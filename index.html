@@ -41,10 +41,11 @@
     background: var(--bg);
     color: var(--cream);
     font-family: 'Manrope', sans-serif;
-    font-size: 15px;
-    line-height: 1.55;
+    font-size: 16.5px;
+    line-height: 1.65;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -64,11 +65,11 @@
     margin: 0;
   }
 
-  h1 { font-size: 32px; font-variation-settings: "SOFT" 50, "opsz" 144; }
-  h2 { font-size: 24px; font-variation-settings: "SOFT" 30, "opsz" 72; }
-  h3 { font-size: 18px; font-variation-settings: "SOFT" 20, "opsz" 36; font-weight: 600; }
+  h1 { font-size: 38px; font-variation-settings: "SOFT" 50, "opsz" 144; }
+  h2 { font-size: 27px; font-variation-settings: "SOFT" 30, "opsz" 72; }
+  h3 { font-size: 20px; font-variation-settings: "SOFT" 20, "opsz" 36; font-weight: 600; }
 
-  p { margin: 0 0 12px; color: var(--cream-dim); }
+  p { margin: 0 0 14px; color: var(--cream-dim); }
 
   .app {
     max-width: 480px;
@@ -1229,9 +1230,590 @@
     body { padding-bottom: 100px; }
     .app { padding: 0 24px; }
   }
+
+  /* ============================================================
+     SPLASH LANDING PAGE
+     ============================================================ */
+  .splash {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,159,28,0.18) 0%, transparent 50%),
+      radial-gradient(circle at 70% 85%, rgba(232,146,124,0.14) 0%, transparent 55%),
+      linear-gradient(180deg, #0B1525 0%, var(--bg) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .splash.hide {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+  }
+  .splash-inner {
+    text-align: center;
+    max-width: 360px;
+    width: 100%;
+  }
+  .splash-bismillah {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.2s forwards;
+    margin-bottom: 22px;
+  }
+  .splash-mark {
+    width: 88px;
+    height: 88px;
+    border-radius: 28px;
+    margin: 0 auto 28px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), transparent 60%),
+      linear-gradient(135deg, var(--orange) 0%, var(--coral) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 44px;
+    font-weight: 600;
+    color: var(--bg);
+    box-shadow: 0 20px 60px rgba(255,159,28,0.35);
+    opacity: 0;
+    transform: scale(0.6);
+    animation: pop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
+  }
+  .splash-greeting {
+    font-family: 'Fraunces', serif;
+    font-size: 46px;
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fadeInUp 0.9s ease 1s forwards;
+  }
+  .splash-greeting .accent {
+    font-style: italic;
+    color: var(--orange);
+    font-weight: 500;
+  }
+  .splash-sub {
+    font-size: 16px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+    opacity: 0;
+    animation: fadeInUp 0.9s ease 1.4s forwards;
+    margin-bottom: 38px;
+  }
+  .splash-sub .urdu-soft {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .splash-cta {
+    background: var(--cream);
+    color: var(--bg);
+    border: none;
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(245,233,215,0.18);
+    opacity: 0;
+    animation: fadeInUp 0.9s ease 1.8s forwards;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .splash-cta:hover, .splash-cta:active {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(245,233,215,0.28);
+  }
+  .splash-cta .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 0.2s ease;
+  }
+  .splash-cta:hover .arrow { transform: translateX(4px); }
+
+  .splash-foot {
+    position: absolute;
+    bottom: 28px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeIn 0.8s ease 2.2s forwards;
+  }
+  .splash-foot .heart-orange { color: var(--orange); }
+
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pop {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* ============================================================
+     URDU ACCENT TEXT
+     ============================================================ */
+  .urdu-accent {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .urdu-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: rgba(212, 175, 111, 0.12);
+    border: 1px solid rgba(212, 175, 111, 0.3);
+    color: var(--gold);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+  }
+
+  /* ============================================================
+     DAILY AFFIRMATION CARD
+     ============================================================ */
+  .affirm-card {
+    margin: 22px 0;
+    background:
+      radial-gradient(circle at 80% 0%, rgba(212, 175, 111, 0.14) 0%, transparent 55%),
+      linear-gradient(135deg, rgba(255,159,28,0.07), rgba(232,146,124,0.05));
+    border: 1px solid rgba(212, 175, 111, 0.2);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .affirm-card:active { transform: scale(0.98); }
+  .affirm-card:hover { border-color: rgba(212, 175, 111, 0.35); }
+  .affirm-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .affirm-label .pulse-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse-dot 2s ease infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.3); }
+  }
+  .affirm-text {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--cream);
+    font-weight: 400;
+    transition: opacity 0.4s ease;
+  }
+  .affirm-text.fade { opacity: 0; }
+  .affirm-tap {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ============================================================
+     PRACTICE TIMER (for STAR page)
+     ============================================================ */
+  .timer-card {
+    margin: 22px 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    text-align: center;
+  }
+  .timer-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--coral);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .timer-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .timer-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .timer-display {
+    font-family: 'Fraunces', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--orange);
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    font-feature-settings: "tnum";
+    transition: color 0.3s ease;
+  }
+  .timer-display.warning { color: var(--coral); }
+  .timer-display.danger { color: #FF6B6B; animation: shake 0.5s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+  .timer-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--surface-2);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .timer-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage), var(--orange), var(--coral));
+    border-radius: 100px;
+    transition: width 1s linear;
+    width: 0%;
+  }
+  .timer-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  .timer-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--line-2);
+    color: var(--cream);
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .timer-btn:hover { background: var(--surface-3); }
+  .timer-btn.primary {
+    background: var(--orange);
+    color: var(--bg);
+    border-color: var(--orange);
+  }
+  .timer-btn.primary:hover { background: var(--orange-soft); }
+
+  /* ============================================================
+     ACHIEVEMENT BADGE
+     ============================================================ */
+  .achievement-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  .badge.earned {
+    background: rgba(255,159,28,0.1);
+    border-color: rgba(255,159,28,0.4);
+    color: var(--orange);
+  }
+  .badge.earned .badge-icon { color: var(--orange); }
+  .badge-icon {
+    font-size: 14px;
+  }
+
+  /* ============================================================
+     CONFETTI
+     ============================================================ */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 14px;
+    top: -20px;
+    z-index: 999;
+    pointer-events: none;
+    animation: confetti-fall 3s linear forwards;
+  }
+  @keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ============================================================
+     PAGE TRANSITIONS - smoother
+     ============================================================ */
+  .page {
+    animation: pageIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============================================================
+     RIPPLE TAP FEEDBACK
+     ============================================================ */
+  .quick-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Bigger touch targets, better breathing on key components */
+  .hero-title { line-height: 1.08 !important; }
+  .countdown-num { font-feature-settings: "tnum"; }
+
+  /* ============================================================
+     PODCAST PLAYER
+     ============================================================ */
+  .podcast-section {
+    margin: 24px 0 8px;
+  }
+  .podcast-intro {
+    font-size: 15px;
+    color: var(--cream-dim);
+    margin-bottom: 14px;
+    line-height: 1.55;
+  }
+  .podcast-group-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--muted);
+    margin: 18px 0 10px;
+  }
+  .podcast-group-label .line {
+    flex: 1;
+    height: 1px;
+    background: var(--line-2);
+  }
+  .podcast-group-label.urdu { color: var(--gold); }
+  .podcast-group-label.urdu .line { background: rgba(212,175,111,0.25); }
+
+  .podcast-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .podcast-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+  }
+  .podcast-card.playing {
+    border-color: rgba(255,159,28,0.5);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(255,159,28,0.08) 0%, transparent 50%),
+      var(--surface);
+  }
+  .podcast-card.urdu.playing {
+    border-color: rgba(212,175,111,0.5);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(212,175,111,0.08) 0%, transparent 50%),
+      var(--surface);
+  }
+  .podcast-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .podcast-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: var(--surface-2);
+    color: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .podcast-icon.coral { background: rgba(232,146,124,0.14); color: var(--coral); }
+  .podcast-icon.sage  { background: rgba(132,169,140,0.14); color: var(--sage); }
+  .podcast-icon.gold  { background: rgba(212,175,111,0.14); color: var(--gold); }
+  .podcast-icon svg { width: 22px; height: 22px; }
+  .podcast-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .podcast-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--cream);
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+  .podcast-sub {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .lang-tag {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: var(--surface-2);
+    color: var(--cream-dim);
+    text-transform: uppercase;
+  }
+  .lang-tag.urdu {
+    background: rgba(212,175,111,0.16);
+    color: var(--gold);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    text-transform: none;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    font-size: 12px;
+  }
+  .podcast-play {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: var(--bg);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 18px rgba(255,159,28,0.25);
+  }
+  .podcast-play:hover {
+    transform: scale(1.06);
+    box-shadow: 0 8px 22px rgba(255,159,28,0.35);
+  }
+  .podcast-play:active { transform: scale(0.95); }
+  .podcast-play svg { width: 18px; height: 18px; }
+  .podcast-play.urdu {
+    background: var(--gold);
+    box-shadow: 0 6px 18px rgba(212,175,111,0.25);
+  }
+  .podcast-play.urdu:hover { box-shadow: 0 8px 22px rgba(212,175,111,0.35); }
+
+  .podcast-progress-wrap {
+    margin-top: 14px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  }
+  .podcast-card.playing .podcast-progress-wrap,
+  .podcast-card.has-progress .podcast-progress-wrap {
+    max-height: 60px;
+    opacity: 1;
+  }
+  .podcast-bar {
+    height: 5px;
+    background: var(--surface-2);
+    border-radius: 100px;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .podcast-bar:hover .podcast-fill { filter: brightness(1.1); }
+  .podcast-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), var(--coral));
+    width: 0%;
+    border-radius: 100px;
+    transition: width 0.1s linear, filter 0.2s ease;
+  }
+  .podcast-card.urdu .podcast-fill {
+    background: linear-gradient(90deg, var(--gold), var(--coral));
+  }
+  .podcast-times {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    font-feature-settings: "tnum";
+  }
+  .podcast-card audio { display: none; }
+
+  /* Now playing pulse */
+  .podcast-card.playing .podcast-icon {
+    animation: podcast-pulse 2s ease infinite;
+  }
+  @keyframes podcast-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,159,28,0.4); }
+    50%      { box-shadow: 0 0 0 8px rgba(255,159,28,0); }
+  }
+
 </style>
 </head>
 <body>
+
+<!-- ============ SPLASH LANDING ============ -->
+<div class="splash" id="splash">
+  <div class="splash-inner">
+    <div class="splash-bismillah">With the Name of Allah</div>
+    <div class="splash-mark">A</div>
+    <div class="splash-greeting">Salam, <span class="accent">Arooj</span></div>
+    <div class="splash-sub">
+      A small corner I made just for you. Take your time, breathe, and let&rsquo;s get you ready. <span class="urdu-soft">InshaaAllah, sab acha ho ga.</span>
+    </div>
+    <button class="splash-cta" onclick="dismissSplash()">
+      Let&rsquo;s begin <span class="arrow">&rarr;</span>
+    </button>
+  </div>
+  <div class="splash-foot">
+    Made for you <span class="heart-orange">&#9734;</span> by Seemab
+  </div>
+</div>
 
 <div class="app">
 
@@ -1239,7 +1821,7 @@
   <div class="top-bar">
     <div class="brand">
       <div class="brand-mark">A</div>
-      <div class="brand-text">For <span class="name">Arooj</span></div>
+      <div class="brand-text">Salam, <span class="name">Arooj</span></div>
     </div>
     <div class="progress-pill">
       <span class="dot"></span>
@@ -1250,9 +1832,16 @@
   <!-- ============ HOME PAGE ============ -->
   <div class="page active" id="page-home">
     <div class="hero">
-      <div class="hero-greeting">May 04 · Your week</div>
-      <h1 class="hero-title">Hello <span class="accent">Arooj</span>, you've got this.</h1>
-      <p class="hero-sub">A small space made just for you, to walk into both interviews calm, prepared, and confident. Take it one section at a time. No rush.</p>
+      <div class="hero-greeting">May 04 <span class="urdu-accent">&middot; Aaj ka din</span></div>
+      <h1 class="hero-title">Salam, <span class="accent">Arooj</span></h1>
+      <p class="hero-sub">A small space made just for you, to walk into both interviews calm, prepared, and confident. Take it one section at a time. <span class="urdu-accent">Koi jaldi nahi hai.</span></p>
+    </div>
+
+    <!-- Daily affirmation rotator -->
+    <div class="affirm-card" id="affirmCard" onclick="rotateAffirmation()">
+      <div class="affirm-label"><span class="pulse-dot"></span> A reminder for you</div>
+      <div class="affirm-text" id="affirmText">You have done harder things than this. The interview is just a conversation about work you already know.</div>
+      <div class="affirm-tap">Tap for another one</div>
     </div>
 
     <div class="countdown-card">
@@ -1276,6 +1865,129 @@
         <div class="num" id="d2Mini">8d</div>
         <div class="date">Behavioral + technical</div>
       </div>
+    </div>
+
+    <!-- ============ PODCAST / AUDIO SESSIONS ============ -->
+    <div class="podcast-section">
+      <div class="section-title">
+        <h2>Audio <span class="italic" style="font-style: italic; color: var(--orange);">sessions</span></h2>
+        <span class="meta">Listen anywhere</span>
+      </div>
+      <p class="podcast-intro">
+        Four mock interviews to listen to. Two in English and two in Urdu, behavioral and technical for each. <span class="urdu-accent">Sun lo, jab time milay.</span>
+      </p>
+
+      <div class="podcast-group-label"><span>English</span><span class="line"></span></div>
+
+      <div class="podcast-list">
+        <div class="podcast-card" data-id="beh_english">
+          <div class="podcast-row">
+            <div class="podcast-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="podcast-info">
+              <div class="podcast-title">Behavioral Interview</div>
+              <div class="podcast-sub"><span class="lang-tag">English</span> <span class="podcast-time-total">--:--</span></div>
+            </div>
+            <button class="podcast-play" onclick="togglePodcast('beh_english')" aria-label="Play">
+              <svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="podcast-progress-wrap">
+            <div class="podcast-bar"><div class="podcast-fill"></div></div>
+            <div class="podcast-times">
+              <span class="podcast-time-current">0:00</span>
+              <span class="podcast-time-remaining">--:--</span>
+            </div>
+          </div>
+          <audio id="audio-beh_english" preload="metadata" src="beh_english.mp3"></audio>
+        </div>
+
+        <div class="podcast-card" data-id="Tech_english">
+          <div class="podcast-row">
+            <div class="podcast-icon coral">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <div class="podcast-info">
+              <div class="podcast-title">Technical Interview</div>
+              <div class="podcast-sub"><span class="lang-tag">English</span> <span class="podcast-time-total">--:--</span></div>
+            </div>
+            <button class="podcast-play" onclick="togglePodcast('Tech_english')" aria-label="Play">
+              <svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="podcast-progress-wrap">
+            <div class="podcast-bar"><div class="podcast-fill"></div></div>
+            <div class="podcast-times">
+              <span class="podcast-time-current">0:00</span>
+              <span class="podcast-time-remaining">--:--</span>
+            </div>
+          </div>
+          <audio id="audio-Tech_english" preload="metadata" src="Tech_english.mp3"></audio>
+        </div>
+      </div>
+
+      <div class="podcast-group-label urdu"><span>Urdu &middot; <span style="font-family: 'Fraunces', serif; font-style: italic; text-transform: none; letter-spacing: 0.02em;">apni zubaan mein</span></span><span class="line"></span></div>
+
+      <div class="podcast-list">
+        <div class="podcast-card urdu" data-id="beh_urdu">
+          <div class="podcast-row">
+            <div class="podcast-icon gold">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="podcast-info">
+              <div class="podcast-title">Behavioral Interview</div>
+              <div class="podcast-sub"><span class="lang-tag urdu">Urdu</span> <span class="podcast-time-total">--:--</span></div>
+            </div>
+            <button class="podcast-play urdu" onclick="togglePodcast('beh_urdu')" aria-label="Play">
+              <svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="podcast-progress-wrap">
+            <div class="podcast-bar"><div class="podcast-fill"></div></div>
+            <div class="podcast-times">
+              <span class="podcast-time-current">0:00</span>
+              <span class="podcast-time-remaining">--:--</span>
+            </div>
+          </div>
+          <audio id="audio-beh_urdu" preload="metadata" src="beh_urdu.mp3"></audio>
+        </div>
+
+        <div class="podcast-card urdu" data-id="Tech_urdu">
+          <div class="podcast-row">
+            <div class="podcast-icon sage">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <div class="podcast-info">
+              <div class="podcast-title">Technical Interview</div>
+              <div class="podcast-sub"><span class="lang-tag urdu">Urdu</span> <span class="podcast-time-total">--:--</span></div>
+            </div>
+            <button class="podcast-play urdu" onclick="togglePodcast('Tech_urdu')" aria-label="Play">
+              <svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="podcast-progress-wrap">
+            <div class="podcast-bar"><div class="podcast-fill"></div></div>
+            <div class="podcast-times">
+              <span class="podcast-time-current">0:00</span>
+              <span class="podcast-time-remaining">--:--</span>
+            </div>
+          </div>
+          <audio id="audio-Tech_urdu" preload="metadata" src="Tech_urdu.mp3"></audio>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievement badges -->
+    <div class="section-title" style="margin-top: 22px;">
+      <h2>Your prep journey</h2>
+      <span class="meta" id="badgeCount">0/4</span>
+    </div>
+    <div class="achievement-badges" id="badgeRow">
+      <div class="badge" data-badge="lp"><span class="badge-icon">&#9733;</span> 16 LPs reviewed</div>
+      <div class="badge" data-badge="quiz"><span class="badge-icon">&#10003;</span> Quiz passed</div>
+      <div class="badge" data-badge="flash"><span class="badge-icon">&#9636;</span> Flashcards seen</div>
+      <div class="badge" data-badge="check"><span class="badge-icon">&#9678;</span> Day plan ready</div>
     </div>
 
     <div class="section-title">
@@ -1327,8 +2039,8 @@
     </div>
 
     <div class="note-card">
-      <div class="from">A note for you</div>
-      <div class="body">"You already do this work every day. The interview is just a place to talk about it. Be specific, breathe between sentences, and let your real experience speak."</div>
+      <div class="from">A note from Seemab</div>
+      <div class="body">"You already do this work every day. The interview is just a place to talk about it. Be specific, breathe between sentences, and let your real experience speak. <span class="urdu-accent">Tum tayyar ho.</span> If anything feels confusing, I am one message away. Always."</div>
     </div>
 
     <div class="section-title" style="margin-top: 26px;">
@@ -1456,6 +2168,19 @@
         <span class="data-pill coral">A mistake and recovery</span>
         <span class="data-pill sage">A time you learned fast</span>
         <span class="data-pill">A time you finished early</span>
+      </div>
+    </div>
+
+    <!-- Practice Timer -->
+    <div class="timer-card">
+      <div class="timer-eyebrow">Practice Tool</div>
+      <div class="timer-title">90 second STAR drill</div>
+      <div class="timer-sub">Pick a story. Speak it out loud. Aim for 60 to 90 seconds. <span class="urdu-accent">Bas yahi karna hai.</span></div>
+      <div class="timer-display" id="timerDisplay">1:30</div>
+      <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+      <div class="timer-controls">
+        <button class="timer-btn primary" id="timerStart" onclick="toggleTimer()">Start</button>
+        <button class="timer-btn" onclick="resetTimer()">Reset</button>
       </div>
     </div>
   </div>
@@ -1897,7 +2622,7 @@
   <!-- FOOTER -->
   <div class="footer">
     <div class="footer-msg">"Walk in like you already work there. Because you almost do."</div>
-    <div class="footer-sig">All the best, Arooj <span class="heart">·</span> made for you by Seemab</div>
+    <div class="footer-sig"><span class="urdu-accent">Duaaon mein</span> <span class="heart">&middot;</span> made for you by Seemab</div>
   </div>
 
 </div>
@@ -2329,7 +3054,10 @@ let state = {
   lpDone: {},
   checkDone: {},
   qExpanded: {},
-  lpExpanded: {}
+  lpExpanded: {},
+  flashSeen: false,
+  quizPassed: false,
+  _initialized: false
 };
 
 function loadState() {
@@ -2346,7 +3074,9 @@ function saveState() {
   try {
     const toSave = {
       lpDone: state.lpDone,
-      checkDone: state.checkDone
+      checkDone: state.checkDone,
+      flashSeen: state.flashSeen,
+      quizPassed: state.quizPassed
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
   } catch(e) {}
@@ -2568,6 +3298,14 @@ function nextFlash() {
   if (state.flashIdx < FLASHCARDS.length - 1) {
     state.flashIdx++;
     state.flashFlipped = false;
+    // Mark flashSeen as true when more than half the deck has been viewed
+    if (state.flashIdx >= Math.floor(FLASHCARDS.length / 2)) {
+      if (!state.flashSeen) {
+        state.flashSeen = true;
+        saveState();
+        updateProgress();
+      }
+    }
     renderFlash();
   }
 }
@@ -2651,7 +3389,13 @@ function selectQuiz(i) {
 function nextQuiz() {
   if (state.quizIdx === QUIZ.length - 1) {
     state.quizDone = true;
+    // Mark passed if scored at least 70 percent
+    if (state.quizScore / QUIZ.length >= 0.7) {
+      state.quizPassed = true;
+      saveState();
+    }
     renderQuiz();
+    updateProgress();
     return;
   }
   state.quizIdx++;
@@ -2709,6 +3453,314 @@ function updateProgress() {
   const pct = Math.round(((lpCount + checkCount) / (totalLP + totalCheck)) * 100);
   const el = document.getElementById('overallProgress');
   if (el) el.textContent = pct + '% complete';
+  updateBadges();
+}
+
+/* ============================================================
+   SPLASH LANDING
+   ============================================================ */
+
+function dismissSplash() {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+  splash.classList.add('hide');
+  // remove from DOM after the transition
+  setTimeout(() => { splash.style.display = 'none'; }, 700);
+  try { sessionStorage.setItem('arooj_splash_seen', '1'); } catch (e) {}
+}
+
+function maybeShowSplash() {
+  // Show splash on first visit per session. Skip if already seen this session.
+  let seen = false;
+  try { seen = sessionStorage.getItem('arooj_splash_seen') === '1'; } catch (e) {}
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+  if (seen) {
+    splash.style.display = 'none';
+  }
+}
+
+/* ============================================================
+   DAILY AFFIRMATIONS
+   ============================================================ */
+
+const AFFIRMATIONS = [
+  "You have done harder things than this. The interview is just a conversation about work you already know.",
+  "Tum tayyar ho. Hosla rakho. The prep is solid, your experience is real.",
+  "Your accent is not on trial. Your thinking is. And your thinking is sharp.",
+  "Pause before you answer. Three seconds of silence is better than three minutes of rambling.",
+  "Every story you tell is real. Real stories always sound better than rehearsed ones.",
+  "You belong in that room. They are looking for someone exactly like you.",
+  "With the Name of Allah, take a breath. Walk in calm. Walk out proud.",
+  "It is okay to ask the interviewer to repeat a question. Clarity is professional.",
+  "Use 'I' not 'we' in your answers. They are hiring you, not your team.",
+  "Quantify every result. 'I reduced rework by 30 percent' lands harder than 'it went well'.",
+  "InshaaAllah, you will look back at this week and smile. Just keep showing up.",
+  "Whatever happens, you tried. Tried is more than most people manage.",
+];
+
+let _affirmIdx = 0;
+function rotateAffirmation() {
+  const el = document.getElementById('affirmText');
+  if (!el) return;
+  el.classList.add('fade');
+  setTimeout(() => {
+    _affirmIdx = (_affirmIdx + 1) % AFFIRMATIONS.length;
+    el.textContent = AFFIRMATIONS[_affirmIdx];
+    el.classList.remove('fade');
+  }, 350);
+}
+
+function setRandomAffirmation() {
+  const el = document.getElementById('affirmText');
+  if (!el) return;
+  // pick based on day of month so it stays consistent same-day
+  const today = new Date().getDate();
+  _affirmIdx = today % AFFIRMATIONS.length;
+  el.textContent = AFFIRMATIONS[_affirmIdx];
+}
+
+/* ============================================================
+   PRACTICE TIMER (STAR drill)
+   ============================================================ */
+
+let _timerInterval = null;
+let _timerSeconds = 90;
+const _timerStart = 90;
+
+function formatTimer(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function updateTimerUI() {
+  const display = document.getElementById('timerDisplay');
+  const fill = document.getElementById('timerFill');
+  if (!display || !fill) return;
+  display.textContent = formatTimer(_timerSeconds);
+  display.classList.remove('warning', 'danger');
+  if (_timerSeconds <= 10) display.classList.add('danger');
+  else if (_timerSeconds <= 30) display.classList.add('warning');
+  const elapsed = _timerStart - _timerSeconds;
+  const pct = (elapsed / _timerStart) * 100;
+  fill.style.width = pct + '%';
+}
+
+function toggleTimer() {
+  const btn = document.getElementById('timerStart');
+  if (!btn) return;
+  if (_timerInterval) {
+    clearInterval(_timerInterval);
+    _timerInterval = null;
+    btn.textContent = 'Resume';
+    return;
+  }
+  if (_timerSeconds <= 0) _timerSeconds = _timerStart;
+  btn.textContent = 'Pause';
+  _timerInterval = setInterval(() => {
+    _timerSeconds--;
+    updateTimerUI();
+    if (_timerSeconds <= 0) {
+      clearInterval(_timerInterval);
+      _timerInterval = null;
+      btn.textContent = 'Start';
+      // Gentle done feedback
+      const display = document.getElementById('timerDisplay');
+      if (display) display.textContent = "Done";
+      setTimeout(() => { resetTimer(); }, 1500);
+    }
+  }, 1000);
+}
+
+function resetTimer() {
+  if (_timerInterval) { clearInterval(_timerInterval); _timerInterval = null; }
+  _timerSeconds = _timerStart;
+  const btn = document.getElementById('timerStart');
+  if (btn) btn.textContent = 'Start';
+  updateTimerUI();
+}
+
+/* ============================================================
+   ACHIEVEMENT BADGES
+   ============================================================ */
+
+function updateBadges() {
+  const lpCount = Object.values(state.lpDone).filter(Boolean).length;
+  const totalLP = LEADERSHIP_PRINCIPLES.length;
+  const checkCount = Object.values(state.checkDone).filter(Boolean).length;
+  const totalCheck = CHECKLIST.night.length + CHECKLIST.morning.length + CHECKLIST.during.length + CHECKLIST.after.length;
+
+  const earned = {
+    lp: lpCount >= totalLP,
+    quiz: !!state.quizPassed,
+    flash: !!state.flashSeen,
+    check: checkCount >= totalCheck,
+  };
+  let earnedCount = 0;
+  document.querySelectorAll('.badge').forEach(b => {
+    const k = b.getAttribute('data-badge');
+    const wasEarned = b.classList.contains('earned');
+    if (earned[k]) {
+      b.classList.add('earned');
+      earnedCount++;
+      if (!wasEarned && state._initialized) {
+        triggerConfetti();
+      }
+    } else {
+      b.classList.remove('earned');
+    }
+  });
+  const counter = document.getElementById('badgeCount');
+  if (counter) counter.textContent = earnedCount + '/4';
+}
+
+/* ============================================================
+   CONFETTI
+   ============================================================ */
+
+function triggerConfetti() {
+  const colors = ['#FF9F1C', '#E8927C', '#84A98C', '#D4AF6F', '#F5E9D7'];
+  for (let i = 0; i < 40; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = colors[i % colors.length];
+    piece.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    piece.style.animationDelay = (Math.random() * 0.4) + 's';
+    piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+    piece.style.opacity = (0.7 + Math.random() * 0.3).toString();
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 4000);
+  }
+}
+
+/* ============================================================
+   PODCAST PLAYER
+   ============================================================ */
+
+const PLAY_SVG = '<svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const PAUSE_SVG = '<svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+
+let _currentlyPlayingPodcast = null;
+
+function _formatPodcastTime(s) {
+  if (!s || isNaN(s) || !isFinite(s)) return '--:--';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function togglePodcast(id) {
+  const audio = document.getElementById('audio-' + id);
+  const card = document.querySelector('.podcast-card[data-id="' + id + '"]');
+  if (!audio || !card) return;
+
+  // Pause any other currently playing podcast
+  if (_currentlyPlayingPodcast && _currentlyPlayingPodcast !== id) {
+    const otherAudio = document.getElementById('audio-' + _currentlyPlayingPodcast);
+    const otherCard = document.querySelector('.podcast-card[data-id="' + _currentlyPlayingPodcast + '"]');
+    if (otherAudio) otherAudio.pause();
+    if (otherCard) {
+      otherCard.classList.remove('playing');
+      const btn = otherCard.querySelector('.podcast-play');
+      if (btn) btn.innerHTML = PLAY_SVG;
+    }
+  }
+
+  if (audio.paused) {
+    const playPromise = audio.play();
+    if (playPromise && playPromise.catch) {
+      playPromise.catch(err => {
+        console.warn('Podcast play failed:', err);
+        // Common cause: file not yet uploaded or wrong filename. Show a graceful hint.
+        const sub = card.querySelector('.podcast-sub');
+        if (sub && !sub.querySelector('.podcast-error')) {
+          const e = document.createElement('span');
+          e.className = 'podcast-error';
+          e.style.color = 'var(--coral)';
+          e.style.marginLeft = '6px';
+          e.textContent = '(audio not loaded yet)';
+          sub.appendChild(e);
+        }
+      });
+    }
+    card.classList.add('playing');
+    const btn = card.querySelector('.podcast-play');
+    if (btn) btn.innerHTML = PAUSE_SVG;
+    _currentlyPlayingPodcast = id;
+  } else {
+    audio.pause();
+    card.classList.remove('playing');
+    const btn = card.querySelector('.podcast-play');
+    if (btn) btn.innerHTML = PLAY_SVG;
+    _currentlyPlayingPodcast = null;
+  }
+}
+
+function setupPodcasts() {
+  document.querySelectorAll('.podcast-card').forEach(card => {
+    const id = card.getAttribute('data-id');
+    const audio = document.getElementById('audio-' + id);
+    if (!audio) return;
+
+    const fill = card.querySelector('.podcast-fill');
+    const totalEl = card.querySelector('.podcast-time-total');
+    const currentEl = card.querySelector('.podcast-time-current');
+    const remainingEl = card.querySelector('.podcast-time-remaining');
+    const bar = card.querySelector('.podcast-bar');
+    const btn = card.querySelector('.podcast-play');
+
+    audio.addEventListener('loadedmetadata', () => {
+      const dur = audio.duration;
+      if (totalEl) totalEl.textContent = _formatPodcastTime(dur);
+      if (remainingEl) remainingEl.textContent = _formatPodcastTime(dur);
+      card.classList.add('has-progress');
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const dur = audio.duration || 0;
+      const cur = audio.currentTime || 0;
+      if (fill && dur > 0) fill.style.width = (cur / dur * 100) + '%';
+      if (currentEl) currentEl.textContent = _formatPodcastTime(cur);
+      if (remainingEl) remainingEl.textContent = _formatPodcastTime(dur - cur);
+    });
+
+    audio.addEventListener('ended', () => {
+      card.classList.remove('playing');
+      if (btn) btn.innerHTML = PLAY_SVG;
+      if (_currentlyPlayingPodcast === id) _currentlyPlayingPodcast = null;
+      // Reset progress visually
+      if (fill) fill.style.width = '0%';
+      if (currentEl) currentEl.textContent = '0:00';
+      audio.currentTime = 0;
+    });
+
+    audio.addEventListener('error', () => {
+      // Silent fallback. Show a small note so it's not confusing if file isn't there yet.
+      const sub = card.querySelector('.podcast-sub');
+      if (sub && !sub.querySelector('.podcast-error')) {
+        const e = document.createElement('span');
+        e.className = 'podcast-error';
+        e.style.color = 'var(--muted)';
+        e.style.marginLeft = '6px';
+        e.style.fontSize = '12px';
+        e.textContent = '(file not found)';
+        sub.appendChild(e);
+      }
+    });
+
+    // Click on bar to seek
+    if (bar) {
+      bar.addEventListener('click', (e) => {
+        const rect = bar.getBoundingClientRect();
+        const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        if (audio.duration && isFinite(audio.duration)) {
+          audio.currentTime = ratio * audio.duration;
+        }
+      });
+    }
+  });
 }
 
 /* ============================================================
@@ -2717,6 +3769,8 @@ function updateProgress() {
 
 function init() {
   loadState();
+  maybeShowSplash();
+  setRandomAffirmation();
   updateCountdown();
   renderLPs();
   renderQuestionFilters();
@@ -2725,7 +3779,12 @@ function init() {
   renderQuiz();
   renderChecklist();
   setupTechTabs();
+  setupPodcasts();
+  resetTimer();
   updateProgress();
+
+  // Mark initialized after first render so confetti only fires on real changes
+  setTimeout(() => { state._initialized = true; }, 500);
 
   // Update countdown each minute
   setInterval(updateCountdown, 60000);
