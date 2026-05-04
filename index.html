@@ -1,0 +1,2738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#0F1B2D" />
+<title>For Arooj · AWS Interview Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F1B2D;
+    --bg-2: #14233A;
+    --surface: #1A2940;
+    --surface-2: #243757;
+    --surface-3: #2E4368;
+    --line: rgba(245, 233, 215, 0.08);
+    --line-2: rgba(245, 233, 215, 0.14);
+    --cream: #F5E9D7;
+    --cream-dim: #D4C9B8;
+    --muted: #8896B5;
+    --muted-2: #6B7A99;
+    --orange: #FF9F1C;
+    --orange-soft: #FFB04D;
+    --coral: #E8927C;
+    --rose: #F4A89E;
+    --sage: #84A98C;
+    --gold: #D4AF6F;
+    --shadow-lg: 0 20px 60px rgba(0,0,0,0.4);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.3);
+    --radius: 18px;
+    --radius-sm: 12px;
+    --radius-lg: 24px;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,159,28,0.07) 0%, transparent 40%),
+      radial-gradient(circle at 85% 85%, rgba(232,146,124,0.06) 0%, transparent 50%),
+      var(--bg);
+    min-height: 100vh;
+    padding-bottom: 92px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  h1 { font-size: 32px; font-variation-settings: "SOFT" 50, "opsz" 144; }
+  h2 { font-size: 24px; font-variation-settings: "SOFT" 30, "opsz" 72; }
+  h3 { font-size: 18px; font-variation-settings: "SOFT" 20, "opsz" 36; font-weight: 600; }
+
+  p { margin: 0 0 12px; color: var(--cream-dim); }
+
+  .app {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+  }
+
+  /* ============ HEADER ============ */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 14px;
+    position: sticky;
+    top: 0;
+    background: linear-gradient(to bottom, var(--bg) 70%, transparent);
+    z-index: 50;
+    backdrop-filter: blur(8px);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-mark {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--orange), var(--coral));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--bg);
+    font-size: 17px;
+    box-shadow: 0 6px 16px rgba(255,159,28,0.3);
+  }
+  .brand-text {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    color: var(--cream);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .brand-text .name {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--orange);
+  }
+
+  .progress-pill {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 6px 12px;
+    font-size: 11px;
+    color: var(--cream-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+  }
+  .progress-pill .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--sage);
+    box-shadow: 0 0 8px var(--sage);
+  }
+
+  /* ============ PAGES ============ */
+  .page { display: none; animation: fadeUp 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .page.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ HOME PAGE ============ */
+  .hero {
+    padding: 12px 0 8px;
+    position: relative;
+  }
+  .hero-greeting {
+    font-size: 13px;
+    color: var(--orange);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-size: 40px;
+    line-height: 1.05;
+    font-variation-settings: "SOFT" 80, "opsz" 144, "wght" 400;
+    margin-bottom: 14px;
+  }
+  .hero-title .accent {
+    font-style: italic;
+    background: linear-gradient(120deg, var(--orange), var(--rose));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-variation-settings: "wght" 500;
+  }
+  .hero-sub {
+    color: var(--cream-dim);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 90%;
+  }
+
+  .countdown-card {
+    background: linear-gradient(140deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-lg);
+    padding: 22px 22px 20px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .countdown-card::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(255,159,28,0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .countdown-label {
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .countdown-title {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    margin-bottom: 14px;
+    color: var(--cream);
+  }
+  .countdown-value {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .countdown-num {
+    font-family: 'Fraunces', serif;
+    font-size: 56px;
+    font-variation-settings: "wght" 400, "opsz" 144;
+    line-height: 1;
+    color: var(--cream);
+    letter-spacing: -0.04em;
+  }
+  .countdown-unit {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .countdown-date {
+    font-size: 13px;
+    color: var(--cream-dim);
+    margin-top: 6px;
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .countdown-mini {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 14px;
+    position: relative;
+  }
+  .countdown-mini.urgent {
+    border-color: rgba(255,159,28,0.3);
+    background: linear-gradient(140deg, var(--surface), rgba(255,159,28,0.06));
+  }
+  .countdown-mini .label {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .countdown-mini .num {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .countdown-mini .date {
+    font-size: 12px;
+    color: var(--cream-dim);
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 28px 0 14px;
+  }
+  .section-title h2 {
+    font-size: 22px;
+    color: var(--cream);
+  }
+  .section-title .meta {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .quick-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .quick-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .quick-card:active {
+    transform: scale(0.97);
+    background: var(--surface-2);
+  }
+  .quick-card .icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
+  .quick-card .icon.orange { background: rgba(255,159,28,0.15); color: var(--orange); }
+  .quick-card .icon.coral  { background: rgba(232,146,124,0.15); color: var(--coral); }
+  .quick-card .icon.sage   { background: rgba(132,169,140,0.15); color: var(--sage); }
+  .quick-card .icon.gold   { background: rgba(212,175,111,0.15); color: var(--gold); }
+  .quick-card .title {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--cream);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .quick-card .sub {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .note-card {
+    margin-top: 22px;
+    background: linear-gradient(140deg, rgba(232,146,124,0.10), rgba(244,168,158,0.05));
+    border: 1px solid rgba(232,146,124,0.22);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    position: relative;
+  }
+  .note-card .from {
+    font-size: 11px;
+    color: var(--coral);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .note-card .body {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--cream);
+    font-style: italic;
+    font-variation-settings: "wght" 350;
+  }
+
+  /* ============ NAVIGATION (BOTTOM TABS) ============ */
+  .tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: rgba(15, 27, 45, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--line-2);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 8px 18px;
+    z-index: 100;
+  }
+  .tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--muted-2);
+    padding: 6px 4px;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+  }
+  .tab-btn svg {
+    width: 22px; height: 22px;
+    stroke-width: 1.6;
+  }
+  .tab-btn .label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .tab-btn.active {
+    color: var(--orange);
+  }
+  .tab-btn.active .label {
+    font-weight: 600;
+  }
+
+  /* ============ GENERIC PAGE HEADER ============ */
+  .page-header {
+    padding: 12px 0 18px;
+  }
+  .page-eyebrow {
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .page-title {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    font-variation-settings: "SOFT" 60, "wght" 450, "opsz" 144;
+  }
+  .page-title .italic { font-style: italic; font-weight: 400; }
+  .page-desc {
+    color: var(--cream-dim);
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+
+  /* ============ LP CARDS ============ */
+  .lp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .lp-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 16px 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .lp-card.expanded {
+    background: var(--surface-2);
+    border-color: var(--line-2);
+  }
+  .lp-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .lp-num {
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    background: rgba(255,159,28,0.12);
+    color: var(--orange);
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .lp-card.done .lp-num {
+    background: rgba(132,169,140,0.18);
+    color: var(--sage);
+  }
+  .lp-name {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--cream);
+    flex: 1;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .lp-toggle {
+    color: var(--muted);
+    font-size: 18px;
+    transition: transform 0.25s;
+  }
+  .lp-card.expanded .lp-toggle { transform: rotate(180deg); }
+  .lp-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+  }
+  .lp-card.expanded .lp-body {
+    max-height: 1200px;
+    padding-top: 14px;
+  }
+  .lp-tagline {
+    font-style: italic;
+    color: var(--cream-dim);
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 12px 14px;
+    border-left: 2px solid var(--orange);
+    background: rgba(255,159,28,0.04);
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+  }
+  .lp-section {
+    margin-bottom: 14px;
+  }
+  .lp-section-label {
+    font-size: 10px;
+    color: var(--orange);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .lp-section p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .lp-question {
+    background: rgba(255,159,28,0.06);
+    border-radius: 10px;
+    padding: 11px 13px;
+    font-size: 13px;
+    color: var(--cream);
+    line-height: 1.5;
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+  .mark-done-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    background: rgba(132,169,140,0.10);
+    border: 1px solid rgba(132,169,140,0.22);
+    border-radius: 10px;
+    color: var(--sage);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mark-done-btn.done {
+    background: rgba(132,169,140,0.20);
+    color: var(--cream);
+  }
+
+  /* ============ STAR METHOD ============ */
+  .star-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 18px 0;
+  }
+  .star-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .star-card::before {
+    content: attr(data-letter);
+    position: absolute;
+    top: -16px;
+    right: 14px;
+    font-family: 'Fraunces', serif;
+    font-size: 110px;
+    color: rgba(255,159,28,0.07);
+    font-weight: 600;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .star-card .step {
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .star-card h3 {
+    font-size: 18px;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .star-card p {
+    font-size: 13.5px;
+    margin-bottom: 10px;
+    line-height: 1.55;
+  }
+  .star-example {
+    background: rgba(15,27,45,0.5);
+    border-left: 2px solid var(--coral);
+    padding: 10px 12px;
+    border-radius: 0 8px 8px 0;
+    font-size: 12.5px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+    font-style: italic;
+  }
+
+  .tip-box {
+    background: linear-gradient(140deg, rgba(212,175,111,0.10), rgba(212,175,111,0.04));
+    border: 1px solid rgba(212,175,111,0.25);
+    border-radius: var(--radius);
+    padding: 16px 16px 14px;
+    margin: 20px 0;
+  }
+  .tip-box .tip-label {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tip-box ul {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--cream-dim);
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  .tip-box ul li { margin-bottom: 4px; }
+
+  /* ============ QUESTIONS BANK ============ */
+  .filter-pills {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 0 14px;
+    margin: 0 -20px 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    scrollbar-width: none;
+  }
+  .filter-pills::-webkit-scrollbar { display: none; }
+  .pill {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 8px 14px;
+    color: var(--cream-dim);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .pill.active {
+    background: var(--orange);
+    color: var(--bg);
+    border-color: var(--orange);
+    font-weight: 600;
+  }
+
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .q-card.expanded {
+    background: var(--surface-2);
+  }
+  .q-card-header {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .q-tag {
+    font-size: 9px;
+    color: var(--orange);
+    background: rgba(255,159,28,0.10);
+    border-radius: 6px;
+    padding: 4px 7px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .q-text {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--cream);
+    flex: 1;
+    line-height: 1.35;
+    font-weight: 500;
+  }
+  .q-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s;
+  }
+  .q-card.expanded .q-body {
+    max-height: 2400px;
+    padding-top: 14px;
+  }
+  .q-section {
+    margin-bottom: 11px;
+  }
+  .q-section-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .q-section.s .q-section-label { color: var(--orange); }
+  .q-section.t .q-section-label { color: var(--coral); }
+  .q-section.a .q-section-label { color: var(--gold); }
+  .q-section.r .q-section-label { color: var(--sage); }
+  .q-section p {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--cream-dim);
+  }
+  .q-which-lp {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ============ TECHNICAL ============ */
+  .tech-tabs {
+    display: flex;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 4px;
+    margin: 14px 0 18px;
+  }
+  .tech-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 9px 8px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .tech-tab.active {
+    background: var(--orange);
+    color: var(--bg);
+  }
+  .tech-content { display: none; }
+  .tech-content.active { display: block; animation: fadeUp 0.3s ease; }
+
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .info-card h3 {
+    font-size: 16px;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .info-card p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .info-card .keyline {
+    display: flex;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(15,27,45,0.5);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .info-card .keyline .k {
+    color: var(--orange);
+    font-weight: 600;
+    flex-shrink: 0;
+    min-width: 86px;
+  }
+  .info-card .keyline .v {
+    color: var(--cream-dim);
+    line-height: 1.5;
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+  }
+  .data-pill {
+    font-size: 11px;
+    background: rgba(255,159,28,0.12);
+    color: var(--orange);
+    padding: 5px 10px;
+    border-radius: 100px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .data-pill.coral { background: rgba(232,146,124,0.12); color: var(--coral); }
+  .data-pill.sage { background: rgba(132,169,140,0.12); color: var(--sage); }
+
+  /* ============ FLASHCARDS ============ */
+  .flashcard-stage {
+    margin: 20px 0 14px;
+    perspective: 1500px;
+    height: 360px;
+  }
+  .flashcard {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+    cursor: pointer;
+  }
+  .flashcard.flipped {
+    transform: rotateY(180deg);
+  }
+  .flash-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--line-2);
+  }
+  .flash-front {
+    background: linear-gradient(140deg, var(--surface-2), var(--surface));
+  }
+  .flash-back {
+    background: linear-gradient(140deg, rgba(255,159,28,0.10), rgba(232,146,124,0.06));
+    transform: rotateY(180deg);
+    border-color: rgba(255,159,28,0.25);
+  }
+  .flash-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 12px;
+  }
+  .flash-q {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.25;
+    color: var(--cream);
+    font-weight: 500;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .flash-a {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--cream);
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .flash-tap {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .flash-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .flash-btn {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 18px;
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .flash-btn:active { transform: scale(0.96); }
+  .flash-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .flash-btn.primary {
+    background: var(--orange);
+    color: var(--bg);
+    border-color: var(--orange);
+  }
+  .flash-counter {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--cream);
+    text-align: center;
+    flex: 1;
+  }
+  .flash-counter .total {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* ============ QUIZ ============ */
+  .quiz-progress-bar {
+    height: 4px;
+    background: var(--surface);
+    border-radius: 100px;
+    overflow: hidden;
+    margin: 14px 0 22px;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), var(--coral));
+    border-radius: 100px;
+    transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .quiz-question {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--cream);
+    margin-bottom: 22px;
+    font-weight: 500;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .quiz-option {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.45;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .quiz-option:active { transform: scale(0.98); }
+  .quiz-option.selected {
+    border-color: var(--orange);
+    background: rgba(255,159,28,0.06);
+  }
+  .quiz-option.correct {
+    border-color: var(--sage);
+    background: rgba(132,169,140,0.10);
+  }
+  .quiz-option.wrong {
+    border-color: var(--coral);
+    background: rgba(232,146,124,0.10);
+  }
+  .quiz-option .letter {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: rgba(245,233,215,0.06);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cream-dim);
+    flex-shrink: 0;
+  }
+  .quiz-option.correct .letter {
+    background: var(--sage);
+    color: var(--bg);
+  }
+  .quiz-option.wrong .letter {
+    background: var(--coral);
+    color: var(--bg);
+  }
+
+  .quiz-explain {
+    margin-top: 16px;
+    padding: 14px 14px;
+    background: rgba(15,27,45,0.7);
+    border-radius: 12px;
+    border-left: 3px solid var(--orange);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--cream-dim);
+    display: none;
+  }
+  .quiz-explain.show { display: block; animation: fadeUp 0.35s; }
+  .quiz-explain strong { color: var(--orange); }
+
+  .quiz-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--orange);
+    color: var(--bg);
+    border: none;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 14px;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+  .quiz-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .quiz-btn:active:not(:disabled) { transform: scale(0.98); }
+
+  .quiz-result {
+    text-align: center;
+    padding: 30px 20px;
+  }
+  .quiz-result-num {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .quiz-result-num .total {
+    font-size: 28px;
+    color: var(--muted);
+  }
+
+  /* ============ MIND MAP ============ */
+  .mindmap-wrap {
+    margin: 18px -20px;
+    overflow-x: auto;
+    padding: 8px 20px 20px;
+    scrollbar-width: thin;
+  }
+  .mindmap-svg {
+    display: block;
+    margin: 0 auto;
+  }
+  .mm-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 14px;
+  }
+  .mm-legend-item {
+    font-size: 11px;
+    color: var(--cream-dim);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+  .mm-legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* ============ COMM TIPS ============ */
+  .comm-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .comm-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--cream);
+  }
+  .comm-card p { font-size: 13.5px; line-height: 1.6; }
+  .phrase-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+  }
+  .phrase-list li {
+    background: rgba(255,159,28,0.05);
+    border-left: 2px solid var(--orange);
+    padding: 9px 12px;
+    margin-bottom: 6px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--cream);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ============ CHECKLIST ============ */
+  .check-section h3 {
+    font-size: 14px;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 22px 0 10px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .check-item.done {
+    background: rgba(132,169,140,0.06);
+    border-color: rgba(132,169,140,0.2);
+  }
+  .check-box {
+    width: 22px; height: 22px;
+    border: 2px solid var(--line-2);
+    border-radius: 7px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .check-item.done .check-box {
+    background: var(--sage);
+    border-color: var(--sage);
+  }
+  .check-item.done .check-box::after {
+    content: '✓';
+    color: var(--bg);
+    font-size: 13px;
+    font-weight: 800;
+  }
+  .check-text {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--cream);
+  }
+  .check-item.done .check-text {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    margin: 36px 0 24px;
+    padding: 20px 16px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+  .footer-msg {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--cream-dim);
+    margin-bottom: 6px;
+    line-height: 1.5;
+    font-variation-settings: "wght" 350;
+  }
+  .footer-sig {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    color: var(--orange);
+    font-weight: 500;
+  }
+  .footer-sig .heart {
+    color: var(--coral);
+    margin: 0 4px;
+  }
+
+  /* ============ MISC ============ */
+  ::selection { background: var(--orange); color: var(--bg); }
+
+  /* Subtle scrollbar for desktop */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 100px; }
+
+  /* Responsive */
+  @media (min-width: 520px) {
+    body { padding-bottom: 100px; }
+    .app { padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="brand">
+      <div class="brand-mark">A</div>
+      <div class="brand-text">For <span class="name">Arooj</span></div>
+    </div>
+    <div class="progress-pill">
+      <span class="dot"></span>
+      <span id="overallProgress">0% complete</span>
+    </div>
+  </div>
+
+  <!-- ============ HOME PAGE ============ -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-greeting">May 04 · Your week</div>
+      <h1 class="hero-title">Hello <span class="accent">Arooj</span>, you've got this.</h1>
+      <p class="hero-sub">A small space made just for you, to walk into both interviews calm, prepared, and confident. Take it one section at a time. No rush.</p>
+    </div>
+
+    <div class="countdown-card">
+      <div class="countdown-label">Up Next</div>
+      <div class="countdown-title">First Interview</div>
+      <div class="countdown-value">
+        <div class="countdown-num" id="d1Num">3</div>
+        <div class="countdown-unit" id="d1Unit">days to go</div>
+      </div>
+      <div class="countdown-date">Thursday, May 7, 2026</div>
+    </div>
+
+    <div class="countdown-grid">
+      <div class="countdown-mini">
+        <div class="label">Round 1</div>
+        <div class="num" id="d1Mini">3d</div>
+        <div class="date">Recruiter screen</div>
+      </div>
+      <div class="countdown-mini urgent">
+        <div class="label">Round 2</div>
+        <div class="num" id="d2Mini">8d</div>
+        <div class="date">Behavioral + technical</div>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <h2>Start here</h2>
+      <span class="meta">Tap a card</span>
+    </div>
+
+    <div class="quick-grid">
+      <div class="quick-card" onclick="goTo('lp')">
+        <div class="icon orange">★</div>
+        <div class="title">Leadership Principles</div>
+        <div class="sub">All 16, with sample questions</div>
+      </div>
+      <div class="quick-card" onclick="goTo('star')">
+        <div class="icon coral">◆</div>
+        <div class="title">STAR Method</div>
+        <div class="sub">Answer framework that works</div>
+      </div>
+      <div class="quick-card" onclick="goTo('questions')">
+        <div class="icon gold">?</div>
+        <div class="title">Question Bank</div>
+        <div class="sub">Real answers, ready to study</div>
+      </div>
+      <div class="quick-card" onclick="goTo('tech')">
+        <div class="icon sage">⚙</div>
+        <div class="title">Technical Notes</div>
+        <div class="sub">Cabling, fiber, racks, safety</div>
+      </div>
+      <div class="quick-card" onclick="goTo('flash')">
+        <div class="icon orange">⌘</div>
+        <div class="title">Flashcards</div>
+        <div class="sub">Quick recall practice</div>
+      </div>
+      <div class="quick-card" onclick="goTo('quiz')">
+        <div class="icon coral">◐</div>
+        <div class="title">Quiz Mode</div>
+        <div class="sub">Test what you remember</div>
+      </div>
+      <div class="quick-card" onclick="goTo('mindmap')">
+        <div class="icon sage">⊕</div>
+        <div class="title">Mind Map</div>
+        <div class="sub">See it all at once</div>
+      </div>
+      <div class="quick-card" onclick="goTo('comm')">
+        <div class="icon gold">♬</div>
+        <div class="title">Speaking Tips</div>
+        <div class="sub">Sound calm and clear</div>
+      </div>
+    </div>
+
+    <div class="note-card">
+      <div class="from">A note for you</div>
+      <div class="body">"You already do this work every day. The interview is just a place to talk about it. Be specific, breathe between sentences, and let your real experience speak."</div>
+    </div>
+
+    <div class="section-title" style="margin-top: 26px;">
+      <h2>Day of essentials</h2>
+    </div>
+    <div class="quick-grid">
+      <div class="quick-card" onclick="goTo('checklist')">
+        <div class="icon orange">✓</div>
+        <div class="title">Checklist</div>
+        <div class="sub">What to do, bring, prepare</div>
+      </div>
+      <div class="quick-card" onclick="goTo('overview')">
+        <div class="icon coral">◉</div>
+        <div class="title">Interview Map</div>
+        <div class="sub">What happens on each day</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ INTERVIEW OVERVIEW ============ -->
+  <div class="page" id="page-overview">
+    <div class="page-header">
+      <div class="page-eyebrow">Roadmap</div>
+      <h1 class="page-title">What to <span class="italic">expect</span></h1>
+      <p class="page-desc">Two rounds, different focus each. Here is the honest breakdown so nothing surprises you.</p>
+    </div>
+
+    <div class="info-card">
+      <h3>Round 1 · May 7 · Recruiter Screen</h3>
+      <p>This one is a conversation more than a test. The recruiter wants to confirm the basics and get a feel for whether you would actually thrive in this role.</p>
+      <div class="keyline"><div class="k">Length</div><div class="v">30 to 45 minutes, usually a phone or video call.</div></div>
+      <div class="keyline"><div class="k">Focus</div><div class="v">Your background, why Amazon, why this role, willingness to travel up to 90 percent, physical comfort with the work, salary expectations.</div></div>
+      <div class="keyline"><div class="k">Win it by</div><div class="v">Sounding genuine about why this role fits you. Show you have read the job description and you understand what 90 percent travel actually means in your life.</div></div>
+      <div class="keyline"><div class="k">Watch for</div><div class="v">Soft Leadership Principle questions tucked inside friendly chat. Even here, Amazon is listening.</div></div>
+    </div>
+
+    <div class="info-card">
+      <h3>Round 2 · May 12 · Loop Interview</h3>
+      <p>This is the deeper round. Expect a mix of behavioral questions tied to the Leadership Principles and technical questions about the actual work.</p>
+      <div class="keyline"><div class="k">Length</div><div class="v">Often 45 to 60 minutes per interviewer, sometimes back to back.</div></div>
+      <div class="keyline"><div class="k">Focus</div><div class="v">Behavioral questions in STAR format, hands on technical questions about cabling, fiber, copper, racks, safety, and troubleshooting.</div></div>
+      <div class="keyline"><div class="k">Win it by</div><div class="v">Having three to five strong stories prepared in STAR form. Each story should map to two or three Leadership Principles.</div></div>
+      <div class="keyline"><div class="k">Watch for</div><div class="v">Bar Raiser style follow ups. They will dig deeper after your answer with "why did you choose that approach", "what would you do differently", "what was the result in numbers".</div></div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-label">★ The Amazon truth</div>
+      <ul>
+        <li>Every Amazon interview is graded against the 16 Leadership Principles, even the technical ones.</li>
+        <li>Each interviewer is assigned 2 to 3 specific principles to evaluate. They submit independent feedback.</li>
+        <li>Use "I" not "we". They are hiring you, not your team.</li>
+        <li>Quantify your results. "I reduced rework by 30 percent" lands harder than "it went well".</li>
+        <li>Prepare for follow up questions. They will probe 3 to 4 layers deep.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ LP PAGE ============ -->
+  <div class="page" id="page-lp">
+    <div class="page-header">
+      <div class="page-eyebrow">The Foundation</div>
+      <h1 class="page-title">16 <span class="italic">Leadership Principles</span></h1>
+      <p class="page-desc">Amazon's interview rubric. Every behavioral question maps to one. Tap each card to expand it. Mark them as you study.</p>
+    </div>
+    <div class="lp-list" id="lpList"></div>
+  </div>
+
+  <!-- ============ STAR PAGE ============ -->
+  <div class="page" id="page-star">
+    <div class="page-header">
+      <div class="page-eyebrow">Answer Framework</div>
+      <h1 class="page-title">The <span class="italic">STAR</span> Method</h1>
+      <p class="page-desc">Every behavioral answer follows this structure. Memorize the four pieces and you will never get lost mid story.</p>
+    </div>
+
+    <div class="star-grid">
+      <div class="star-card" data-letter="S">
+        <div class="step">Step One</div>
+        <h3>Situation</h3>
+        <p>Set the scene in 2 to 3 sentences. Where were you, what was happening, why did it matter.</p>
+        <div class="star-example">"At my current role at AWS, our team was deploying a new switch rack on a tight deadline. The original cable plan had the wrong fiber type listed for two uplinks."</div>
+      </div>
+
+      <div class="star-card" data-letter="T">
+        <div class="step">Step Two</div>
+        <h3>Task</h3>
+        <p>Make the goal or your responsibility crystal clear in 1 to 2 sentences. What were you specifically supposed to do.</p>
+        <div class="star-example">"As the lead installer on shift, I had to fix the plan and complete the install before the customer cutover window closed in three hours."</div>
+      </div>
+
+      <div class="star-card" data-letter="A">
+        <div class="step">Step Three</div>
+        <h3>Action</h3>
+        <p>The longest part. Describe what YOU did, step by step. Use "I" not "we". Include 2 to 4 specific actions.</p>
+        <div class="star-example">"I checked the spec sheet on the SFP modules, confirmed they needed OS2 single mode, pulled the right cables from stock, re-labeled them, ran them through the cable management with proper bend radius, and tested each run with an optical power meter before patching."</div>
+      </div>
+
+      <div class="star-card" data-letter="R">
+        <div class="step">Step Four</div>
+        <h3>Result</h3>
+        <p>End with measurable impact. Numbers, time saved, problem prevented, customer outcome. This is what they remember.</p>
+        <div class="star-example">"We finished the install 25 minutes inside the window with zero failed test runs. The customer cutover went clean, and I added a fiber type checklist to our pre-install template so the same error would not happen again."</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-label">★ STAR mistakes to avoid</div>
+      <ul>
+        <li>Saying "we" instead of "I" in the action part. The interviewer is grading you, not the team.</li>
+        <li>Spending too long on the situation. Aim for 30 percent of your time on Action and Result.</li>
+        <li>Vague results like "it went well". Always have a number, a timeframe, or a specific outcome.</li>
+        <li>Not preparing follow ups. After your answer, they will ask "why that approach" or "what would you do differently".</li>
+        <li>Using a story that is older than 3 to 4 years if you have something more recent.</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h3>Build your story bank</h3>
+      <p>Pick 5 to 7 strong stories from your work life. Each story should be flexible enough to answer questions about 2 or 3 different Leadership Principles. That way you walk in with material you can adapt.</p>
+      <div class="pill-row">
+        <span class="data-pill">A time you solved a problem</span>
+        <span class="data-pill coral">A time you took ownership</span>
+        <span class="data-pill sage">A time you helped a teammate</span>
+        <span class="data-pill">A safety call you made</span>
+        <span class="data-pill coral">A mistake and recovery</span>
+        <span class="data-pill sage">A time you learned fast</span>
+        <span class="data-pill">A time you finished early</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ QUESTIONS PAGE ============ -->
+  <div class="page" id="page-questions">
+    <div class="page-header">
+      <div class="page-eyebrow">The Question Bank</div>
+      <h1 class="page-title">Real <span class="italic">questions</span>, real answers</h1>
+      <p class="page-desc">Tap a question to see a full STAR sample answer tailored to a STORM Installation Tech role. Adapt these to your own experience.</p>
+    </div>
+    <div class="filter-pills" id="qFilters"></div>
+    <div id="qList"></div>
+  </div>
+
+  <!-- ============ TECHNICAL PAGE ============ -->
+  <div class="page" id="page-tech">
+    <div class="page-header">
+      <div class="page-eyebrow">Hands On Knowledge</div>
+      <h1 class="page-title">Technical <span class="italic">cheat sheet</span></h1>
+      <p class="page-desc">Everything you might be asked about cabling, hardware, and safety. Speak naturally about these and you will sound like the pro you are.</p>
+    </div>
+
+    <div class="tech-tabs">
+      <button class="tech-tab active" data-tab="cable">Cabling</button>
+      <button class="tech-tab" data-tab="rack">Racks</button>
+      <button class="tech-tab" data-tab="tools">Tools</button>
+      <button class="tech-tab" data-tab="safety">Safety</button>
+    </div>
+
+    <div class="tech-content active" id="tech-cable">
+      <div class="info-card">
+        <h3>Fiber Optic Cables</h3>
+        <p>Two big families, picked based on distance and bandwidth needs.</p>
+        <div class="keyline"><div class="k">Single mode</div><div class="v">Small core (around 9 microns), used for long distance and high bandwidth. Color jacket is yellow. Standard is OS2.</div></div>
+        <div class="keyline"><div class="k">Multi mode</div><div class="v">Larger core (50 microns), used for short distances inside data centers. Common types are OM3 (aqua), OM4 (aqua or magenta), OM5 (lime green).</div></div>
+        <div class="keyline"><div class="k">Connectors</div><div class="v">LC is most common (small, push pull). MPO/MTP is used for high-density 40G/100G/400G. SC is older, larger.</div></div>
+      </div>
+
+      <div class="info-card">
+        <h3>Copper Cables</h3>
+        <p>Twisted pair Ethernet, the workhorse for shorter runs.</p>
+        <div class="keyline"><div class="k">Cat5e</div><div class="v">Up to 1 Gbps, 100 meters max. Older but still common.</div></div>
+        <div class="keyline"><div class="k">Cat6</div><div class="v">Up to 10 Gbps over 55 meters, 1 Gbps to 100 meters.</div></div>
+        <div class="keyline"><div class="k">Cat6a</div><div class="v">10 Gbps to full 100 meters. Standard for new data center deployments.</div></div>
+        <div class="keyline"><div class="k">Wiring standards</div><div class="v">T568A and T568B define the pin colors. Most data centers use T568B. Both ends must match for straight through.</div></div>
+      </div>
+
+      <div class="info-card">
+        <h3>Cable Management Best Practices</h3>
+        <div class="keyline"><div class="k">Bend radius</div><div class="v">Never bend fiber tighter than 10 times the cable diameter. Around 30mm minimum for most patch fiber.</div></div>
+        <div class="keyline"><div class="k">Velcro vs zip ties</div><div class="v">Use Velcro. Zip ties can crush cables and damage them when removed. Velcro is reusable and gentle.</div></div>
+        <div class="keyline"><div class="k">Labeling</div><div class="v">Label both ends with source, destination, and port. Update DCIM or your cable spreadsheet immediately.</div></div>
+        <div class="keyline"><div class="k">Slack</div><div class="v">Leave a service loop near each end so you can rework without tension on the connector.</div></div>
+      </div>
+    </div>
+
+    <div class="tech-content" id="tech-rack">
+      <div class="info-card">
+        <h3>Rack Basics</h3>
+        <div class="keyline"><div class="k">1U</div><div class="v">One rack unit equals 1.75 inches. Used to measure equipment height in a rack.</div></div>
+        <div class="keyline"><div class="k">Standard rack</div><div class="v">42U is the most common full size. Width is 19 inches.</div></div>
+        <div class="keyline"><div class="k">Rails</div><div class="v">Inner rails attach to the server, outer rails attach to the rack posts. Make sure they are level.</div></div>
+        <div class="keyline"><div class="k">Heavy gear</div><div class="v">Use a server lift or do a 2-person lift for anything over 40 pounds. Never wing it.</div></div>
+      </div>
+
+      <div class="info-card">
+        <h3>Power and PDUs</h3>
+        <div class="keyline"><div class="k">PDU</div><div class="v">Power Distribution Unit. Vertical strips on the side of the rack delivering power to gear.</div></div>
+        <div class="keyline"><div class="k">Redundancy</div><div class="v">Always plug the two power supplies of a server into separate PDUs. That is the whole point of dual PSU.</div></div>
+        <div class="keyline"><div class="k">A side and B side</div><div class="v">Two independent power paths. If one fails, the other carries the load.</div></div>
+      </div>
+
+      <div class="info-card">
+        <h3>Airflow and Cooling</h3>
+        <div class="keyline"><div class="k">Hot aisle / cold aisle</div><div class="v">Cold aisles in front (where servers pull air in), hot aisles behind (where they push exhaust out). Never mix them.</div></div>
+        <div class="keyline"><div class="k">Blanking panels</div><div class="v">Fill empty rack U slots with blanking panels so cold air does not bypass the gear.</div></div>
+        <div class="keyline"><div class="k">Cable obstruction</div><div class="v">Messy cables in the back can block exhaust airflow and cause overheating. Keep them tight.</div></div>
+      </div>
+    </div>
+
+    <div class="tech-content" id="tech-tools">
+      <div class="info-card">
+        <h3>Test Equipment</h3>
+        <div class="keyline"><div class="k">Cable tester</div><div class="v">Checks copper for continuity, shorts, miswires. Fluke is the industry name.</div></div>
+        <div class="keyline"><div class="k">Optical power meter</div><div class="v">Measures the light coming out of a fiber. You compare to expected dB to know if the run is healthy.</div></div>
+        <div class="keyline"><div class="k">Light source</div><div class="v">Pairs with the power meter. Sends a known signal so you can measure end-to-end loss.</div></div>
+        <div class="keyline"><div class="k">OTDR</div><div class="v">Optical Time Domain Reflectometer. Tells you exactly where in a fiber a break or bad splice is located.</div></div>
+        <div class="keyline"><div class="k">VFL</div><div class="v">Visual Fault Locator. Red laser that lights up the fiber so you can spot breaks visually.</div></div>
+      </div>
+
+      <div class="info-card">
+        <h3>Hand Tools</h3>
+        <div class="pill-row">
+          <span class="data-pill">Crimper</span>
+          <span class="data-pill">Punch down tool</span>
+          <span class="data-pill">Cable cutter</span>
+          <span class="data-pill">Stripper</span>
+          <span class="data-pill">Multi tool</span>
+          <span class="data-pill">Torque screwdriver</span>
+          <span class="data-pill">ESD strap</span>
+          <span class="data-pill">Headlamp</span>
+        </div>
+        <p style="margin-top: 8px;">A torque screwdriver matters because over-tightening rack screws can strip threads and crack equipment ears. Always set the right torque value.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Diagnosing a Bad Cable</h3>
+        <p>The order matters. Start cheap, work up to expensive.</p>
+        <div class="keyline"><div class="k">1. Visual</div><div class="v">Look at the connector for damage, dirt, or bent pins. Most fiber issues are dirty connectors.</div></div>
+        <div class="keyline"><div class="k">2. Re seat</div><div class="v">Unplug, inspect, plug back in. Many "cable issues" are loose connectors.</div></div>
+        <div class="keyline"><div class="k">3. Tester</div><div class="v">Run a continuity test for copper, or a power meter test for fiber.</div></div>
+        <div class="keyline"><div class="k">4. Swap</div><div class="v">Replace with a known good cable. If it works, you confirmed the cable was the issue.</div></div>
+        <div class="keyline"><div class="k">5. Replace and document</div><div class="v">Pull the bad cable, label it as failed, log it. Never leave failed cables in service.</div></div>
+      </div>
+    </div>
+
+    <div class="tech-content" id="tech-safety">
+      <div class="info-card">
+        <h3>Lifting Rules</h3>
+        <div class="keyline"><div class="k">Up to 40 lbs</div><div class="v">Solo lift is acceptable, but always with proper form: bend the knees, keep back straight, lift with legs.</div></div>
+        <div class="keyline"><div class="k">41 lbs and up</div><div class="v">Group lift only, or use a server lift. No exceptions. Most modern servers and switches need this.</div></div>
+        <div class="keyline"><div class="k">Pre lift check</div><div class="v">Clear path, stable footing, communicate with your partner before counting down.</div></div>
+      </div>
+
+      <div class="info-card">
+        <h3>Working at Height</h3>
+        <div class="keyline"><div class="k">Ladder safety</div><div class="v">Three points of contact at all times. Two hands and one foot, or two feet and one hand.</div></div>
+        <div class="keyline"><div class="k">Top of rack</div><div class="v">Use a stable platform ladder, not a chair, not a milk crate. Always face the ladder.</div></div>
+        <div class="keyline"><div class="k">Tool drop</div><div class="v">Tether tools or use a tool belt. A wrench dropped from rack-top is dangerous and damages gear below.</div></div>
+      </div>
+
+      <div class="info-card">
+        <h3>Electrical and ESD</h3>
+        <div class="keyline"><div class="k">Power off when possible</div><div class="v">Confirm with a meter, do not assume. Lockout tagout if working on circuits.</div></div>
+        <div class="keyline"><div class="k">ESD strap</div><div class="v">Wear it whenever handling exposed boards, RAM, GPUs. Static can kill silicon instantly.</div></div>
+        <div class="keyline"><div class="k">No metal jewelry</div><div class="v">Watches, rings, bracelets come off near live equipment. Conductors plus current equals injury.</div></div>
+      </div>
+
+      <div class="info-card">
+        <h3>If something goes wrong</h3>
+        <div class="keyline"><div class="k">Stop work</div><div class="v">If a situation feels unsafe, stop. Amazon culture explicitly supports calling a stop.</div></div>
+        <div class="keyline"><div class="k">Report fast</div><div class="v">Tell your lead and document immediately. Safety incidents that get reported quickly are easier to fix and less damaging to your record.</div></div>
+        <div class="keyline"><div class="k">Learn from it</div><div class="v">Amazon respects people who own mistakes and explain what they will change.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FLASHCARDS PAGE ============ -->
+  <div class="page" id="page-flash">
+    <div class="page-header">
+      <div class="page-eyebrow">Quick Recall</div>
+      <h1 class="page-title">Flash<span class="italic">cards</span></h1>
+      <p class="page-desc">Tap the card to flip. Use these for last minute review. Mix of behavioral and technical content.</p>
+    </div>
+
+    <div class="flashcard-stage">
+      <div class="flashcard" id="flashcard" onclick="flipFlash()">
+        <div class="flash-face flash-front">
+          <div>
+            <div class="flash-tag" id="flashTag">Loading</div>
+            <div class="flash-q" id="flashQ">Loading question...</div>
+          </div>
+          <div class="flash-tap">Tap to flip</div>
+        </div>
+        <div class="flash-face flash-back">
+          <div>
+            <div class="flash-tag">Answer</div>
+            <div class="flash-a" id="flashA">Loading answer...</div>
+          </div>
+          <div class="flash-tap">Tap to flip back</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flash-controls">
+      <button class="flash-btn" id="flashPrev" onclick="prevFlash()">← Prev</button>
+      <div class="flash-counter">
+        <span id="flashIdx">1</span><span class="total"> / <span id="flashTotal">1</span></span>
+      </div>
+      <button class="flash-btn primary" id="flashNext" onclick="nextFlash()">Next →</button>
+    </div>
+
+    <div class="tip-box" style="margin-top: 22px;">
+      <div class="tip-label">★ How to use these</div>
+      <ul>
+        <li>Read the question, say your answer out loud, then flip.</li>
+        <li>If you got it wrong, do not skip ahead. Sit with it for a second.</li>
+        <li>Review these the morning of each interview as a quick warm up.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ QUIZ PAGE ============ -->
+  <div class="page" id="page-quiz">
+    <div class="page-header">
+      <div class="page-eyebrow">Test Yourself</div>
+      <h1 class="page-title">Quiz <span class="italic">mode</span></h1>
+      <p class="page-desc">12 questions covering technical knowledge and Leadership Principles. No time pressure. Take it as many times as you want.</p>
+    </div>
+
+    <div class="quiz-progress-bar">
+      <div class="quiz-progress-fill" id="quizProgressFill" style="width: 0%"></div>
+    </div>
+
+    <div id="quizContent"></div>
+  </div>
+
+  <!-- ============ MIND MAP PAGE ============ -->
+  <div class="page" id="page-mindmap">
+    <div class="page-header">
+      <div class="page-eyebrow">Big Picture</div>
+      <h1 class="page-title">The whole <span class="italic">map</span></h1>
+      <p class="page-desc">How everything connects. Behavioral story bank in the center, branching out to the principles and technical topics. Scroll sideways if needed.</p>
+    </div>
+
+    <div class="mindmap-wrap">
+      <svg class="mindmap-svg" width="720" height="640" viewBox="0 0 720 640" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FF9F1C" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#FF9F1C" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="branchOrange" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF9F1C" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#FF9F1C" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="branchCoral" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#E8927C" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#E8927C" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="branchSage" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#84A98C" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#84A98C" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="branchGold" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#D4AF6F" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#D4AF6F" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Center glow -->
+        <circle cx="360" cy="320" r="180" fill="url(#centerGlow)" />
+
+        <!-- Center node -->
+        <circle cx="360" cy="320" r="58" fill="#1A2940" stroke="#FF9F1C" stroke-width="2"/>
+        <text x="360" y="312" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="14" font-weight="600">Your</text>
+        <text x="360" y="332" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="14" font-weight="600" font-style="italic">Stories</text>
+
+        <!-- BRANCH 1: Leadership Principles (top) -->
+        <path d="M 360 262 Q 360 200 200 130" stroke="url(#branchOrange)" stroke-width="2" fill="none"/>
+        <path d="M 360 262 Q 360 200 360 110" stroke="url(#branchOrange)" stroke-width="2" fill="none"/>
+        <path d="M 360 262 Q 360 200 520 130" stroke="url(#branchOrange)" stroke-width="2" fill="none"/>
+
+        <rect x="120" y="100" width="160" height="60" rx="14" fill="#1A2940" stroke="#FF9F1C" stroke-width="1"/>
+        <text x="200" y="125" text-anchor="middle" fill="#FF9F1C" font-family="Manrope" font-size="10" font-weight="700" letter-spacing="2">CORE LP</text>
+        <text x="200" y="145" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Customer Obsession</text>
+
+        <rect x="280" y="80" width="160" height="60" rx="14" fill="#1A2940" stroke="#FF9F1C" stroke-width="1"/>
+        <text x="360" y="105" text-anchor="middle" fill="#FF9F1C" font-family="Manrope" font-size="10" font-weight="700" letter-spacing="2">CORE LP</text>
+        <text x="360" y="125" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Ownership</text>
+
+        <rect x="440" y="100" width="160" height="60" rx="14" fill="#1A2940" stroke="#FF9F1C" stroke-width="1"/>
+        <text x="520" y="125" text-anchor="middle" fill="#FF9F1C" font-family="Manrope" font-size="10" font-weight="700" letter-spacing="2">CORE LP</text>
+        <text x="520" y="145" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Bias for Action</text>
+
+        <!-- BRANCH 2: STAR (right) -->
+        <path d="M 418 320 Q 480 320 580 270" stroke="url(#branchCoral)" stroke-width="2" fill="none"/>
+        <path d="M 418 320 Q 480 320 580 320" stroke="url(#branchCoral)" stroke-width="2" fill="none"/>
+        <path d="M 418 320 Q 480 320 580 370" stroke="url(#branchCoral)" stroke-width="2" fill="none"/>
+        <path d="M 418 320 Q 480 320 580 420" stroke="url(#branchCoral)" stroke-width="2" fill="none"/>
+
+        <rect x="580" y="240" width="120" height="50" rx="12" fill="#1A2940" stroke="#E8927C" stroke-width="1"/>
+        <text x="640" y="270" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Situation</text>
+
+        <rect x="580" y="295" width="120" height="50" rx="12" fill="#1A2940" stroke="#E8927C" stroke-width="1"/>
+        <text x="640" y="325" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Task</text>
+
+        <rect x="580" y="350" width="120" height="50" rx="12" fill="#1A2940" stroke="#E8927C" stroke-width="1"/>
+        <text x="640" y="380" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Action</text>
+
+        <rect x="580" y="405" width="120" height="50" rx="12" fill="#1A2940" stroke="#E8927C" stroke-width="1"/>
+        <text x="640" y="435" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Result</text>
+
+        <text x="640" y="220" text-anchor="middle" fill="#E8927C" font-family="Manrope" font-size="10" font-weight="700" letter-spacing="2">STAR METHOD</text>
+
+        <!-- BRANCH 3: Technical (bottom) -->
+        <path d="M 360 378 Q 360 440 200 510" stroke="url(#branchSage)" stroke-width="2" fill="none"/>
+        <path d="M 360 378 Q 360 440 360 530" stroke="url(#branchSage)" stroke-width="2" fill="none"/>
+        <path d="M 360 378 Q 360 440 520 510" stroke="url(#branchSage)" stroke-width="2" fill="none"/>
+
+        <rect x="120" y="490" width="160" height="60" rx="14" fill="#1A2940" stroke="#84A98C" stroke-width="1"/>
+        <text x="200" y="515" text-anchor="middle" fill="#84A98C" font-family="Manrope" font-size="10" font-weight="700" letter-spacing="2">TECHNICAL</text>
+        <text x="200" y="535" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Cabling</text>
+
+        <rect x="280" y="510" width="160" height="60" rx="14" fill="#1A2940" stroke="#84A98C" stroke-width="1"/>
+        <text x="360" y="535" text-anchor="middle" fill="#84A98C" font-family="Manrope" font-size="10" font-weight="700" letter-spacing="2">TECHNICAL</text>
+        <text x="360" y="555" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Racks &amp; Power</text>
+
+        <rect x="440" y="490" width="160" height="60" rx="14" fill="#1A2940" stroke="#84A98C" stroke-width="1"/>
+        <text x="520" y="515" text-anchor="middle" fill="#84A98C" font-family="Manrope" font-size="10" font-weight="700" letter-spacing="2">TECHNICAL</text>
+        <text x="520" y="535" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Tools &amp; Tests</text>
+
+        <!-- BRANCH 4: Soft skills (left) -->
+        <path d="M 302 320 Q 240 320 140 270" stroke="url(#branchGold)" stroke-width="2" fill="none"/>
+        <path d="M 302 320 Q 240 320 140 320" stroke="url(#branchGold)" stroke-width="2" fill="none"/>
+        <path d="M 302 320 Q 240 320 140 370" stroke="url(#branchGold)" stroke-width="2" fill="none"/>
+
+        <rect x="20" y="240" width="120" height="50" rx="12" fill="#1A2940" stroke="#D4AF6F" stroke-width="1"/>
+        <text x="80" y="270" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Travel ready</text>
+
+        <rect x="20" y="295" width="120" height="50" rx="12" fill="#1A2940" stroke="#D4AF6F" stroke-width="1"/>
+        <text x="80" y="325" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Safety first</text>
+
+        <rect x="20" y="350" width="120" height="50" rx="12" fill="#1A2940" stroke="#D4AF6F" stroke-width="1"/>
+        <text x="80" y="380" text-anchor="middle" fill="#F5E9D7" font-family="Fraunces, serif" font-size="13" font-weight="500">Adaptable</text>
+
+        <text x="80" y="220" text-anchor="middle" fill="#D4AF6F" font-family="Manrope" font-size="10" font-weight="700" letter-spacing="2">YOUR EDGE</text>
+      </svg>
+    </div>
+
+    <div class="mm-legend">
+      <div class="mm-legend-item"><span class="mm-legend-dot" style="background:#FF9F1C"></span>Leadership Principles</div>
+      <div class="mm-legend-item"><span class="mm-legend-dot" style="background:#E8927C"></span>Answer Framework</div>
+      <div class="mm-legend-item"><span class="mm-legend-dot" style="background:#84A98C"></span>Technical Skills</div>
+      <div class="mm-legend-item"><span class="mm-legend-dot" style="background:#D4AF6F"></span>Personal Edge</div>
+    </div>
+
+    <div class="info-card" style="margin-top: 22px;">
+      <h3>How to use this map</h3>
+      <p>Pick one of your real work stories. See how it could connect to multiple branches at once. A great Amazon answer pulls from the center (your story), structures itself around STAR (right), shows a Leadership Principle (top), uses technical detail (bottom), and reflects your personal edge (left). That is what a complete answer looks like.</p>
+    </div>
+  </div>
+
+  <!-- ============ COMM TIPS ============ -->
+  <div class="page" id="page-comm">
+    <div class="page-header">
+      <div class="page-eyebrow">Speaking with Confidence</div>
+      <h1 class="page-title">Sound <span class="italic">calm</span> and clear</h1>
+      <p class="page-desc">English does not have to be perfect. What matters is structure, pace, and being understood. These tips are practical and proven.</p>
+    </div>
+
+    <div class="comm-card">
+      <h3>The 3 second rule</h3>
+      <p>When asked a question, take a deliberate 3 second pause before answering. This is not awkward. It is professional. It tells the interviewer you are thinking, and it gives you time to choose the right opening sentence.</p>
+    </div>
+
+    <div class="comm-card">
+      <h3>Memorize 5 opening phrases</h3>
+      <p>If your first sentence is solid, the rest flows. Pick a few of these and rehearse until they feel natural.</p>
+      <ul class="phrase-list">
+        <li>"Let me give you a specific example from my time at..."</li>
+        <li>"Yes, I have actually run into something like this. Here is what happened..."</li>
+        <li>"Good question. The most relevant example I can share is..."</li>
+        <li>"At my current role, I dealt with this kind of situation when..."</li>
+        <li>"There was a time on the job when..."</li>
+      </ul>
+    </div>
+
+    <div class="comm-card">
+      <h3>Phrases for buying time</h3>
+      <p>If you need a moment to think mid answer, these are clean and professional ways to pause.</p>
+      <ul class="phrase-list">
+        <li>"That is a great question, let me think for a second."</li>
+        <li>"To make sure I answer that correctly, can you give me a moment?"</li>
+        <li>"Just to clarify, are you asking about X or Y?"</li>
+      </ul>
+    </div>
+
+    <div class="comm-card">
+      <h3>If you do not understand a question</h3>
+      <p>Ask. It is a hundred times better than guessing wrong.</p>
+      <ul class="phrase-list">
+        <li>"Could you rephrase that for me?"</li>
+        <li>"I want to make sure I understand. Are you asking about how I handled the conflict, or how the team responded?"</li>
+        <li>"Sorry, the connection cut for a moment. Can you repeat the question?"</li>
+      </ul>
+    </div>
+
+    <div class="comm-card">
+      <h3>Pace and breathing</h3>
+      <p>Speak slower than you think you need to. Most candidates rush when they get nervous, and rushing makes English harder to follow. Pause between sentences. A small breath between thoughts gives the interviewer time to absorb what you said.</p>
+    </div>
+
+    <div class="comm-card">
+      <h3>Practice out loud, every day</h3>
+      <p>Pick three of the questions from the Question Bank and answer them out loud, looking at yourself in a mirror or recording on your phone. This is the single most powerful prep technique. Reading silently is not the same.</p>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-label">★ Day of mindset</div>
+      <ul>
+        <li>You are not being judged on your accent. They listen for clarity and content.</li>
+        <li>Short complete sentences land better than long winding ones.</li>
+        <li>If you stumble on a word, do not panic. Smile, restart the sentence, keep going.</li>
+        <li>Your real experience is your best ally. Lean on stories you actually lived.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ CHECKLIST ============ -->
+  <div class="page" id="page-checklist">
+    <div class="page-header">
+      <div class="page-eyebrow">Day Of Game Plan</div>
+      <h1 class="page-title">The <span class="italic">checklist</span></h1>
+      <p class="page-desc">Tick these off as you go. The night before, the morning of, and during the call.</p>
+    </div>
+
+    <div class="check-section">
+      <h3>Night Before</h3>
+      <div id="checkNight"></div>
+    </div>
+
+    <div class="check-section">
+      <h3>Morning Of</h3>
+      <div id="checkMorning"></div>
+    </div>
+
+    <div class="check-section">
+      <h3>During the Interview</h3>
+      <div id="checkDuring"></div>
+    </div>
+
+    <div class="check-section">
+      <h3>After the Interview</h3>
+      <div id="checkAfter"></div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-label">★ One last thing</div>
+      <ul>
+        <li>Whatever happens, you tried. Tried is more than most people do.</li>
+        <li>If round 1 feels rough, round 2 is a fresh start. They evaluate independently.</li>
+        <li>Send a short thank you note within 24 hours. It matters more than people think.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-msg">"Walk in like you already work there. Because you almost do."</div>
+    <div class="footer-sig">All the best, Arooj <span class="heart">·</span> made for you by Seemab</div>
+  </div>
+
+</div>
+
+<!-- BOTTOM TAB BAR -->
+<nav class="tab-bar">
+  <button class="tab-btn active" data-page="home" onclick="goTo('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/></svg>
+    <span class="label">Home</span>
+  </button>
+  <button class="tab-btn" data-page="lp" onclick="goTo('lp')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>
+    <span class="label">LPs</span>
+  </button>
+  <button class="tab-btn" data-page="questions" onclick="goTo('questions')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span class="label">Q&amp;A</span>
+  </button>
+  <button class="tab-btn" data-page="flash" onclick="goTo('flash')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 21h10"/></svg>
+    <span class="label">Cards</span>
+  </button>
+  <button class="tab-btn" data-page="quiz" onclick="goTo('quiz')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span class="label">Quiz</span>
+  </button>
+</nav>
+
+<script>
+/* ============================================================
+   DATA
+   ============================================================ */
+
+const LEADERSHIP_PRINCIPLES = [
+  {
+    name: "Customer Obsession",
+    tagline: "Leaders start with the customer and work backwards. They obsess over customers, not competitors.",
+    means: "For your role, the customer is whoever depends on the data center being up. Internal teams, AWS customers, the next shift. Show that your decisions always trace back to keeping things running for them.",
+    sample: "Tell me about a time you went above what was required to help a customer or end user.",
+    arooj: "STORM Tech specific tip: When you fly in to a region last minute, the customer is the team relying on capacity coming online. Your urgency on a deployment is customer obsession in action."
+  },
+  {
+    name: "Ownership",
+    tagline: "Leaders are owners. They think long term and never say 'that is not my job'.",
+    means: "Show times you took on something messy that was not technically yours, because the right outcome mattered more than the lines on a job description.",
+    sample: "Tell me about a time you saw a problem that was not your responsibility. What did you do?",
+    arooj: "Easy story bank: a time you spotted a labeling error from a previous shift and fixed it before it caused issues, even though you did not create it."
+  },
+  {
+    name: "Invent and Simplify",
+    tagline: "Leaders find new ways to do things and simplify what is complicated.",
+    means: "Pick a moment where you improved a process, built a checklist, or removed a step that was wasting time. Even small wins count.",
+    sample: "Tell me about a time you simplified a complex process.",
+    arooj: "If you ever made a cleaner cable labeling system, a faster prep checklist for installs, or a smarter way to stage gear, that is your story."
+  },
+  {
+    name: "Are Right, A Lot",
+    tagline: "Leaders have strong judgment and good instincts, and seek diverse perspectives.",
+    means: "Show you make calls that turn out to be correct, not by luck, but by reasoning and asking smart questions before deciding.",
+    sample: "Tell me about a time your initial assessment of a problem turned out to be wrong. What did you do?",
+    arooj: "Honest stories work here. Talk about a time you almost made a wrong call but caught it through a second check or a teammate's input."
+  },
+  {
+    name: "Learn and Be Curious",
+    tagline: "Leaders are never done learning. They explore new ideas and possibilities.",
+    means: "Show you have picked up new skills voluntarily. New cable types, new tools, new certifications. They want hungry learners.",
+    sample: "Tell me about a time you learned something new on your own, outside of work requirements.",
+    arooj: "If you have studied for any cert (Network+, CCENT, CompTIA, FOA), used YouTube to learn a new tool, or read AWS docs in your own time, this is the story."
+  },
+  {
+    name: "Hire and Develop the Best",
+    tagline: "Leaders raise the performance bar with every hire and promotion. They mentor others.",
+    means: "Even as an individual contributor, you can show you have helped train new techs, written documentation, or made it easier for the next person to do the job.",
+    sample: "Tell me about a time you helped a teammate improve.",
+    arooj: "Did you ever onboard a new hire, walk someone through a tricky install, or write notes that helped the next shift? That is your example."
+  },
+  {
+    name: "Insist on the Highest Standards",
+    tagline: "Leaders have relentlessly high standards. They keep raising the bar.",
+    means: "Show you do not settle for 'good enough' on a cable run, a label, or a test. Quality matters even when no one is watching.",
+    sample: "Tell me about a time you refused to accept a 'good enough' solution.",
+    arooj: "A great story: a time you re-did a cable run because the bend radius was wrong, even though it would have probably worked. Or a time you re-tested a fiber when the first reading was borderline."
+  },
+  {
+    name: "Think Big",
+    tagline: "Leaders create and communicate a bold direction.",
+    means: "For a tech role, this is about thinking beyond the immediate ticket. How can the install pattern improve overall? What would scale better?",
+    sample: "Tell me about a time you proposed a bigger picture solution to a recurring problem.",
+    arooj: "If you have ever suggested an improvement that went beyond your shift, like a templating idea or a documentation change, this is the story."
+  },
+  {
+    name: "Bias for Action",
+    tagline: "Speed matters. Many decisions are reversible and do not need extensive study.",
+    means: "Show you act decisively when it makes sense, especially in time pressure situations like a deployment window or a fault.",
+    sample: "Tell me about a time you had to make a decision quickly without all the information.",
+    arooj: "Perfect for STORM Tech. The 90 percent travel role is built around quick action. A time you walked into a problem cold and started fixing it within minutes is gold."
+  },
+  {
+    name: "Frugality",
+    tagline: "Accomplish more with less. Constraints breed resourcefulness.",
+    means: "Show you found a way to do a job without wasting time, materials, or unnecessary escalation.",
+    sample: "Tell me about a time you got a great result with limited resources.",
+    arooj: "Finished a task using gear already on hand instead of waiting on shipping. Used a creative workaround when the right tool was not available."
+  },
+  {
+    name: "Earn Trust",
+    tagline: "Leaders listen attentively, speak candidly, and treat others respectfully.",
+    means: "Show you take feedback well, give honest updates, and admit mistakes early. Trust comes from being predictable and honest.",
+    sample: "Tell me about a time you had to give difficult feedback to someone.",
+    arooj: "Or flip it: a time you received tough feedback and how you used it to improve. Both work for this principle."
+  },
+  {
+    name: "Dive Deep",
+    tagline: "Leaders operate at all levels, stay connected to details, and audit frequently.",
+    means: "Show you do not skim the surface. When something is wrong, you go layer by layer until you find the actual root cause.",
+    sample: "Tell me about a time you investigated a problem deeply and found a non obvious root cause.",
+    arooj: "A great story is a time a 'cable issue' turned out to be something else entirely. A bad transceiver, a port misconfig, a software issue. Your detective work matters."
+  },
+  {
+    name: "Have Backbone; Disagree and Commit",
+    tagline: "Leaders respectfully challenge decisions when they disagree, then fully commit once a decision is made.",
+    means: "Show a time you pushed back on a plan with your reasoning, but then committed completely once the team made a call.",
+    sample: "Tell me about a time you disagreed with your manager. What happened?",
+    arooj: "Maybe you flagged a safety concern, or pushed back on a deployment timeline. The key is showing you spoke up AND then supported the final decision wholeheartedly."
+  },
+  {
+    name: "Deliver Results",
+    tagline: "Leaders focus on the key inputs and deliver them on time with the right quality.",
+    means: "Show measurable outcomes. Number of racks deployed, time saved, percent reduction in errors. Numbers stick.",
+    sample: "Tell me about a time you delivered a project under a tight deadline.",
+    arooj: "This is your strongest principle for a STORM role. Pick a deployment story with a tight timeline, list what you did, and end with a clear measurable result."
+  },
+  {
+    name: "Strive to be Earth's Best Employer",
+    tagline: "Leaders work to make work better for everyone, including the people on their team.",
+    means: "Show you helped make your workplace safer, more inclusive, or more positive. Small gestures count.",
+    sample: "Tell me about a time you made the work experience better for a teammate.",
+    arooj: "A time you took the harder shift so a teammate could attend something important. A time you spoke up about a safety condition. A time you trained someone with patience."
+  },
+  {
+    name: "Success and Scale Bring Broad Responsibility",
+    tagline: "Leaders take responsibility for the long term impact of their actions on customers, partners, employees, and the planet.",
+    means: "Show awareness of bigger picture impact. Sustainability, ethics, second-order effects of decisions.",
+    sample: "Tell me about a time you considered the longer term impact of a short term decision.",
+    arooj: "If you have ever recycled fiber spools, refused a shortcut that would create future debt, or thought about how a quick fix would affect the next shift, that is the story."
+  }
+];
+
+const QUESTIONS = [
+  {
+    cat: "Intro",
+    lp: "Multiple",
+    q: "Tell me about yourself.",
+    s: "I currently work at AWS as an Infrastructure Delivery Install Tech, where I focus on hardware installs and cabling for data center sites.",
+    t: "My day to day involves landing gear in racks, running fiber and copper, testing each cable, and making sure capacity is delivered safely and on time.",
+    a: "I came into this work because I like that it combines physical hands on problem solving with technical precision. I handle a fast moving environment well, I am very comfortable with tight deadlines, and I take safety extremely seriously. I have also been building my technical knowledge in fiber optics and structured cabling on my own time.",
+    r: "I am applying for the STORM role because the travel side of it really fits me, and because I want to keep growing in a role where the work directly impacts AWS capacity for customers.",
+    note: "Keep this answer 60 to 90 seconds. Practice it until it feels natural, not memorized."
+  },
+  {
+    cat: "Motivation",
+    lp: "Customer Obsession",
+    q: "Why do you want this STORM role specifically?",
+    s: "I have been doing infrastructure install work and the part of the job I enjoy most is the high pressure deployment days, when capacity has to come online for customers.",
+    t: "I want a role where that pace is the standard, not the exception.",
+    a: "STORM is exactly that. Flying in to support cluster capacity, dropping into a region cold, executing fast, then moving to the next site. It builds on the technical work I already do, it adds variety through travel, and it keeps me close to the part of AWS that has the most direct impact on customers waiting for capacity.",
+    r: "I am also at a stage where I can fully commit to that travel pattern, which I know is not a fit for everyone.",
+    note: "Tying your motivation to customer impact is a Customer Obsession win."
+  },
+  {
+    cat: "Behavioral",
+    lp: "Ownership",
+    q: "Tell me about a time you took ownership of a problem that was not yours.",
+    s: "On a deployment last month, I was finishing my own rack work when I noticed cables in the rack next to mine were labeled inconsistently. They were not my installs.",
+    t: "Technically my work was done, but I knew if those labels stayed wrong, the next team troubleshooting them would lose hours.",
+    a: "I checked the cable plan against the labels, identified four cables that had source and destination flipped, re-labeled them properly, updated the cable spreadsheet, and left a short note for the team lead so they would know what was changed and why.",
+    r: "It took me an extra 30 minutes that day. Two weeks later, the team lead told me a remote troubleshooting call went smoothly because the labels matched the documentation, which would not have been the case before.",
+    note: "Notice the answer uses 'I' throughout. Quantify with specific numbers (4 cables, 30 minutes, 2 weeks)."
+  },
+  {
+    cat: "Behavioral",
+    lp: "Bias for Action",
+    q: "Tell me about a time you had to make a quick decision without complete information.",
+    s: "During a switch install, we had a fiber run that failed its initial light test. The cutover window was closing in 90 minutes and the lead network engineer was on another call.",
+    t: "I had to decide whether to wait for guidance, escalate, or troubleshoot myself.",
+    a: "I checked the connector ends with a fiber scope, found the receive side was contaminated, cleaned it with a dry cloth and an inspection cleaner, re-tested, and the loss was back inside spec. I documented the issue in the install notes and texted the engineer a one line update so he was not surprised when he saw the log.",
+    r: "We hit the cutover with 20 minutes to spare. A dirty connector is the most common cause of fiber failure, and catching it fast saved an escalation.",
+    note: "Bias for Action does not mean reckless. It means decisive within your scope."
+  },
+  {
+    cat: "Behavioral",
+    lp: "Insist on the Highest Standards",
+    q: "Tell me about a time you refused to accept a 'good enough' result.",
+    s: "I had finished running 12 fiber patches into a new rack. Eleven came back inside spec on the power meter. One was on the edge, technically passing but with very little margin.",
+    t: "It would have worked. But I was not comfortable leaving a patch with that little headroom in production.",
+    a: "I pulled the cable, cleaned both connectors, re-seated them, and re-tested. The reading came back well inside spec. I logged the original reading and the corrected reading so there was a paper trail.",
+    r: "Six months later that link is still healthy. A marginal connector at install time often fails under temperature swings later. Re-doing it cost me 8 minutes and probably prevented a future escalation.",
+    note: "Quality stories often beat heroic stories. They show steady judgment."
+  },
+  {
+    cat: "Behavioral",
+    lp: "Dive Deep",
+    q: "Tell me about a time you investigated a problem deeply and found a root cause that surprised you.",
+    s: "We had a switch port that kept showing intermittent link flaps after a deployment. The first response was to assume bad fiber.",
+    t: "My job was to identify the actual cause before we replaced more parts.",
+    a: "I tested the fiber with an OTDR and it was clean. I swapped the SFP transceiver, no change. I checked the patch panel insertion, fine. Finally I traced the cable run physically and found it had been pulled too tightly around a corner during the original install. The bend radius was below spec, which was creating intermittent loss under thermal expansion.",
+    r: "I re-routed the cable through the proper management path with the correct bend radius. The flaps stopped. I documented the cause and added 'verify bend radius on every run' to our post install checklist.",
+    note: "The 'unexpected root cause' angle is exactly what Dive Deep is testing."
+  },
+  {
+    cat: "Behavioral",
+    lp: "Earn Trust",
+    q: "Tell me about a time you made a mistake. How did you handle it?",
+    s: "Early in my time on this role, I racked a 1U switch but did not tighten one set of cage nuts properly because I was rushing to finish before end of shift.",
+    t: "I owed it to my team to catch this and fix it.",
+    a: "Before leaving, I did my final walkthrough, noticed the switch was sitting slightly uneven, and immediately stopped to re-do it. I told my lead what had happened, fixed the install properly, and stayed an extra 15 minutes to make sure my whole rack was right. I also added a 'final torque check' as the last step of my personal install routine going forward.",
+    r: "The switch is still in service with no issue. More importantly, my lead later told me he trusted me more for owning it on my own rather than hoping no one noticed.",
+    note: "Self-aware mistake stories build trust faster than perfect record stories."
+  },
+  {
+    cat: "Behavioral",
+    lp: "Deliver Results",
+    q: "Tell me about a time you delivered a project under a tight deadline.",
+    s: "We had a rack delivery scheduled for a Friday cutover. On Wednesday the cable plan was updated, which meant 30 percent of the pre-staged cables were now wrong type or length.",
+    t: "I had two days to re-stage cables, verify the new plan, and stay on schedule for Friday.",
+    a: "I built a quick comparison spreadsheet between the old plan and the new plan to identify exactly which cables needed to be replaced. I pulled the right cables from stock, pre-labeled them at the bench, and ran the install in the order the network team needed for testing. I worked an extended Thursday so Friday could stay clean.",
+    r: "We hit the cutover window on Friday with no slip and zero failed light tests. The team lead used the comparison spreadsheet I built as a template for two later projects.",
+    note: "End every Deliver Results answer with concrete numbers and a tangible artifact if possible."
+  },
+  {
+    cat: "Travel",
+    lp: "Customer Obsession",
+    q: "How do you feel about traveling up to 90 percent of your time across AMER?",
+    s: "I want to be honest about this because I know it is the hardest part of the role for many people.",
+    t: "I have thought about it carefully and it works for my life right now.",
+    a: "I am at a point where I can be flexible on location, my home setup supports it, and I actually enjoy seeing different sites and meeting different teams. I keep my go bag packed. I have a system for short notice flights, and I know how to settle into a new region quickly without it affecting my work quality.",
+    r: "I see the travel as the upside of the role, not the downside. The customers waiting on capacity in those regions are why this role exists.",
+    note: "Be genuine. If you have any travel anxiety, address it honestly and explain how you manage it."
+  },
+  {
+    cat: "Physical",
+    lp: "Ownership",
+    q: "Are you comfortable with the physical demands of this role? Lifting up to 40 pounds, working at heights, long shifts on your feet?",
+    s: "Yes, this is the day to day reality of my current role.",
+    t: "I take physical safety as seriously as electrical or data safety.",
+    a: "I follow proper lift technique on anything up to 40 pounds, I always do group lifts on anything above. I am comfortable on platform ladders with three points of contact at all times. I work full shifts on my feet, I stay hydrated, I take micro breaks between heavy tasks, and I never push past a safety limit just to finish faster.",
+    r: "I have never had a reportable injury in this role. That is not luck, that is the result of treating each lift, each ladder climb, and each long shift as something to plan for, not improvise through.",
+    note: "Tie physical ability to safety culture. That is what they are really listening for."
+  },
+  {
+    cat: "Conflict",
+    lp: "Have Backbone",
+    q: "Tell me about a time you disagreed with your manager or team lead.",
+    s: "On one job, my lead wanted to skip the optical power meter test on a series of patch fibers because they were short jumpers and he believed visual inspection was enough.",
+    t: "I felt we should not skip the test, but he was the lead and the time pressure was real.",
+    a: "I respectfully said something like 'I understand the time issue, but I would feel a lot better if we tested even just a sample. If they all pass we can move on faster, and if one fails we know now instead of in production.' He thought about it for a moment and agreed to test 4 of the 12. One of those 4 came back with a failing reading.",
+    r: "We tested the rest, found one more bad jumper, replaced both. The lead later thanked me for pushing on it. I learned that having a calm, specific reason for pushing back makes the disagreement easier to resolve.",
+    note: "Have Backbone is not about being argumentative. It is about being honest and constructive."
+  },
+  {
+    cat: "Learning",
+    lp: "Learn and Be Curious",
+    q: "Tell me about a time you learned a new technical skill on your own.",
+    s: "When I started getting more fiber heavy installs, I realized my optical fundamentals were weaker than my copper fundamentals.",
+    t: "I wanted to fix that gap before it caused a mistake on the job.",
+    a: "I studied the FOA Certified Fiber Optic Technician material in the evenings over about three weeks. I watched OTDR walkthrough videos, I practiced cleaning and inspecting connectors at home with practice cables, and I asked one of the senior techs at work to show me how to read OTDR traces during downtime.",
+    r: "Within a month I was confident running fiber light tests independently and reading OTDR traces. The next deployment I led had zero re-work on fiber, where my prior projects sometimes had one or two cables to re-do.",
+    note: "Self directed learning is one of the most underrated principles for a tech role. Show you do it."
+  }
+];
+
+const FLASHCARDS = [
+  { tag: "Cabling", q: "What is the difference between single mode and multi mode fiber?", a: "Single mode (OS2) has a small 9 micron core, used for long distance and high bandwidth. Multi mode (OM3, OM4, OM5) has a larger 50 micron core, used for short distances inside data centers. Single mode is yellow jacket, multi mode is aqua or magenta or lime green." },
+  { tag: "Cabling", q: "What is the recommended bend radius for patch fiber?", a: "Around 30mm minimum, or about 10 times the cable diameter. Bending tighter than this causes signal loss and can permanently damage the fiber." },
+  { tag: "Cabling", q: "Why use Velcro instead of zip ties for cable management?", a: "Velcro is reusable and gentle on cable jackets. Zip ties can over tighten and crush cables, especially fiber, and they damage cables when removed. Always use Velcro in data centers." },
+  { tag: "Cabling", q: "What is the difference between Cat6 and Cat6a copper cable?", a: "Cat6 supports 10 Gbps up to 55 meters and 1 Gbps up to 100 meters. Cat6a supports 10 Gbps over the full 100 meters. Cat6a is the standard for new data center deployments." },
+  { tag: "Cabling", q: "What are LC and MPO connectors used for?", a: "LC is a small push-pull fiber connector, the most common in data centers for individual links. MPO/MTP is a multi fiber connector used for high density 40G, 100G, and 400G applications." },
+  { tag: "Cabling", q: "What is the wiring standard for copper Ethernet patch cables?", a: "T568A and T568B define the pin colors. Most data centers use T568B. Both ends of a straight through cable must use the same standard." },
+  { tag: "Tools", q: "What does an optical power meter measure?", a: "The amount of light coming out of a fiber, measured in dB. You compare the reading to the expected loss budget for that link to know if the cable run is healthy." },
+  { tag: "Tools", q: "What does an OTDR do?", a: "Optical Time Domain Reflectometer. It pulses light into a fiber and measures reflections to tell you exactly where in the cable a break, kink, or bad splice is located." },
+  { tag: "Tools", q: "What is the right order for diagnosing a bad cable?", a: "Visual inspection first, then re seat the connector, then test with a meter or tester, then swap with a known good cable, then replace and document the failure." },
+  { tag: "Racks", q: "How is rack equipment height measured?", a: "In rack units, where 1U equals 1.75 inches of vertical space. A standard rack is 42U tall and 19 inches wide." },
+  { tag: "Racks", q: "Why are blanking panels important in racks?", a: "They fill empty rack U spaces so cold air does not bypass the gear and short circuit back to the hot aisle. Without them, cooling efficiency drops and gear runs hotter." },
+  { tag: "Safety", q: "What is the rule for lifting heavier equipment in a data center?", a: "Solo lift up to 40 pounds with proper form. 41 pounds and up requires a group lift or a server lift. No exceptions, even when it is faster to do alone." },
+  { tag: "Safety", q: "What does ESD strap do, and when should you wear one?", a: "It safely discharges static electricity from your body to ground. Wear it whenever handling exposed circuit boards, RAM, GPUs, or any sensitive component. Static can kill silicon instantly." },
+  { tag: "Safety", q: "What does 'three points of contact' mean on a ladder?", a: "Two hands and one foot, or two feet and one hand, must always be touching the ladder. This is the rule for working safely at any height." },
+  { tag: "LP", q: "What does Customer Obsession mean for a STORM Tech?", a: "Every install you do exists because a customer is waiting on capacity. Speed and quality of your work directly translates to customer experience. The customer is the team relying on the cluster going live." },
+  { tag: "LP", q: "What does Bias for Action mean in practice?", a: "Speed matters. Most decisions are reversible. When you have enough information to act, do not wait for perfect information. Decisive action within your scope is valued." },
+  { tag: "LP", q: "What does Dive Deep mean?", a: "Do not skim the surface. When something is wrong, go layer by layer until you find the actual root cause. Stay connected to details, audit frequently, and resist the urge to assume." },
+  { tag: "LP", q: "What does Earn Trust mean?", a: "Listen attentively, speak candidly, treat others respectfully. Admit mistakes early, give honest updates, take feedback well. Trust comes from being predictable and honest over time." },
+  { tag: "STAR", q: "What are the four parts of the STAR method?", a: "Situation (set the scene), Task (your specific responsibility), Action (what YOU did, step by step, using 'I'), Result (measurable outcome with numbers if possible)." },
+  { tag: "STAR", q: "What is the most common STAR mistake?", a: "Using 'we' instead of 'I' in the Action part. The interviewer is grading you, not the team. Always describe your specific actions in the first person." },
+  { tag: "STAR", q: "How long should a STAR answer be?", a: "60 to 90 seconds for the main answer. About 20 percent on Situation, 10 percent on Task, 50 percent on Action, 20 percent on Result. Be ready for follow up probes after." }
+];
+
+const QUIZ = [
+  {
+    q: "What is the bend radius rule for patch fiber?",
+    options: ["Bend it however you need to fit the path", "Minimum 30mm, or 10 times the cable diameter", "5mm minimum is fine", "Only matters for single mode fiber"],
+    correct: 1,
+    explain: "Patch fiber needs at least 30mm bend radius, or roughly 10 times the cable diameter. Tighter bends cause signal loss and can permanently damage the fiber strand."
+  },
+  {
+    q: "Which Leadership Principle is most about owning a problem even when it is not technically yours?",
+    options: ["Customer Obsession", "Ownership", "Frugality", "Think Big"],
+    correct: 1,
+    explain: "Ownership is exactly that. Leaders never say 'that is not my job' and act on behalf of the entire company."
+  },
+  {
+    q: "What does 1U mean in a rack?",
+    options: ["1 unit of power", "1.75 inches of vertical space", "1 cable bundle", "1 server slot"],
+    correct: 1,
+    explain: "1U equals 1.75 inches of vertical rack space. Standard racks are 42U tall."
+  },
+  {
+    q: "In the STAR method, what should you focus on most in your answer?",
+    options: ["Situation, since context matters", "Task, to show your responsibility", "Action, what YOU specifically did", "Result, the outcome"],
+    correct: 2,
+    explain: "About 50 percent of your answer should be Action. That is where the interviewer learns what you actually do, in your own first person words."
+  },
+  {
+    q: "What is the most common cause of fiber link failure at install time?",
+    options: ["Bad transceiver", "Wrong cable type", "Dirty or damaged connectors", "Software config"],
+    correct: 2,
+    explain: "Dirty or damaged connectors are by far the most common cause. Always inspect and clean before testing or escalating."
+  },
+  {
+    q: "How heavy can you lift solo in a data center per safety guidelines?",
+    options: ["Up to 25 pounds", "Up to 40 pounds", "Up to 50 pounds", "No solo lifting allowed"],
+    correct: 1,
+    explain: "Up to 40 pounds with proper lifting technique. Anything 41 pounds and above requires a group lift or a server lift."
+  },
+  {
+    q: "What does T568B refer to?",
+    options: ["A fiber connector type", "An Ethernet wiring color standard", "A rack unit measurement", "A switch model"],
+    correct: 1,
+    explain: "T568B is one of two standards (alongside T568A) defining the pin to color mapping for copper Ethernet cables. Most data centers use T568B."
+  },
+  {
+    q: "Which Leadership Principle is best demonstrated by re testing a marginal cable instead of accepting the first borderline reading?",
+    options: ["Frugality", "Insist on the Highest Standards", "Bias for Action", "Earn Trust"],
+    correct: 1,
+    explain: "Insist on the Highest Standards. Refusing 'good enough' on quality is exactly what this principle is testing."
+  },
+  {
+    q: "What does an OTDR do?",
+    options: ["Tests copper continuity", "Cleans fiber connectors", "Locates faults in a fiber by reflection", "Crimps RJ45 ends"],
+    correct: 2,
+    explain: "Optical Time Domain Reflectometer. It pulses light into a fiber and measures reflections to find break locations, kinks, or bad splices."
+  },
+  {
+    q: "Why are blanking panels installed in empty rack U slots?",
+    options: ["For looks", "To stop cold air from bypassing the gear", "To hold up cables", "To label the rack"],
+    correct: 1,
+    explain: "Without blanking panels, cold supply air recirculates through empty slots back into the hot aisle, killing cooling efficiency and overheating gear."
+  },
+  {
+    q: "How many points of contact must you maintain on a ladder?",
+    options: ["One", "Two", "Three", "Four"],
+    correct: 2,
+    explain: "Three points of contact at all times. Two hands and one foot, or two feet and one hand."
+  },
+  {
+    q: "Which is true about using 'we' in interview answers?",
+    options: ["Always use 'we' to show team mindset", "Use 'we' equally with 'I'", "Use 'I' for actions, since they are evaluating you", "It does not matter which one you use"],
+    correct: 2,
+    explain: "Amazon interviewers are trained to listen for first person language in the Action portion. Use 'I' to make your specific contribution unmistakable. 'We' is fine in Situation when describing the team context."
+  }
+];
+
+const CHECKLIST = {
+  night: [
+    "Re read your top 5 STAR stories out loud once",
+    "Pick the outfit you will wear, lay it out",
+    "Charge your phone and laptop fully",
+    "Test the video link or platform if known",
+    "Check your internet connection speed",
+    "Set 2 alarms, on different devices",
+    "Print or have your resume ready to reference",
+    "Drink water, sleep early, no heavy late food"
+  ],
+  morning: [
+    "Light breakfast, you do not want a heavy stomach",
+    "Review the Leadership Principles flashcards once",
+    "Read your top 3 stories out loud",
+    "Test your camera, mic, and headphones",
+    "Sit in a quiet, well lit space, neutral background",
+    "Have water nearby (no coffee right before, it shakes the voice)",
+    "Take 5 deep breaths in the 10 minutes before",
+    "Smile before joining the call. Tone carries."
+  ],
+  during: [
+    "Pause 3 seconds before answering each question",
+    "Use STAR structure, especially the Action and Result parts",
+    "Use 'I' not 'we' for your actions",
+    "Quantify results whenever possible (numbers, time, percentages)",
+    "Ask clarifying questions if something is unclear",
+    "Take notes on questions, you may want to reference them later",
+    "If you stumble, smile, restart the sentence calmly",
+    "Have 2 thoughtful questions ready for the end"
+  ],
+  after: [
+    "Send a thank you email within 24 hours",
+    "Note down what questions were asked while fresh",
+    "Note down what felt strong and what felt shaky",
+    "Update your stories based on what came up",
+    "Rest, you earned it",
+    "If round 1, prep specifically for the round 2 gaps you identified",
+    "Stay positive about the outcome either way"
+  ]
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+
+const STORAGE_KEY = 'arooj_aws_prep_v1';
+let state = {
+  currentPage: 'home',
+  flashIdx: 0,
+  flashFlipped: false,
+  quizIdx: 0,
+  quizAnswered: false,
+  quizSelected: null,
+  quizScore: 0,
+  quizDone: false,
+  qFilter: 'All',
+  techTab: 'cable',
+  lpDone: {},
+  checkDone: {},
+  qExpanded: {},
+  lpExpanded: {}
+};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  try {
+    const toSave = {
+      lpDone: state.lpDone,
+      checkDone: state.checkDone
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+  } catch(e) {}
+}
+
+/* ============================================================
+   COUNTDOWN
+   ============================================================ */
+
+function updateCountdown() {
+  const now = new Date('2026-05-04T12:00:00');
+  const i1 = new Date('2026-05-07T09:00:00');
+  const i2 = new Date('2026-05-12T09:00:00');
+
+  const dayMs = 1000 * 60 * 60 * 24;
+  const d1 = Math.max(0, Math.ceil((i1 - now) / dayMs));
+  const d2 = Math.max(0, Math.ceil((i2 - now) / dayMs));
+
+  const d1NumEl = document.getElementById('d1Num');
+  const d1UnitEl = document.getElementById('d1Unit');
+  const d1MiniEl = document.getElementById('d1Mini');
+  const d2MiniEl = document.getElementById('d2Mini');
+
+  if (d1NumEl) d1NumEl.textContent = d1;
+  if (d1UnitEl) d1UnitEl.textContent = d1 === 1 ? 'day to go' : 'days to go';
+  if (d1MiniEl) d1MiniEl.textContent = d1 + 'd';
+  if (d2MiniEl) d2MiniEl.textContent = d2 + 'd';
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+function goTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const tab = document.querySelector(`.tab-btn[data-page="${page}"]`);
+  if (tab) tab.classList.add('active');
+
+  state.currentPage = page;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================================================
+   LP RENDERING
+   ============================================================ */
+
+function renderLPs() {
+  const list = document.getElementById('lpList');
+  if (!list) return;
+  list.innerHTML = LEADERSHIP_PRINCIPLES.map((lp, i) => `
+    <div class="lp-card ${state.lpDone[i] ? 'done' : ''}" data-idx="${i}">
+      <div class="lp-card-header" onclick="toggleLP(${i})">
+        <div class="lp-num">${i+1}</div>
+        <div class="lp-name">${lp.name}</div>
+        <div class="lp-toggle">⌃</div>
+      </div>
+      <div class="lp-body">
+        <div class="lp-tagline">${lp.tagline}</div>
+        <div class="lp-section">
+          <div class="lp-section-label">What it means for you</div>
+          <p>${lp.means}</p>
+        </div>
+        <div class="lp-section">
+          <div class="lp-section-label">Sample question</div>
+          <div class="lp-question">${lp.sample}</div>
+        </div>
+        <div class="lp-section">
+          <div class="lp-section-label">Story idea</div>
+          <p>${lp.arooj}</p>
+        </div>
+        <button class="mark-done-btn ${state.lpDone[i] ? 'done' : ''}" onclick="event.stopPropagation(); toggleLPDone(${i})">
+          ${state.lpDone[i] ? '✓ Reviewed' : 'Mark as reviewed'}
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  // Restore expanded state
+  Object.keys(state.lpExpanded).forEach(idx => {
+    if (state.lpExpanded[idx]) {
+      const card = list.querySelector(`.lp-card[data-idx="${idx}"]`);
+      if (card) card.classList.add('expanded');
+    }
+  });
+}
+
+function toggleLP(i) {
+  const card = document.querySelector(`.lp-card[data-idx="${i}"]`);
+  if (!card) return;
+  card.classList.toggle('expanded');
+  state.lpExpanded[i] = card.classList.contains('expanded');
+}
+
+function toggleLPDone(i) {
+  state.lpDone[i] = !state.lpDone[i];
+  saveState();
+  updateProgress();
+  renderLPs();
+  // Re-expand the card we were just on
+  const card = document.querySelector(`.lp-card[data-idx="${i}"]`);
+  if (card) card.classList.add('expanded');
+}
+
+/* ============================================================
+   QUESTIONS RENDERING
+   ============================================================ */
+
+function renderQuestionFilters() {
+  const cats = ['All', ...new Set(QUESTIONS.map(q => q.cat))];
+  const wrap = document.getElementById('qFilters');
+  if (!wrap) return;
+  wrap.innerHTML = cats.map(c => `
+    <button class="pill ${state.qFilter === c ? 'active' : ''}" onclick="filterQ('${c}')">${c}</button>
+  `).join('');
+}
+
+function filterQ(cat) {
+  state.qFilter = cat;
+  renderQuestionFilters();
+  renderQuestions();
+}
+
+function renderQuestions() {
+  const wrap = document.getElementById('qList');
+  if (!wrap) return;
+  const filtered = state.qFilter === 'All' ? QUESTIONS : QUESTIONS.filter(q => q.cat === state.qFilter);
+  wrap.innerHTML = filtered.map((q, i) => {
+    const idx = QUESTIONS.indexOf(q);
+    const expanded = state.qExpanded[idx] ? 'expanded' : '';
+    return `
+      <div class="q-card ${expanded}" data-idx="${idx}" onclick="toggleQ(${idx})">
+        <div class="q-card-header">
+          <div class="q-tag">${q.lp}</div>
+          <div class="q-text">${q.q}</div>
+        </div>
+        <div class="q-body">
+          <div class="q-section s">
+            <div class="q-section-label">Situation</div>
+            <p>${q.s}</p>
+          </div>
+          <div class="q-section t">
+            <div class="q-section-label">Task</div>
+            <p>${q.t}</p>
+          </div>
+          <div class="q-section a">
+            <div class="q-section-label">Action</div>
+            <p>${q.a}</p>
+          </div>
+          <div class="q-section r">
+            <div class="q-section-label">Result</div>
+            <p>${q.r}</p>
+          </div>
+          <div class="q-which-lp">${q.note}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleQ(idx) {
+  state.qExpanded[idx] = !state.qExpanded[idx];
+  renderQuestions();
+}
+
+/* ============================================================
+   TECH TABS
+   ============================================================ */
+
+function setupTechTabs() {
+  document.querySelectorAll('.tech-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.tech-tab').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('.tech-content').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const targetId = 'tech-' + t.dataset.tab;
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) targetEl.classList.add('active');
+    });
+  });
+}
+
+/* ============================================================
+   FLASHCARDS
+   ============================================================ */
+
+function renderFlash() {
+  const total = FLASHCARDS.length;
+  const card = FLASHCARDS[state.flashIdx];
+  const tagEl = document.getElementById('flashTag');
+  const qEl = document.getElementById('flashQ');
+  const aEl = document.getElementById('flashA');
+  const idxEl = document.getElementById('flashIdx');
+  const totalEl = document.getElementById('flashTotal');
+  const flashEl = document.getElementById('flashcard');
+  const prevBtn = document.getElementById('flashPrev');
+  const nextBtn = document.getElementById('flashNext');
+
+  if (!tagEl) return;
+
+  tagEl.textContent = card.tag;
+  qEl.textContent = card.q;
+  aEl.textContent = card.a;
+  idxEl.textContent = state.flashIdx + 1;
+  totalEl.textContent = total;
+  flashEl.classList.toggle('flipped', state.flashFlipped);
+  prevBtn.disabled = state.flashIdx === 0;
+  nextBtn.disabled = state.flashIdx === total - 1;
+}
+
+function flipFlash() {
+  state.flashFlipped = !state.flashFlipped;
+  renderFlash();
+}
+function nextFlash() {
+  if (state.flashIdx < FLASHCARDS.length - 1) {
+    state.flashIdx++;
+    state.flashFlipped = false;
+    renderFlash();
+  }
+}
+function prevFlash() {
+  if (state.flashIdx > 0) {
+    state.flashIdx--;
+    state.flashFlipped = false;
+    renderFlash();
+  }
+}
+
+/* ============================================================
+   QUIZ
+   ============================================================ */
+
+function renderQuiz() {
+  const wrap = document.getElementById('quizContent');
+  const fill = document.getElementById('quizProgressFill');
+  if (!wrap) return;
+
+  if (state.quizDone) {
+    fill.style.width = '100%';
+    const pct = Math.round((state.quizScore / QUIZ.length) * 100);
+    let msg = '';
+    if (pct >= 85) msg = "You are absolutely ready. This level of recall is what an interviewer wants to see.";
+    else if (pct >= 65) msg = "Solid result. Review the ones you missed and run the quiz once more before the interview.";
+    else msg = "Worth another pass. Re read the technical and LP sections, then come back here.";
+
+    wrap.innerHTML = `
+      <div class="quiz-result">
+        <div class="quiz-result-num">${state.quizScore}<span class="total">/${QUIZ.length}</span></div>
+        <h2 style="font-family: Fraunces, serif; margin: 8px 0 12px;">${pct}% correct</h2>
+        <p style="color: var(--cream-dim); font-size: 14px; max-width: 320px; margin: 0 auto 22px;">${msg}</p>
+        <button class="quiz-btn" onclick="resetQuiz()">Take it again</button>
+      </div>
+    `;
+    return;
+  }
+
+  const q = QUIZ[state.quizIdx];
+  const pct = (state.quizIdx / QUIZ.length) * 100;
+  fill.style.width = pct + '%';
+
+  wrap.innerHTML = `
+    <div style="font-size: 12px; color: var(--muted); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">
+      Question ${state.quizIdx + 1} of ${QUIZ.length}
+    </div>
+    <div class="quiz-question">${q.q}</div>
+    <div class="quiz-options" id="quizOpts">
+      ${q.options.map((opt, i) => `
+        <button class="quiz-option" data-i="${i}" onclick="selectQuiz(${i})">
+          <span class="letter">${String.fromCharCode(65+i)}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('')}
+    </div>
+    <div class="quiz-explain" id="quizExplain">
+      <strong>Why:</strong> ${q.explain}
+    </div>
+    <button class="quiz-btn" id="quizNextBtn" onclick="nextQuiz()" disabled>Continue</button>
+  `;
+}
+
+function selectQuiz(i) {
+  if (state.quizAnswered) return;
+  const q = QUIZ[state.quizIdx];
+  state.quizAnswered = true;
+  state.quizSelected = i;
+  if (i === q.correct) state.quizScore++;
+
+  document.querySelectorAll('.quiz-option').forEach((btn, idx) => {
+    if (idx === q.correct) btn.classList.add('correct');
+    else if (idx === i) btn.classList.add('wrong');
+    btn.style.cursor = 'default';
+  });
+  document.getElementById('quizExplain').classList.add('show');
+  document.getElementById('quizNextBtn').disabled = false;
+  document.getElementById('quizNextBtn').textContent = state.quizIdx === QUIZ.length - 1 ? 'See your score' : 'Continue';
+}
+
+function nextQuiz() {
+  if (state.quizIdx === QUIZ.length - 1) {
+    state.quizDone = true;
+    renderQuiz();
+    return;
+  }
+  state.quizIdx++;
+  state.quizAnswered = false;
+  state.quizSelected = null;
+  renderQuiz();
+}
+
+function resetQuiz() {
+  state.quizIdx = 0;
+  state.quizAnswered = false;
+  state.quizSelected = null;
+  state.quizScore = 0;
+  state.quizDone = false;
+  renderQuiz();
+}
+
+/* ============================================================
+   CHECKLIST
+   ============================================================ */
+
+function renderChecklist() {
+  ['night', 'morning', 'during', 'after'].forEach(section => {
+    const wrap = document.getElementById('check' + section.charAt(0).toUpperCase() + section.slice(1));
+    if (!wrap) return;
+    wrap.innerHTML = CHECKLIST[section].map((item, i) => {
+      const key = section + '_' + i;
+      const done = state.checkDone[key] ? 'done' : '';
+      return `
+        <div class="check-item ${done}" onclick="toggleCheck('${key}')">
+          <div class="check-box"></div>
+          <div class="check-text">${item}</div>
+        </div>
+      `;
+    }).join('');
+  });
+}
+
+function toggleCheck(key) {
+  state.checkDone[key] = !state.checkDone[key];
+  saveState();
+  renderChecklist();
+  updateProgress();
+}
+
+/* ============================================================
+   PROGRESS
+   ============================================================ */
+
+function updateProgress() {
+  const lpCount = Object.values(state.lpDone).filter(Boolean).length;
+  const checkCount = Object.values(state.checkDone).filter(Boolean).length;
+  const totalLP = LEADERSHIP_PRINCIPLES.length;
+  const totalCheck = CHECKLIST.night.length + CHECKLIST.morning.length + CHECKLIST.during.length + CHECKLIST.after.length;
+  const pct = Math.round(((lpCount + checkCount) / (totalLP + totalCheck)) * 100);
+  const el = document.getElementById('overallProgress');
+  if (el) el.textContent = pct + '% complete';
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+
+function init() {
+  loadState();
+  updateCountdown();
+  renderLPs();
+  renderQuestionFilters();
+  renderQuestions();
+  renderFlash();
+  renderQuiz();
+  renderChecklist();
+  setupTechTabs();
+  updateProgress();
+
+  // Update countdown each minute
+  setInterval(updateCountdown, 60000);
+}
+
+init();
+</script>
+
+</body>
+</html>
