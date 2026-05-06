@@ -1793,6 +1793,783 @@
     50%      { box-shadow: 0 0 0 8px rgba(255,159,28,0); }
   }
 
+  /* ============================================================
+     LIVE COUNTDOWN TIMER
+     ============================================================ */
+  .live-countdown {
+    margin: 18px 0 24px;
+    background:
+      radial-gradient(circle at 80% 0%, rgba(255,159,28,0.18) 0%, transparent 50%),
+      radial-gradient(circle at 0% 100%, rgba(232,146,124,0.10) 0%, transparent 45%),
+      linear-gradient(180deg, var(--surface) 0%, #131F35 100%);
+    border: 1px solid rgba(212,175,111,0.22);
+    border-radius: 22px;
+    padding: 22px 22px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .live-countdown::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,159,28,0.4), transparent);
+  }
+  .lc-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .lc-eyebrow .pulse-dot {
+    width: 6px; height: 6px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: pulse-dot 1.6s ease infinite;
+    box-shadow: 0 0 10px rgba(255,159,28,0.6);
+  }
+  .lc-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .lc-title .accent {
+    color: var(--orange);
+    font-style: italic;
+  }
+  .lc-meta {
+    font-size: 14px;
+    color: var(--cream-dim);
+    margin-bottom: 18px;
+  }
+  .lc-meta .interviewer {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .lc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .lc-cell {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 14px 4px 10px;
+    text-align: center;
+    transition: background 0.3s ease;
+  }
+  .lc-cell.tick {
+    background: rgba(255,159,28,0.10);
+    border-color: rgba(255,159,28,0.25);
+  }
+  .lc-num {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--cream);
+    font-feature-settings: "tnum";
+    letter-spacing: -0.02em;
+  }
+  .lc-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  .lc-date {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .lc-date .urdu-accent {
+    color: var(--gold);
+  }
+
+  /* Quick timeline of all 3 sessions */
+  .session-timeline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin: 0 0 22px;
+  }
+  .session-pill {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+  .session-pill:hover, .session-pill:active {
+    border-color: rgba(255,159,28,0.35);
+    background: var(--surface-2);
+    transform: translateY(-1px);
+  }
+  .session-pill.next {
+    border-color: rgba(255,159,28,0.35);
+    background:
+      linear-gradient(135deg, rgba(255,159,28,0.08), rgba(255,159,28,0.02));
+  }
+  .session-dot {
+    width: 10px; height: 10px;
+    background: var(--surface-3);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .session-pill.next .session-dot {
+    background: var(--orange);
+    box-shadow: 0 0 12px rgba(255,159,28,0.6);
+    animation: pulse-dot 2s infinite;
+  }
+  .session-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .session-name {
+    font-size: 14px;
+    color: var(--cream);
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .session-detail {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .session-when {
+    font-size: 12px;
+    color: var(--cream-dim);
+    text-align: right;
+    font-feature-settings: "tnum";
+    flex-shrink: 0;
+  }
+  .session-when strong {
+    display: block;
+    color: var(--orange);
+    font-size: 14px;
+    margin-bottom: 1px;
+  }
+  .session-pill .arrow-r {
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-left: 4px;
+  }
+  .session-pill:hover .arrow-r { color: var(--orange); }
+
+  /* ============================================================
+     INTERVIEW TABS
+     ============================================================ */
+  .iv-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0 22px;
+    padding: 4px;
+    background: var(--surface);
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .iv-tabs::-webkit-scrollbar { display: none; }
+  .iv-tab {
+    padding: 10px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+  .iv-tab.active {
+    background: var(--orange);
+    color: var(--bg);
+  }
+  .iv-tab:not(.active):hover {
+    color: var(--cream);
+    background: var(--surface-2);
+  }
+  .iv-panel { display: none; }
+  .iv-panel.active { display: block; animation: pageIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+  /* Interview banner card */
+  .iv-banner {
+    background:
+      radial-gradient(circle at 100% 0%, rgba(255,159,28,0.12) 0%, transparent 55%),
+      var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--orange);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .iv-banner.tech {
+    border-left-color: var(--coral);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(232,146,124,0.12) 0%, transparent 55%),
+      var(--surface);
+  }
+  .iv-banner-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .iv-banner.tech .iv-banner-eyebrow { color: var(--coral); }
+  .iv-banner-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .iv-banner-when {
+    font-size: 14px;
+    color: var(--cream-dim);
+    margin-bottom: 12px;
+  }
+  .iv-banner-when .interviewer {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .iv-banner-bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.5;
+  }
+  .iv-banner-bullet .dot {
+    color: var(--orange);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .iv-banner.tech .iv-banner-bullet .dot { color: var(--coral); }
+
+  /* Focus group */
+  .focus-group {
+    margin-bottom: 18px;
+  }
+  .focus-group-title {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .focus-group-title::before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .focus-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .focus-item {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.45;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .focus-item .num {
+    color: var(--orange);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 18px;
+  }
+  .focus-item .text { flex: 1; }
+  .focus-item .text strong {
+    color: var(--cream);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* Quick action button */
+  .quick-action-btn {
+    display: block;
+    width: 100%;
+    background: var(--orange);
+    color: var(--bg);
+    border: none;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  .quick-action-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(255,159,28,0.3); }
+  .quick-action-btn.coral { background: var(--coral); }
+  .quick-action-btn.coral:hover { box-shadow: 0 8px 22px rgba(232,146,124,0.3); }
+
+  /* ============================================================
+     ENGLISH BRIDGE (Urdu thinking helper)
+     ============================================================ */
+  .bridge-card {
+    background:
+      linear-gradient(135deg, rgba(212,175,111,0.08), rgba(132,169,140,0.06));
+    border: 1px solid rgba(212,175,111,0.22);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .bridge-card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .bridge-card-sub {
+    font-size: 13px;
+    color: var(--gold);
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+  .bridge-row {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(212,175,111,0.15);
+  }
+  .bridge-row:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+  .bridge-urdu {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .bridge-eng {
+    font-size: 14px;
+    color: var(--cream);
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     AUDIO LIBRARY HERO (on home)
+     ============================================================ */
+  .audio-cta {
+    margin: 0 0 24px;
+    background:
+      radial-gradient(circle at 100% 100%, rgba(212,175,111,0.15) 0%, transparent 60%),
+      radial-gradient(circle at 0% 0%, rgba(232,146,124,0.12) 0%, transparent 50%),
+      linear-gradient(135deg, var(--surface) 0%, #182336 100%);
+    border: 1px solid rgba(212,175,111,0.25);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .audio-cta:hover {
+    transform: translateY(-2px);
+    border-color: rgba(212,175,111,0.45);
+  }
+  .audio-cta-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: rgba(212,175,111,0.14);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .audio-cta-icon svg { width: 26px; height: 26px; }
+  .audio-cta-info { flex: 1; min-width: 0; }
+  .audio-cta-title {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    color: var(--cream);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .audio-cta-title .accent {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .audio-cta-sub {
+    font-size: 13px;
+    color: var(--cream-dim);
+    line-height: 1.4;
+  }
+  .audio-cta-sub .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 100px;
+    background: rgba(212,175,111,0.16);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 4px;
+    letter-spacing: 0.04em;
+  }
+  .audio-cta-arrow {
+    color: var(--gold);
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     AUDIO LIBRARY PAGE
+     ============================================================ */
+  .audio-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .audio-filters::-webkit-scrollbar { display: none; }
+  .audio-filter-pill {
+    padding: 9px 16px;
+    border-radius: 100px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+  .audio-filter-pill.active {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+  .audio-filter-pill:not(.active):hover {
+    color: var(--cream);
+    background: var(--surface-2);
+  }
+
+  .audio-group {
+    margin-bottom: 26px;
+  }
+  .audio-group-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .audio-group-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background: rgba(255,159,28,0.12);
+    color: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .audio-group-icon.coral { background: rgba(232,146,124,0.14); color: var(--coral); }
+  .audio-group-icon.gold { background: rgba(212,175,111,0.16); color: var(--gold); }
+  .audio-group-icon.sage { background: rgba(132,169,140,0.14); color: var(--sage); }
+  .audio-group-icon svg { width: 16px; height: 16px; }
+  .audio-group-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--cream);
+    flex: 1;
+  }
+  .audio-group-count {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ============================================================
+     BIG INTERVIEW PICKER CARDS (home page)
+     ============================================================ */
+
+  /* Length pill on audio cards */
+  .length-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--surface-2);
+    color: var(--cream-dim);
+    letter-spacing: 0.02em;
+    margin-left: 6px;
+  }
+
+  .picker-section {
+    margin: 4px 0 24px;
+  }
+  .picker-section-label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .picker-section-label::before {
+    content: '';
+    display: block;
+    width: 18px;
+    height: 1px;
+    background: var(--orange);
+  }
+  .picker-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .picker-card {
+    background:
+      radial-gradient(circle at 100% 0%, rgba(255,159,28,0.10) 0%, transparent 55%),
+      var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 20px 20px 18px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .picker-card:hover, .picker-card:active {
+    transform: translateY(-2px);
+    border-color: rgba(255,159,28,0.4);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  }
+  .picker-card.next {
+    border-color: rgba(255,159,28,0.5);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(255,159,28,0.18) 0%, transparent 55%),
+      linear-gradient(135deg, var(--surface) 0%, #1A2538 100%);
+  }
+  .picker-card.next::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--orange), var(--coral));
+  }
+  .picker-card.tech {
+    background:
+      radial-gradient(circle at 100% 0%, rgba(232,146,124,0.10) 0%, transparent 55%),
+      var(--surface);
+  }
+  .picker-card.tech.next {
+    border-color: rgba(232,146,124,0.5);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(232,146,124,0.18) 0%, transparent 55%),
+      linear-gradient(135deg, var(--surface) 0%, #1A2538 100%);
+  }
+  .picker-card.tech.next::before {
+    background: linear-gradient(180deg, var(--coral), var(--gold));
+  }
+  .picker-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .picker-num {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: rgba(255,159,28,0.12);
+    color: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    font-style: italic;
+  }
+  .picker-card.tech .picker-num {
+    background: rgba(232,146,124,0.14);
+    color: var(--coral);
+  }
+  .picker-tag {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--muted);
+    padding: 5px 11px;
+    border-radius: 100px;
+    background: var(--surface-2);
+  }
+  .picker-card.next .picker-tag {
+    background: var(--orange);
+    color: var(--bg);
+  }
+  .picker-card.tech.next .picker-tag {
+    background: var(--coral);
+    color: var(--bg);
+  }
+  .picker-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .picker-title .interviewer {
+    color: var(--orange);
+    font-style: italic;
+  }
+  .picker-card.tech .picker-title .interviewer {
+    color: var(--coral);
+  }
+  .picker-meta {
+    font-size: 14px;
+    color: var(--cream-dim);
+    margin-bottom: 14px;
+  }
+  .picker-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .picker-when {
+    font-size: 13px;
+    color: var(--muted);
+    font-feature-settings: "tnum";
+  }
+  .picker-when strong {
+    color: var(--cream);
+    font-weight: 600;
+  }
+  .picker-card.next .picker-when strong {
+    color: var(--orange);
+  }
+  .picker-card.tech.next .picker-when strong {
+    color: var(--coral);
+  }
+  .picker-cta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--orange);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .picker-card.tech .picker-cta { color: var(--coral); }
+  .picker-cta .arr {
+    transition: transform 0.2s ease;
+  }
+  .picker-card:hover .picker-cta .arr {
+    transform: translateX(4px);
+  }
+
+  /* ============================================================
+     MORE PAGE GRID
+     ============================================================ */
+  .more-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .more-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 18px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .more-card:hover, .more-card:active {
+    transform: translateY(-2px);
+    border-color: rgba(255,159,28,0.3);
+    background: var(--surface-2);
+  }
+  .more-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
+  .more-card-icon.orange { background: rgba(255,159,28,0.12); color: var(--orange); }
+  .more-card-icon.coral  { background: rgba(232,146,124,0.14); color: var(--coral); }
+  .more-card-icon.sage   { background: rgba(132,169,140,0.14); color: var(--sage); }
+  .more-card-icon.gold   { background: rgba(212,175,111,0.16); color: var(--gold); }
+  .more-card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--cream);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .more-card-sub {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
 </style>
 </head>
 <body>
@@ -1802,16 +2579,16 @@
   <div class="splash-inner">
     <div class="splash-bismillah">With the Name of Allah</div>
     <div class="splash-mark">A</div>
-    <div class="splash-greeting">Salam, <span class="accent">Arooj</span></div>
+    <div class="splash-greeting"><span class="accent">Salam</span></div>
     <div class="splash-sub">
-      A small corner I made just for you. Take your time, breathe, and let&rsquo;s get you ready. <span class="urdu-soft">InshaaAllah, sab acha ho ga.</span>
+      <span class="urdu-soft">InshaaAllah, sab acha ho ga.</span>
     </div>
     <button class="splash-cta" onclick="dismissSplash()">
       Let&rsquo;s begin <span class="arrow">&rarr;</span>
     </button>
   </div>
   <div class="splash-foot">
-    Made for you <span class="heart-orange">&#9734;</span> by Seemab
+    Made for Arooj <span class="heart-orange">&#9734;</span> by Seemab
   </div>
 </div>
 
@@ -1821,7 +2598,7 @@
   <div class="top-bar">
     <div class="brand">
       <div class="brand-mark">A</div>
-      <div class="brand-text">Salam, <span class="name">Arooj</span></div>
+      <div class="brand-text"><span class="name">Salam</span></div>
     </div>
     <div class="progress-pill">
       <span class="dot"></span>
@@ -1832,154 +2609,366 @@
   <!-- ============ HOME PAGE ============ -->
   <div class="page active" id="page-home">
     <div class="hero">
-      <div class="hero-greeting">May 04 <span class="urdu-accent">&middot; Aaj ka din</span></div>
       <h1 class="hero-title">Salam, <span class="accent">Arooj</span></h1>
-      <p class="hero-sub">A small space made just for you, to walk into both interviews calm, prepared, and confident. Take it one section at a time. <span class="urdu-accent">Koi jaldi nahi hai.</span></p>
+      <p class="hero-sub">Pick the interview you want to prepare for. <span class="urdu-accent">Aap tayyar hain.</span></p>
+    </div>
+
+    <!-- Live countdown to next interview -->
+    <div class="live-countdown">
+      <div class="lc-eyebrow"><span class="pulse-dot"></span> Live countdown to next session</div>
+      <div class="lc-title" id="lcTitle">Next: <span class="accent">Session 1</span></div>
+      <div class="lc-meta" id="lcMeta">with <span class="interviewer" id="lcInterviewer">Md Alam, Hiring Manager</span></div>
+      <div class="lc-grid" id="lcGrid">
+        <div class="lc-cell"><div class="lc-num" id="lcDays">--</div><div class="lc-label">Days</div></div>
+        <div class="lc-cell"><div class="lc-num" id="lcHours">--</div><div class="lc-label">Hours</div></div>
+        <div class="lc-cell"><div class="lc-num" id="lcMins">--</div><div class="lc-label">Minutes</div></div>
+        <div class="lc-cell tick"><div class="lc-num" id="lcSecs">--</div><div class="lc-label">Seconds</div></div>
+      </div>
+      <div class="lc-date" id="lcDate">Thursday, May 7, 2026 &middot; 10:00 AM EDT</div>
+    </div>
+
+    <!-- The interview picker, this is the main interaction -->
+    <div class="picker-section">
+      <div class="picker-section-label">Choose your interview</div>
+      <div class="picker-grid">
+
+        <a class="picker-card" id="pickS1" onclick="goTo('s1')">
+          <div class="picker-head">
+            <div class="picker-num">1</div>
+            <div class="picker-tag">May 7 &middot; 10 AM</div>
+          </div>
+          <div class="picker-title">With <span class="interviewer">Md Alam</span></div>
+          <div class="picker-meta">Hiring Manager &middot; Leadership Principles focus</div>
+          <div class="picker-foot">
+            <div class="picker-when"><strong id="pickWhen1">--</strong> &middot; 14 questions ready</div>
+            <div class="picker-cta">Open prep <span class="arr">&rarr;</span></div>
+          </div>
+        </a>
+
+        <a class="picker-card" id="pickS2" onclick="goTo('s2')">
+          <div class="picker-head">
+            <div class="picker-num">2</div>
+            <div class="picker-tag">May 7 &middot; 4 PM</div>
+          </div>
+          <div class="picker-title">With <span class="interviewer">Giovanni Urrutia</span></div>
+          <div class="picker-meta">Peer Tech &middot; Leadership Principles focus</div>
+          <div class="picker-foot">
+            <div class="picker-when"><strong id="pickWhen2">--</strong> &middot; 7 questions ready</div>
+            <div class="picker-cta">Open prep <span class="arr">&rarr;</span></div>
+          </div>
+        </a>
+
+        <a class="picker-card tech" id="pickS3" onclick="goTo('s3')">
+          <div class="picker-head">
+            <div class="picker-num">3</div>
+            <div class="picker-tag">May 11 &middot; 1 PM</div>
+          </div>
+          <div class="picker-title">With <span class="interviewer">Jovani Castelan</span></div>
+          <div class="picker-meta">Technical session &middot; Hands on questions</div>
+          <div class="picker-foot">
+            <div class="picker-when"><strong id="pickWhen3">--</strong> &middot; 6 questions + cheat sheet</div>
+            <div class="picker-cta">Open prep <span class="arr">&rarr;</span></div>
+          </div>
+        </a>
+
+      </div>
     </div>
 
     <!-- Daily affirmation rotator -->
     <div class="affirm-card" id="affirmCard" onclick="rotateAffirmation()">
       <div class="affirm-label"><span class="pulse-dot"></span> A reminder for you</div>
-      <div class="affirm-text" id="affirmText">You have done harder things than this. The interview is just a conversation about work you already know.</div>
+      <div class="affirm-text" id="affirmText">Arooj, you have done harder things than this. The interview is just a conversation about work you already know.</div>
       <div class="affirm-tap">Tap for another one</div>
     </div>
 
-    <div class="countdown-card">
-      <div class="countdown-label">Up Next</div>
-      <div class="countdown-title">First Interview</div>
-      <div class="countdown-value">
-        <div class="countdown-num" id="d1Num">3</div>
-        <div class="countdown-unit" id="d1Unit">days to go</div>
+    <!-- Audio Library quick access -->
+    <div class="audio-cta" onclick="goTo('audio')">
+      <div class="audio-cta-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
       </div>
-      <div class="countdown-date">Thursday, May 7, 2026</div>
+      <div class="audio-cta-info">
+        <div class="audio-cta-title">Audio <span class="accent">Library</span></div>
+        <div class="audio-cta-sub"><span class="pill">6 mocks</span>Two for each session, Urdu first</div>
+      </div>
+      <div class="audio-cta-arrow">&rsaquo;</div>
     </div>
 
-    <div class="countdown-grid">
-      <div class="countdown-mini">
-        <div class="label">Round 1</div>
-        <div class="num" id="d1Mini">3d</div>
-        <div class="date">Recruiter screen</div>
-      </div>
-      <div class="countdown-mini urgent">
-        <div class="label">Round 2</div>
-        <div class="num" id="d2Mini">8d</div>
-        <div class="date">Behavioral + technical</div>
+    <!-- Note from Seemab -->
+    <div class="note-card">
+      <div class="from">A note from Seemab</div>
+      <div class="body">"Arooj, this whole app is now organized around your three interviews. Tap the one you want to prepare for and you will see only that interview's content. No more confusion. <span class="urdu-accent">Aap tayyar hain.</span> I am one message away if anything feels off."</div>
+    </div>
+  </div>
+
+
+  <!-- ============ SESSION 1 PAGE (Md Alam, May 7 10 AM, LP focused) ============ -->
+  <div class="page" id="page-s1">
+    <div class="page-header">
+      <div class="page-eyebrow">Session 1 of 3 &middot; Most important</div>
+      <h1 class="page-title">With <span class="italic">Md Alam</span></h1>
+      <p class="page-desc">Hiring Manager interview, Leadership Principles focused. This is the conversation that matters most.</p>
+    </div>
+
+    <!-- Live countdown for THIS session -->
+    <div class="live-countdown" id="lcS1Wrap">
+      <div class="lc-eyebrow"><span class="pulse-dot"></span> Time to this session</div>
+      <div class="lc-title">Session 1 starts in</div>
+      <div class="lc-meta">Thursday, May 7 &middot; <span class="interviewer">10:00 AM EDT</span></div>
+      <div class="lc-grid">
+        <div class="lc-cell"><div class="lc-num" id="s1Days">--</div><div class="lc-label">Days</div></div>
+        <div class="lc-cell"><div class="lc-num" id="s1Hours">--</div><div class="lc-label">Hours</div></div>
+        <div class="lc-cell"><div class="lc-num" id="s1Mins">--</div><div class="lc-label">Minutes</div></div>
+        <div class="lc-cell tick"><div class="lc-num" id="s1Secs">--</div><div class="lc-label">Seconds</div></div>
       </div>
     </div>
 
-    <!-- ============ PODCAST / AUDIO SESSIONS ============ -->
-    <div class="podcast-section">
-      <div class="section-title">
-        <h2>Audio <span class="italic" style="font-style: italic; color: var(--orange);">sessions</span></h2>
-        <span class="meta">Listen anywhere</span>
+    <!-- What to expect -->
+    <div class="iv-banner">
+      <div class="iv-banner-eyebrow">What to expect</div>
+      <div class="iv-banner-title">A 60 minute conversation about you</div>
+      <div class="iv-banner-bullet"><span class="dot">&#9679;</span><span>The manager has the strongest say on whether you join the team. This is the conversation that matters most.</span></div>
+      <div class="iv-banner-bullet"><span class="dot">&#9679;</span><span>Focus is Leadership Principles, especially Customer Obsession, Ownership, Bias for Action, and Deliver Results.</span></div>
+      <div class="iv-banner-bullet"><span class="dot">&#9679;</span><span>The manager will also probe your background, your motivation for STORM, and how genuinely you understand the 90 percent travel.</span></div>
+    </div>
+
+    <!-- Top LPs Md Alam evaluates -->
+    <div class="focus-group">
+      <div class="focus-group-title">Top LPs Md Alam evaluates</div>
+      <div class="focus-list">
+        <div class="focus-item"><span class="num">&middot;</span><div class="text"><strong>Customer Obsession</strong>Tie everything back to who the work serves.</div></div>
+        <div class="focus-item"><span class="num">&middot;</span><div class="text"><strong>Ownership</strong>Stories where you owned more than your job description.</div></div>
+        <div class="focus-item"><span class="num">&middot;</span><div class="text"><strong>Bias for Action</strong>The PTCL after hours decision story.</div></div>
+        <div class="focus-item"><span class="num">&middot;</span><div class="text"><strong>Deliver Results</strong>Quantify everything. Numbers stick.</div></div>
       </div>
-      <p class="podcast-intro">
-        Four mock interviews to listen to. Two in English and two in Urdu, behavioral and technical for each. <span class="urdu-accent">Sun lo, jab time milay.</span>
-      </p>
+    </div>
 
-      <div class="podcast-group-label"><span>English</span><span class="line"></span></div>
+    <!-- Audio for THIS session -->
+    <div class="focus-group">
+      <div class="focus-group-title">Listen to mock Session 1 (Urdu first)</div>
+      <div id="sessionAudio1"></div>
+    </div>
 
-      <div class="podcast-list">
-        <div class="podcast-card" data-id="beh_english">
-          <div class="podcast-row">
-            <div class="podcast-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div class="podcast-info">
-              <div class="podcast-title">Behavioral Interview</div>
-              <div class="podcast-sub"><span class="lang-tag">English</span> <span class="podcast-time-total">--:--</span></div>
-            </div>
-            <button class="podcast-play" onclick="togglePodcast('beh_english')" aria-label="Play">
-              <svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
-          <div class="podcast-progress-wrap">
-            <div class="podcast-bar"><div class="podcast-fill"></div></div>
-            <div class="podcast-times">
-              <span class="podcast-time-current">0:00</span>
-              <span class="podcast-time-remaining">--:--</span>
-            </div>
-          </div>
-          <audio id="audio-beh_english" preload="metadata" src="beh_english.mp3"></audio>
-        </div>
+    <!-- Practice questions for THIS session only -->
+    <div class="focus-group">
+      <div class="focus-group-title">Practice these 14 questions</div>
+      <div class="session-q-list" id="sessionQs1"></div>
+    </div>
 
-        <div class="podcast-card" data-id="Tech_english">
-          <div class="podcast-row">
-            <div class="podcast-icon coral">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </div>
-            <div class="podcast-info">
-              <div class="podcast-title">Technical Interview</div>
-              <div class="podcast-sub"><span class="lang-tag">English</span> <span class="podcast-time-total">--:--</span></div>
-            </div>
-            <button class="podcast-play" onclick="togglePodcast('Tech_english')" aria-label="Play">
-              <svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
-          <div class="podcast-progress-wrap">
-            <div class="podcast-bar"><div class="podcast-fill"></div></div>
-            <div class="podcast-times">
-              <span class="podcast-time-current">0:00</span>
-              <span class="podcast-time-remaining">--:--</span>
-            </div>
-          </div>
-          <audio id="audio-Tech_english" preload="metadata" src="Tech_english.mp3"></audio>
-        </div>
+    <!-- Tip box -->
+    <div class="tip-box">
+      <div class="tip-label">&#9733; For Session 1 specifically</div>
+      <ul>
+        <li>Open strong with "Tell me about yourself" in 60 to 90 seconds. Your three step arc PTCL to Securitas to ID Install is the heart of it.</li>
+        <li>Use "I" not "we". Md Alam will repeat back any "we" sentences with a follow up.</li>
+        <li>If asked about travel, lead with the relocation Pakistan to US. That single fact is your strongest credibility.</li>
+        <li>Quantify two answers minimum. Numbers are how managers evaluate Deliver Results.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- ============ SESSION 2 PAGE (Giovanni Urrutia, May 7 4 PM, LP peer-tech) ============ -->
+  <div class="page" id="page-s2">
+    <div class="page-header">
+      <div class="page-eyebrow">Session 2 of 3 &middot; Same day, six hours later</div>
+      <h1 class="page-title">With <span class="italic">Giovanni Urrutia</span></h1>
+      <p class="page-desc">Peer Tech interview, Leadership Principles from a peer angle. About judgment, learning, and how you collaborate.</p>
+    </div>
+
+    <!-- Live countdown -->
+    <div class="live-countdown">
+      <div class="lc-eyebrow"><span class="pulse-dot"></span> Time to this session</div>
+      <div class="lc-title">Session 2 starts in</div>
+      <div class="lc-meta">Thursday, May 7 &middot; <span class="interviewer">4:00 PM EDT</span></div>
+      <div class="lc-grid">
+        <div class="lc-cell"><div class="lc-num" id="s2Days">--</div><div class="lc-label">Days</div></div>
+        <div class="lc-cell"><div class="lc-num" id="s2Hours">--</div><div class="lc-label">Hours</div></div>
+        <div class="lc-cell"><div class="lc-num" id="s2Mins">--</div><div class="lc-label">Minutes</div></div>
+        <div class="lc-cell tick"><div class="lc-num" id="s2Secs">--</div><div class="lc-label">Seconds</div></div>
       </div>
+    </div>
 
-      <div class="podcast-group-label urdu"><span>Urdu &middot; <span style="font-family: 'Fraunces', serif; font-style: italic; text-transform: none; letter-spacing: 0.02em;">apni zubaan mein</span></span><span class="line"></span></div>
+    <!-- What to expect -->
+    <div class="iv-banner">
+      <div class="iv-banner-eyebrow">What to expect</div>
+      <div class="iv-banner-title">A peer evaluating how you work</div>
+      <div class="iv-banner-bullet"><span class="dot">&#9679;</span><span>Giovanni already does this work. He evaluates Leadership Principles from a different angle than the manager.</span></div>
+      <div class="iv-banner-bullet"><span class="dot">&#9679;</span><span>Often more about how you collaborate, respond to pressure, and handle disagreement.</span></div>
+      <div class="iv-banner-bullet"><span class="dot">&#9679;</span><span>Try to use different stories than the morning session. Repeat stories signal a thin story bank.</span></div>
+    </div>
 
-      <div class="podcast-list">
-        <div class="podcast-card urdu" data-id="beh_urdu">
-          <div class="podcast-row">
-            <div class="podcast-icon gold">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div class="podcast-info">
-              <div class="podcast-title">Behavioral Interview</div>
-              <div class="podcast-sub"><span class="lang-tag urdu">Urdu</span> <span class="podcast-time-total">--:--</span></div>
-            </div>
-            <button class="podcast-play urdu" onclick="togglePodcast('beh_urdu')" aria-label="Play">
-              <svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
-          <div class="podcast-progress-wrap">
-            <div class="podcast-bar"><div class="podcast-fill"></div></div>
-            <div class="podcast-times">
-              <span class="podcast-time-current">0:00</span>
-              <span class="podcast-time-remaining">--:--</span>
-            </div>
-          </div>
-          <audio id="audio-beh_urdu" preload="metadata" src="beh_urdu.mp3"></audio>
-        </div>
-
-        <div class="podcast-card urdu" data-id="Tech_urdu">
-          <div class="podcast-row">
-            <div class="podcast-icon sage">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </div>
-            <div class="podcast-info">
-              <div class="podcast-title">Technical Interview</div>
-              <div class="podcast-sub"><span class="lang-tag urdu">Urdu</span> <span class="podcast-time-total">--:--</span></div>
-            </div>
-            <button class="podcast-play urdu" onclick="togglePodcast('Tech_urdu')" aria-label="Play">
-              <svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
-          <div class="podcast-progress-wrap">
-            <div class="podcast-bar"><div class="podcast-fill"></div></div>
-            <div class="podcast-times">
-              <span class="podcast-time-current">0:00</span>
-              <span class="podcast-time-remaining">--:--</span>
-            </div>
-          </div>
-          <audio id="audio-Tech_urdu" preload="metadata" src="Tech_urdu.mp3"></audio>
-        </div>
+    <!-- Top LPs Giovanni evaluates -->
+    <div class="focus-group">
+      <div class="focus-group-title">Top LPs Giovanni evaluates</div>
+      <div class="focus-list">
+        <div class="focus-item"><span class="num">&middot;</span><div class="text"><strong>Insist on the Highest Standards</strong>Quality over speed stories.</div></div>
+        <div class="focus-item"><span class="num">&middot;</span><div class="text"><strong>Earn Trust</strong>Honest mistakes, owning them openly.</div></div>
+        <div class="focus-item"><span class="num">&middot;</span><div class="text"><strong>Have Backbone, Disagree and Commit</strong>Calm, specific, constructive disagreement.</div></div>
+        <div class="focus-item"><span class="num">&middot;</span><div class="text"><strong>Learn and Be Curious</strong>Self directed learning, CompTIA Network+.</div></div>
+        <div class="focus-item"><span class="num">&middot;</span><div class="text"><strong>Dive Deep</strong>The PTCL EMI from light fixture story.</div></div>
       </div>
+    </div>
+
+    <!-- Audio for THIS session -->
+    <div class="focus-group">
+      <div class="focus-group-title">Listen to mock Session 2 (Urdu first)</div>
+      <div id="sessionAudio2"></div>
+    </div>
+
+    <!-- Practice questions for THIS session only -->
+    <div class="focus-group">
+      <div class="focus-group-title">Practice these 7 questions</div>
+      <div class="session-q-list" id="sessionQs2"></div>
+    </div>
+
+    <!-- Tip box -->
+    <div class="tip-box">
+      <div class="tip-label">&#9733; For Session 2 specifically</div>
+      <ul>
+        <li>This interview comes after a long morning. Eat something before, drink water, and reset before joining.</li>
+        <li>Giovanni is a peer. The tone is more conversational than the manager interview.</li>
+        <li>Have at least three different stories ready that did not appear in Session 1.</li>
+        <li>For weakness, be honest and visible about how you are working on it. Generic answers fail here.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- ============ SESSION 3 PAGE (Jovani Castelan, May 11 1 PM, Technical) ============ -->
+  <div class="page" id="page-s3">
+    <div class="page-header">
+      <div class="page-eyebrow">Session 3 of 3 &middot; Different day, technical</div>
+      <h1 class="page-title">With <span class="italic">Jovani Castelan</span></h1>
+      <p class="page-desc">Technical interview. Cabling, fiber, copper, hardware, troubleshooting, safety. Lean on PTCL.</p>
+    </div>
+
+    <!-- Live countdown -->
+    <div class="live-countdown">
+      <div class="lc-eyebrow"><span class="pulse-dot"></span> Time to this session</div>
+      <div class="lc-title">Session 3 starts in</div>
+      <div class="lc-meta">Monday, May 11 &middot; <span class="interviewer">1:00 PM EDT</span></div>
+      <div class="lc-grid">
+        <div class="lc-cell"><div class="lc-num" id="s3Days">--</div><div class="lc-label">Days</div></div>
+        <div class="lc-cell"><div class="lc-num" id="s3Hours">--</div><div class="lc-label">Hours</div></div>
+        <div class="lc-cell"><div class="lc-num" id="s3Mins">--</div><div class="lc-label">Minutes</div></div>
+        <div class="lc-cell tick"><div class="lc-num" id="s3Secs">--</div><div class="lc-label">Seconds</div></div>
+      </div>
+    </div>
+
+    <!-- What to expect -->
+    <div class="iv-banner tech">
+      <div class="iv-banner-eyebrow">What to expect</div>
+      <div class="iv-banner-title">Hands on technical questions</div>
+      <div class="iv-banner-bullet"><span class="dot">&#9679;</span><span>Surface questions are technical. Cabling, fiber, copper, hardware, troubleshooting, safety.</span></div>
+      <div class="iv-banner-bullet"><span class="dot">&#9679;</span><span>Leadership Principles still get evaluated underneath, but the questions are about real work.</span></div>
+      <div class="iv-banner-bullet"><span class="dot">&#9679;</span><span>Lean on PTCL. Two years of structured cabling and hardware work is your strongest defendable claim.</span></div>
+    </div>
+
+    <!-- Technical topics to drill -->
+    <div class="focus-group">
+      <div class="focus-group-title">Technical topics to drill</div>
+      <div class="focus-list">
+        <div class="focus-item"><span class="num">01</span><div class="text"><strong>Fiber types</strong>Single mode OS2 vs multi mode OM3/OM4. Where each is used.</div></div>
+        <div class="focus-item"><span class="num">02</span><div class="text"><strong>Connectors</strong>LC for individual links, MPO/MTP for high density 40G/100G.</div></div>
+        <div class="focus-item"><span class="num">03</span><div class="text"><strong>Copper categories</strong>Cat6 vs Cat6a, T568B wiring standard.</div></div>
+        <div class="focus-item"><span class="num">04</span><div class="text"><strong>Bend radius</strong>30mm minimum for patch fiber, why it matters.</div></div>
+        <div class="focus-item"><span class="num">05</span><div class="text"><strong>Tools</strong>Optical power meter, OTDR, cable tester, torque screwdriver.</div></div>
+        <div class="focus-item"><span class="num">06</span><div class="text"><strong>Diagnosing bad cable</strong>Visual, re-seat, test, swap, replace, document.</div></div>
+        <div class="focus-item"><span class="num">07</span><div class="text"><strong>Rack basics</strong>1U = 1.75 inches, 42U standard, hot/cold aisle.</div></div>
+        <div class="focus-item"><span class="num">08</span><div class="text"><strong>Safety</strong>40 lb solo, 41+ group lift, 3 points of contact, ESD.</div></div>
+      </div>
+      <button class="quick-action-btn coral" onclick="goTo('tech')" style="margin-top: 12px;">Open the full Technical Cheat Sheet &rarr;</button>
+    </div>
+
+    <!-- Audio for THIS session -->
+    <div class="focus-group">
+      <div class="focus-group-title">Listen to mock Session 3 (Urdu first)</div>
+      <div id="sessionAudio3"></div>
+    </div>
+
+    <!-- Practice questions for THIS session only -->
+    <div class="focus-group">
+      <div class="focus-group-title">Practice these 6 questions</div>
+      <div class="session-q-list" id="sessionQs3"></div>
+    </div>
+
+    <!-- Tip box -->
+    <div class="tip-box">
+      <div class="tip-label">&#9733; For Session 3 specifically</div>
+      <ul>
+        <li>If you know it, say it directly. Hedging on what you know reads as low confidence.</li>
+        <li>If you have done it at PTCL, name PTCL. "At PTCL we used..." beats "I think...".</li>
+        <li>If you don't know, say so honestly. "I have not worked with that specifically, but my approach would be..."</li>
+        <li>Acknowledge GB200/GB300 hardware. Show awareness of high value compute even if you don't install it yet.</li>
+        <li>This interview is about reliability, not theory. Procedural answers beat textbook ones.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- ============ MORE PAGE (general references) ============ -->
+  <div class="page" id="page-more">
+    <div class="page-header">
+      <div class="page-eyebrow">More tools</div>
+      <h1 class="page-title">Everything <span class="italic">else</span></h1>
+      <p class="page-desc">General study materials and reference. Use these to deepen what you already practice in each session.</p>
+    </div>
+
+    <div class="more-grid">
+      <a class="more-card" onclick="goTo('lp')">
+        <div class="more-card-icon orange">&#9733;</div>
+        <div class="more-card-title">Leadership Principles</div>
+        <div class="more-card-sub">All 16, with sample questions</div>
+      </a>
+      <a class="more-card" onclick="goTo('star')">
+        <div class="more-card-icon coral">&#9670;</div>
+        <div class="more-card-title">STAR Method</div>
+        <div class="more-card-sub">Answer framework that works</div>
+      </a>
+      <a class="more-card" onclick="goTo('questions')">
+        <div class="more-card-icon gold">?</div>
+        <div class="more-card-title">All Questions</div>
+        <div class="more-card-sub">Browse all 27 in one place</div>
+      </a>
+      <a class="more-card" onclick="goTo('tech')">
+        <div class="more-card-icon sage">&#9881;</div>
+        <div class="more-card-title">Technical Cheat Sheet</div>
+        <div class="more-card-sub">Cabling, fiber, racks, safety</div>
+      </a>
+      <a class="more-card" onclick="goTo('flash')">
+        <div class="more-card-icon orange">&#8984;</div>
+        <div class="more-card-title">Flashcards</div>
+        <div class="more-card-sub">Quick recall practice</div>
+      </a>
+      <a class="more-card" onclick="goTo('quiz')">
+        <div class="more-card-icon coral">&#10003;</div>
+        <div class="more-card-title">Quiz Mode</div>
+        <div class="more-card-sub">Test what you remember</div>
+      </a>
+      <a class="more-card" onclick="goTo('comm')">
+        <div class="more-card-icon gold">&#9836;</div>
+        <div class="more-card-title">Speaking Tips</div>
+        <div class="more-card-sub">English bridge from Urdu</div>
+      </a>
+      <a class="more-card" onclick="goTo('audio')">
+        <div class="more-card-icon sage">&#9835;</div>
+        <div class="more-card-title">Audio Library</div>
+        <div class="more-card-sub">6 mock interview recordings</div>
+      </a>
+      <a class="more-card" onclick="goTo('checklist')">
+        <div class="more-card-icon orange">&#10004;</div>
+        <div class="more-card-title">Day of Checklist</div>
+        <div class="more-card-sub">What to do, bring, prepare</div>
+      </a>
+      <a class="more-card" onclick="goTo('mindmap')">
+        <div class="more-card-icon coral">&#8853;</div>
+        <div class="more-card-title">Mind Map</div>
+        <div class="more-card-sub">See it all at once</div>
+      </a>
     </div>
 
     <!-- Achievement badges -->
-    <div class="section-title" style="margin-top: 22px;">
+    <div class="section-title" style="margin-top: 26px;">
       <h2>Your prep journey</h2>
       <span class="meta" id="badgeCount">0/4</span>
     </div>
@@ -1989,113 +2978,27 @@
       <div class="badge" data-badge="flash"><span class="badge-icon">&#9636;</span> Flashcards seen</div>
       <div class="badge" data-badge="check"><span class="badge-icon">&#9678;</span> Day plan ready</div>
     </div>
-
-    <div class="section-title">
-      <h2>Start here</h2>
-      <span class="meta">Tap a card</span>
-    </div>
-
-    <div class="quick-grid">
-      <div class="quick-card" onclick="goTo('lp')">
-        <div class="icon orange">★</div>
-        <div class="title">Leadership Principles</div>
-        <div class="sub">All 16, with sample questions</div>
-      </div>
-      <div class="quick-card" onclick="goTo('star')">
-        <div class="icon coral">◆</div>
-        <div class="title">STAR Method</div>
-        <div class="sub">Answer framework that works</div>
-      </div>
-      <div class="quick-card" onclick="goTo('questions')">
-        <div class="icon gold">?</div>
-        <div class="title">Question Bank</div>
-        <div class="sub">Real answers, ready to study</div>
-      </div>
-      <div class="quick-card" onclick="goTo('tech')">
-        <div class="icon sage">⚙</div>
-        <div class="title">Technical Notes</div>
-        <div class="sub">Cabling, fiber, racks, safety</div>
-      </div>
-      <div class="quick-card" onclick="goTo('flash')">
-        <div class="icon orange">⌘</div>
-        <div class="title">Flashcards</div>
-        <div class="sub">Quick recall practice</div>
-      </div>
-      <div class="quick-card" onclick="goTo('quiz')">
-        <div class="icon coral">◐</div>
-        <div class="title">Quiz Mode</div>
-        <div class="sub">Test what you remember</div>
-      </div>
-      <div class="quick-card" onclick="goTo('mindmap')">
-        <div class="icon sage">⊕</div>
-        <div class="title">Mind Map</div>
-        <div class="sub">See it all at once</div>
-      </div>
-      <div class="quick-card" onclick="goTo('comm')">
-        <div class="icon gold">♬</div>
-        <div class="title">Speaking Tips</div>
-        <div class="sub">Sound calm and clear</div>
-      </div>
-    </div>
-
-    <div class="note-card">
-      <div class="from">A note from Seemab</div>
-      <div class="body">"You already do this work every day. The interview is just a place to talk about it. Be specific, breathe between sentences, and let your real experience speak. <span class="urdu-accent">Tum tayyar ho.</span> If anything feels confusing, I am one message away. Always."</div>
-    </div>
-
-    <div class="section-title" style="margin-top: 26px;">
-      <h2>Day of essentials</h2>
-    </div>
-    <div class="quick-grid">
-      <div class="quick-card" onclick="goTo('checklist')">
-        <div class="icon orange">✓</div>
-        <div class="title">Checklist</div>
-        <div class="sub">What to do, bring, prepare</div>
-      </div>
-      <div class="quick-card" onclick="goTo('overview')">
-        <div class="icon coral">◉</div>
-        <div class="title">Interview Map</div>
-        <div class="sub">What happens on each day</div>
-      </div>
-    </div>
   </div>
 
-  <!-- ============ INTERVIEW OVERVIEW ============ -->
-  <div class="page" id="page-overview">
+
+    <!-- ============ AUDIO LIBRARY PAGE ============ -->
+  <div class="page" id="page-audio">
     <div class="page-header">
-      <div class="page-eyebrow">Roadmap</div>
-      <h1 class="page-title">What to <span class="italic">expect</span></h1>
-      <p class="page-desc">Two rounds, different focus each. Here is the honest breakdown so nothing surprises you.</p>
+      <div class="page-eyebrow">Audio Library</div>
+      <h1 class="page-title">Mock <span class="italic">interviews</span></h1>
+      <p class="page-desc">Six full mock interviews. Two for each session, Urdu first then English. <span class="urdu-accent">Sun lo, jab time milay.</span></p>
     </div>
 
-    <div class="info-card">
-      <h3>Round 1 · May 7 · Recruiter Screen</h3>
-      <p>This one is a conversation more than a test. The recruiter wants to confirm the basics and get a feel for whether you would actually thrive in this role.</p>
-      <div class="keyline"><div class="k">Length</div><div class="v">30 to 45 minutes, usually a phone or video call.</div></div>
-      <div class="keyline"><div class="k">Focus</div><div class="v">Your background, why Amazon, why this role, willingness to travel up to 90 percent, physical comfort with the work, salary expectations.</div></div>
-      <div class="keyline"><div class="k">Win it by</div><div class="v">Sounding genuine about why this role fits you. Show you have read the job description and you understand what 90 percent travel actually means in your life.</div></div>
-      <div class="keyline"><div class="k">Watch for</div><div class="v">Soft Leadership Principle questions tucked inside friendly chat. Even here, Amazon is listening.</div></div>
+    <div class="audio-filters" id="audioFilters">
+      <button class="audio-filter-pill active" data-filter="all">All sessions</button>
+      <button class="audio-filter-pill" data-filter="s1">Session 1</button>
+      <button class="audio-filter-pill" data-filter="s2">Session 2</button>
+      <button class="audio-filter-pill" data-filter="s3">Session 3</button>
+      <button class="audio-filter-pill" data-filter="urdu">Urdu only</button>
+      <button class="audio-filter-pill" data-filter="english">English only</button>
     </div>
 
-    <div class="info-card">
-      <h3>Round 2 · May 12 · Loop Interview</h3>
-      <p>This is the deeper round. Expect a mix of behavioral questions tied to the Leadership Principles and technical questions about the actual work.</p>
-      <div class="keyline"><div class="k">Length</div><div class="v">Often 45 to 60 minutes per interviewer, sometimes back to back.</div></div>
-      <div class="keyline"><div class="k">Focus</div><div class="v">Behavioral questions in STAR format, hands on technical questions about cabling, fiber, copper, racks, safety, and troubleshooting.</div></div>
-      <div class="keyline"><div class="k">Win it by</div><div class="v">Having three to five strong stories prepared in STAR form. Each story should map to two or three Leadership Principles.</div></div>
-      <div class="keyline"><div class="k">Watch for</div><div class="v">Bar Raiser style follow ups. They will dig deeper after your answer with "why did you choose that approach", "what would you do differently", "what was the result in numbers".</div></div>
-    </div>
-
-    <div class="tip-box">
-      <div class="tip-label">★ The Amazon truth</div>
-      <ul>
-        <li>Every Amazon interview is graded against the 16 Leadership Principles, even the technical ones.</li>
-        <li>Each interviewer is assigned 2 to 3 specific principles to evaluate. They submit independent feedback.</li>
-        <li>Use "I" not "we". They are hiring you, not your team.</li>
-        <li>Quantify your results. "I reduced rework by 30 percent" lands harder than "it went well".</li>
-        <li>Prepare for follow up questions. They will probe 3 to 4 layers deep.</li>
-      </ul>
-    </div>
+    <div id="audioLibrary"></div>
   </div>
 
   <!-- ============ LP PAGE ============ -->
@@ -2190,7 +3093,7 @@
     <div class="page-header">
       <div class="page-eyebrow">The Question Bank</div>
       <h1 class="page-title">Real <span class="italic">questions</span>, real answers</h1>
-      <p class="page-desc">Tap a question to see a full STAR sample answer tailored to a STORM Installation Tech role. Adapt these to your own experience.</p>
+      <p class="page-desc">Tap a question to see a full STAR sample answer grounded in your real work at PTCL, Securitas, and Amazon. The Resume tab covers questions about your specific job history.</p>
     </div>
     <div class="filter-pills" id="qFilters"></div>
     <div id="qList"></div>
@@ -2520,12 +3423,64 @@
     <div class="page-header">
       <div class="page-eyebrow">Speaking with Confidence</div>
       <h1 class="page-title">Sound <span class="italic">calm</span> and clear</h1>
-      <p class="page-desc">English does not have to be perfect. What matters is structure, pace, and being understood. These tips are practical and proven.</p>
+      <p class="page-desc">Arooj, English does not have to be perfect. What matters is structure, pace, and being understood. <span class="urdu-accent">Aap ki zubaan, aap ki kahaani.</span></p>
+    </div>
+
+    <div class="bridge-card">
+      <div class="bridge-card-title">When your mind goes to Urdu first</div>
+      <div class="bridge-card-sub">This is normal. Use these bridges to land cleanly in English.</div>
+
+      <div class="bridge-row">
+        <div class="bridge-urdu">"Mujhe yaad aaya, aik dafa..."</div>
+        <div class="bridge-eng"><strong>Use:</strong> "Let me share a specific example. There was a time when..."</div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-urdu">"Sawaal samajh nahi aaya, dobara poochiye"</div>
+        <div class="bridge-eng"><strong>Use:</strong> "Could you rephrase that? I want to make sure I answer correctly."</div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-urdu">"Mujhe sochne do ek second"</div>
+        <div class="bridge-eng"><strong>Use:</strong> "That is a great question, let me think for a second."</div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-urdu">"Maine ye kaam PTCL mein kiya tha"</div>
+        <div class="bridge-eng"><strong>Use:</strong> "I did this kind of work during my time at PTCL."</div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-urdu">"Result acha aaya"</div>
+        <div class="bridge-eng"><strong>Use:</strong> "The outcome was [specific number or fact]."</div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-urdu">"Mujhe nahi pata"</div>
+        <div class="bridge-eng"><strong>Use:</strong> "I have not worked with that specifically, but my approach would be to..."</div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-urdu">"Sahi keh rahay hain"</div>
+        <div class="bridge-eng"><strong>Use:</strong> "That is a fair point. Let me adjust my answer."</div>
+      </div>
+    </div>
+
+    <div class="bridge-card">
+      <div class="bridge-card-title">If you stumble, do not panic</div>
+      <div class="bridge-card-sub">Every interviewer has had non native English speakers do better than fluent ones. Calm beats fluent.</div>
+
+      <div class="bridge-row">
+        <div class="bridge-urdu">If you say a word wrong</div>
+        <div class="bridge-eng">Smile. Repeat the word correctly. Continue. Do not apologize.</div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-urdu">If a sentence breaks midway</div>
+        <div class="bridge-eng">Just say "Let me restart that." Then start the sentence fresh.</div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-urdu">If you forget the English word</div>
+        <div class="bridge-eng">Describe it. "The tool you use to test if light is reaching the end of the fiber" is fine. They will say "optical power meter" and you can use it from there.</div>
+      </div>
     </div>
 
     <div class="comm-card">
       <h3>The 3 second rule</h3>
-      <p>When asked a question, take a deliberate 3 second pause before answering. This is not awkward. It is professional. It tells the interviewer you are thinking, and it gives you time to choose the right opening sentence.</p>
+      <p>When asked a question, take a deliberate 3 second pause before answering. This is not awkward. It is professional. It tells the interviewer you are thinking, and it gives you time to choose the right opening sentence in English.</p>
     </div>
 
     <div class="comm-card">
@@ -2633,21 +3588,21 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/></svg>
     <span class="label">Home</span>
   </button>
-  <button class="tab-btn" data-page="lp" onclick="goTo('lp')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>
-    <span class="label">LPs</span>
+  <button class="tab-btn" data-page="s1" onclick="goTo('s1')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" stroke="none">1</text></svg>
+    <span class="label">Sess 1</span>
   </button>
-  <button class="tab-btn" data-page="questions" onclick="goTo('questions')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <span class="label">Q&amp;A</span>
+  <button class="tab-btn" data-page="s2" onclick="goTo('s2')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" stroke="none">2</text></svg>
+    <span class="label">Sess 2</span>
   </button>
-  <button class="tab-btn" data-page="flash" onclick="goTo('flash')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 21h10"/></svg>
-    <span class="label">Cards</span>
+  <button class="tab-btn" data-page="s3" onclick="goTo('s3')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" stroke="none">3</text></svg>
+    <span class="label">Sess 3</span>
   </button>
-  <button class="tab-btn" data-page="quiz" onclick="goTo('quiz')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-    <span class="label">Quiz</span>
+  <button class="tab-btn" data-page="more" onclick="goTo('more')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+    <span class="label">More</span>
   </button>
 </nav>
 
@@ -2775,192 +3730,299 @@ const QUESTIONS = [
   {
     cat: "Intro",
     lp: "Multiple",
+    sessions: [1],
     q: "Tell me about yourself.",
-    s: "I currently work at AWS as an Infrastructure Delivery Install Tech, where I focus on hardware installs and cabling for data center sites.",
-    t: "My day to day involves landing gear in racks, running fiber and copper, testing each cable, and making sure capacity is delivered safely and on time.",
-    a: "I came into this work because I like that it combines physical hands on problem solving with technical precision. I handle a fast moving environment well, I am very comfortable with tight deadlines, and I take safety extremely seriously. I have also been building my technical knowledge in fiber optics and structured cabling on my own time.",
-    r: "I am applying for the STORM role because the travel side of it really fits me, and because I want to keep growing in a role where the work directly impacts AWS capacity for customers.",
-    note: "Keep this answer 60 to 90 seconds. Practice it until it feels natural, not memorized."
+    s: "I am currently part of the Amazon ID Install organization at Manassas, Virginia, working on the cable preparation side, where I prepare fiber and copper cabling for upcoming rack landings.",
+    t: "Before this, I joined the Amazon Manassas data center through Securitas as a security officer for five months, which is how I first got into the Amazon ecosystem.",
+    a: "My data center foundation actually goes back further. From June 2021 to May 2023 I worked as a Data Center Technician 3 at PTCL in Islamabad, Pakistan, where I had two solid years of hands on work with structured cabling, hardware replacement, power and cooling monitoring, and incident response in a 24/7 environment. I have a Bachelor's in Computer Science and I am currently studying for CompTIA Network+ on my own time.",
+    r: "STORM is the right next step for me because it brings me back to the install and deployment work I did at PTCL, but at AWS scale. I am ready for the travel side too, since I have already made a major relocation from Pakistan to the US.",
+    note: "This is your strongest opening. The three step arc from PTCL to Securitas to ID Install is real and it tells your story without exaggeration. Keep it 60 to 90 seconds."
   },
   {
     cat: "Motivation",
     lp: "Customer Obsession",
+    sessions: [1],
     q: "Why do you want this STORM role specifically?",
-    s: "I have been doing infrastructure install work and the part of the job I enjoy most is the high pressure deployment days, when capacity has to come online for customers.",
-    t: "I want a role where that pace is the standard, not the exception.",
-    a: "STORM is exactly that. Flying in to support cluster capacity, dropping into a region cold, executing fast, then moving to the next site. It builds on the technical work I already do, it adds variety through travel, and it keeps me close to the part of AWS that has the most direct impact on customers waiting for capacity.",
-    r: "I am also at a stage where I can fully commit to that travel pattern, which I know is not a fit for everyone.",
-    note: "Tying your motivation to customer impact is a Customer Obsession win."
+    s: "I want to be honest about why STORM, not just any Amazon role.",
+    t: "My background actually fits this role's profile better than most.",
+    a: "At PTCL I spent two years doing exactly the kind of work STORM does day to day, structured cabling, hardware install and replacement, working in a 24/7 environment, and responding to alerts. My current role on the prep team gives me daily proximity to the install side at Amazon scale, and I understand what it takes to get cables ready before a rack landing date. STORM combines what I already know how to do from PTCL with the Amazon environment I work in now, plus the travel side which I am ready for.",
+    r: "I see this as the natural next step that brings my full background together rather than a stretch.",
+    note: "The key argument is 'I did this work in Pakistan.' That is your strongest defendable claim."
   },
   {
     cat: "Personal",
     lp: "Multiple",
+    sessions: [1],
     q: "Where do you see yourself in five years?",
-    s: "I want to be honest about this because I think a clear answer matters here.",
-    t: "My goal is to keep growing in infrastructure work without losing the hands on side that I love.",
-    a: "In five years I see myself still on the install and deployment side of AWS infrastructure, but with deeper specialization. Maybe a senior install tech, maybe leading small deployment teams across regions, possibly mentoring newer techs. I want to be the person who walks into a problem and the team feels calmer because I am there. To get there I plan to keep building my fiber and structured cabling expertise, keep adding certifications like FOA and possibly Network+, and keep saying yes to harder deployments.",
-    r: "I am not chasing a desk job. I want to be valuable on site, valuable to the team, and known for clean reliable work. STORM is the right environment for that path because it puts me at the leading edge of where AWS is expanding capacity.",
+    s: "I want to be honest because I think clarity matters here.",
+    t: "My five year goal is to grow within Amazon Infrastructure Delivery, ideally reaching a senior install tech or team lead role.",
+    a: "To get there I plan to keep building hands on expertise. I am already pursuing CompTIA Network+ and after that I want to add more networking and fiber specific certifications. I want to keep saying yes to harder deployments and travel rotations, and eventually mentor newer techs the way senior people helped me at PTCL when I was starting out. I particularly want to deepen my fiber optic skills since AWS scale relies heavily on it.",
+    r: "I am not looking for a desk path. I want to stay close to the physical infrastructure where I add the most value, and STORM is the ideal environment for that.",
     note: "They want to hear ambition that fits the role. Avoid answers that imply you will leave for a different department in 18 months."
   },
   {
     cat: "Personal",
     lp: "Multiple",
+    sessions: [1],
     q: "What are your strengths?",
-    s: "There are a few but I will pick the top three that matter most for this role.",
-    t: "Honesty about strengths is more useful than a long list.",
-    a: "First, I am calm under pressure. Tight cutover windows do not rattle me, they help me focus. Second, I am detail oriented in a way that matters for cabling and labeling work. I notice things that look slightly wrong before they become real problems. Third, I take ownership. If something is not right on a rack I am working on, I do not move on until it is right, even if it costs me time.",
-    r: "Those three together are why I have a good track record on tight deadline installs and zero reportable safety incidents.",
-    note: "Pick strengths that are real and that you can back up with a story if they probe. Avoid generic answers like 'I am a hard worker'."
+    s: "Three of them, all from real experience.",
+    t: "I will keep them grounded in work I have done.",
+    a: "First, I am calm under pressure. At PTCL I worked rotating shifts in a 24/7 environment including after hours incident response, and I learned how to make clear decisions when alarms are going off. Second, I am detail oriented in a way that matters for cabling work. At PTCL I handled structured cabling labeling and organization, and in my current Amazon role, label accuracy directly determines whether install crews can land racks on time. Third, I take ownership. When I see something that is not right, I do not move on until it is.",
+    r: "Those three together are why my work has been consistently reliable across PTCL, Securitas, and now Amazon.",
+    note: "Pick strengths you can back up with a story if they probe. Avoid generic answers like 'I am a hard worker'."
   },
   {
     cat: "Personal",
     lp: "Earn Trust",
+    sessions: [2],
     q: "What is your biggest weakness?",
-    s: "My honest one is that I sometimes hold on to a task longer than I should because I want to finish it myself.",
-    t: "Especially under deadline pressure, I would rather stay an extra hour and finish clean than hand off a partially done job.",
-    a: "I have been working on this. I have learned to ask for help earlier when scope changes mid task, and I have started using shared cable spreadsheets so a teammate can pick up exactly where I left off if needed. Last quarter I deliberately handed off two projects mid way to other techs to practice this. Both went smoothly.",
-    r: "It is a balance I am still finding, but I am much better at it now than I was a year ago. The role I am applying for actually depends on this kind of teamwork given the travel pattern, so it is the right time to sharpen it.",
-    note: "Pick a real weakness that you are visibly working on. Avoid fake weaknesses like 'I work too hard'."
+    s: "My honest one is that early in my PTCL career, I was sometimes hesitant to escalate issues quickly because I wanted to solve them myself first.",
+    t: "For first level troubleshooting that was usually fine, but for issues that needed senior engineer input, holding on too long meant longer downtime.",
+    a: "I worked on this deliberately. I learned to time box my own troubleshooting before reaching out, and I started documenting what I had already tried before escalating so the next person did not have to redo my steps. By the end of my time at PTCL I was much sharper on this. In my current role I apply the same approach with my team lead.",
+    r: "It is a balance every technician has to find, but I am much better at it now than I was at the start.",
+    note: "A real weakness with visible improvement is much stronger than a fake humble brag."
   },
   {
     cat: "Personal",
     lp: "Multiple",
+    sessions: [1],
     q: "Why should we hire you?",
-    s: "I want to keep this short and direct.",
-    t: "There are three reasons that I think matter most.",
-    a: "First, I already do this exact work. Hardware installs, fiber, copper, racks, testing, documentation. The ramp time on me is short. Second, I am genuinely fit for the travel side of this role. Not just willing, actually a fit, which is what makes the difference at six months in. Third, I take the Leadership Principles seriously. I know what Bias for Action looks like in practice, what Dive Deep means when troubleshooting, and what Earn Trust feels like on a tired team finishing a late cutover.",
-    r: "I am not the loudest candidate you will interview, but I will be reliable, low drama, and effective from week one.",
+    s: "Three reasons.",
+    t: "I will keep it short.",
+    a: "First, I have two years of hands on data center work at PTCL that maps directly to what STORM does, structured cabling, hardware replacement, 24/7 incident response. Second, I already work inside the Amazon DC ecosystem, both currently on the ID Install prep team and previously through Securitas, so I know the operational standards and culture. Third, I am ready for the travel and physical demands. I have already made a major life relocation from Pakistan to the US, and the daily physical work is something I have sustained for years across multiple roles.",
+    r: "I am not the loudest candidate, but I will be reliable, hands ready, and effective from week one.",
     note: "This is your closing argument. Save it for when they ask. Keep it under 90 seconds."
   },
   {
     cat: "Personal",
     lp: "Learn and Be Curious",
+    sessions: [2],
     q: "What are you passionate about?",
-    s: "Inside work, the moment I love most is when capacity comes online and you know real customers are about to start using it.",
-    t: "Outside work, I care about a few things that I think also make me better at this job.",
-    a: "I am drawn to anything physical and precise at the same time. That is why this kind of infrastructure work feels right. It is not just a job for me. I also enjoy learning new things on my own time. Right now I am working through fiber optic theory in more depth even though my day to day already covers the basics. And I value people who do their work without needing recognition, which is the culture I want to be part of.",
-    r: "A person who is genuinely curious about their craft becomes good at it faster than someone who treats it as just a paycheck. That has been true for me and I think it shows in the quality of my installs.",
-    note: "Be real here. Forced passion sounds fake. Pick something true and connect it back to the work."
+    s: "Inside work, the part I love is when something physical I helped prepare or install is now actually carrying customer traffic.",
+    t: "That feels real to me in a way that other work does not.",
+    a: "That is why data center work has fit me since my first year at PTCL. I am drawn to physical precision work, and I keep adding to my technical foundation on my own time, which is why I am pursuing CompTIA Network+ now. I also enjoy the team rhythm of 24/7 operations, where you rely on your shift partners and they rely on you.",
+    r: "I think people who actually like this work get better at it faster than people who just clock in.",
+    note: "Forced passion sounds fake. Pick something true and connect it back to the work."
   },
   {
     cat: "Personal",
     lp: "Customer Obsession",
+    sessions: [1],
     q: "What do you know about Amazon and AWS?",
-    s: "I have done my reading and I want to give you a grounded answer rather than recite the website.",
-    t: "I will focus on what is most relevant to this role.",
-    a: "AWS is the cloud arm of Amazon and the largest cloud provider globally. The Infrastructure Delivery team is the part of AWS that actually builds and maintains the physical capacity that every cloud service runs on. STORM specifically is the mobile fast deployment unit, which means you go where the demand spikes. I also know that AWS is heavily focused on customer obsession and operational excellence as core values, which translates on the ground into clean documentation, no shortcuts on standards, and accountability to the next shift.",
-    r: "What draws me to AWS over other cloud providers is the scale. The rate of new region build outs and capacity expansion is unmatched, and that is exactly the environment a STORM tech wants to be in.",
+    s: "I will focus on what is relevant to this role rather than recite the website.",
+    t: "Quick grounded picture.",
+    a: "AWS is the cloud arm of Amazon and the largest cloud provider globally. The Infrastructure Delivery organization, which I work in, is the part of AWS that builds and maintains the physical capacity that every cloud service runs on. STORM is the mobile fast deployment unit that flies into regions to support cluster capacity needs. From my prep team work I also know that AWS uses high performance compute platforms like GB200 and GB300 for AI workloads, which require extra care and precision in handling.",
+    r: "What draws me to AWS specifically is the scale of region build outs. From the install side, that is the most exciting environment to be in.",
     note: "Show that you understand where this team fits in the AWS picture. Skip the generic 'AWS is a great company' line."
   },
   {
     cat: "Personal",
     lp: "Deliver Results",
+    sessions: [3],
     q: "Walk me through a typical day in your current role.",
-    s: "A typical install day starts before I even get to site.",
-    t: "The work has a rhythm and I will walk you through it.",
-    a: "I start with the day's cable plan and ticket queue, usually reviewed the night before so I am not figuring it out at 7 AM. On site I begin with PPE, ESD strap, tool check. Morning is usually heavy lifting work, racking servers and switches while I am freshest. Mid morning I switch to cabling, fiber and copper runs based on the plan, with proper bend radius and cable management. Afternoon is testing, optical power meter for fiber, continuity tests for copper, then labeling both ends and updating DCIM. Last hour is always documentation and final walkthrough, looking for anything that does not match the plan.",
-    r: "I end most shifts with a clean rack, complete documentation, and zero open items handed to the next shift. That is the standard I hold myself to.",
+    s: "A typical day at the prep team starts before the cables even leave our area.",
+    t: "Let me walk through it.",
+    a: "The day begins with reviewing the cable plan for upcoming rack landings, what is needed, what site, by what date. From there I print labels with exact cable specifications, take precise measurements, and pick the cables from their assigned aisles. Each cable gets matched to its label and verified for accuracy. Before any shipment, every cable is double checked against the site requirements and the cable IDs. Cables get organized into totes by site, and if a site needs more than nine totes, we combine onto pallets for transport. For sensitive hardware like GB200 and GB300 AI compute units, we add extra verification because of their value and the precision needed.",
+    r: "I end most shifts with verified, documented cable inventories ready for install crews to use without rework, which is what supports on time rack landings.",
     note: "This question tests whether you actually do the work or just talk about it. Be specific and procedural."
   },
   {
     cat: "Behavioral",
     lp: "Ownership",
+    sessions: [1],
     q: "Tell me about a time you took ownership of a problem that was not yours.",
-    s: "On a deployment last month, I was finishing my own rack work when I noticed cables in the rack next to mine were labeled inconsistently. They were not my installs.",
-    t: "Technically my work was done, but I knew if those labels stayed wrong, the next team troubleshooting them would lose hours.",
-    a: "I checked the cable plan against the labels, identified four cables that had source and destination flipped, re-labeled them properly, updated the cable spreadsheet, and left a short note for the team lead so they would know what was changed and why.",
-    r: "It took me an extra 30 minutes that day. Two weeks later, the team lead told me a remote troubleshooting call went smoothly because the labels matched the documentation, which would not have been the case before.",
-    note: "Notice the answer uses 'I' throughout. Quantify with specific numbers (4 cables, 30 minutes, 2 weeks)."
+    s: "At PTCL one weekend shift, I noticed the cable management on a rack outside my assigned area was deteriorating, with several patch cables loose and one cable starting to bend below the recommended radius.",
+    t: "It was not my rack and the assigned tech was off shift, but I knew if it stayed that way we would risk a link failure on a production system.",
+    a: "I checked the cable plan to confirm what I was looking at, properly seated the loose patches, re-routed the bent cable through the management arm to fix the bend radius, labeled what I had touched, and logged the work in the ticketing system so the assigned tech would see exactly what was changed and why when they came back.",
+    r: "The links stayed up. The assigned tech later thanked me because it would have been a 2 AM call in otherwise. After that I made it a habit to do a quick walk past adjacent racks during slow hours.",
+    note: "Notice the answer uses 'I' throughout. The PTCL setting is real and defendable."
   },
   {
     cat: "Behavioral",
     lp: "Bias for Action",
+    sessions: [1],
     q: "Tell me about a time you had to make a quick decision without complete information.",
-    s: "During a switch install, we had a fiber run that failed its initial light test. The cutover window was closing in 90 minutes and the lead network engineer was on another call.",
-    t: "I had to decide whether to wait for guidance, escalate, or troubleshoot myself.",
-    a: "I checked the connector ends with a fiber scope, found the receive side was contaminated, cleaned it with a dry cloth and an inspection cleaner, re-tested, and the loss was back inside spec. I documented the issue in the install notes and texted the engineer a one line update so he was not surprised when he saw the log.",
-    r: "We hit the cutover with 20 minutes to spare. A dirty connector is the most common cause of fiber failure, and catching it fast saved an escalation.",
+    s: "One late shift at PTCL, we got a critical alert on a server that was throwing repeated power supply errors. The senior engineer was on a call and could not respond immediately.",
+    t: "I had to decide whether to wait or act.",
+    a: "I checked the server's documentation, confirmed it was a hot swappable redundant power supply, retrieved a replacement from stock, swapped the failed unit, verified the LEDs went to healthy state, and documented the swap in the ticketing system. I sent the senior engineer a one line update so he would not be surprised when he saw the log.",
+    r: "The server stayed up with no service interruption. The senior later confirmed I had made the right call. Acting decisively within my scope was what kept that production system running.",
     note: "Bias for Action does not mean reckless. It means decisive within your scope."
   },
   {
     cat: "Behavioral",
     lp: "Insist on the Highest Standards",
+    sessions: [2],
     q: "Tell me about a time you refused to accept a 'good enough' result.",
-    s: "I had finished running 12 fiber patches into a new rack. Eleven came back inside spec on the power meter. One was on the edge, technically passing but with very little margin.",
-    t: "It would have worked. But I was not comfortable leaving a patch with that little headroom in production.",
-    a: "I pulled the cable, cleaned both connectors, re-seated them, and re-tested. The reading came back well inside spec. I logged the original reading and the corrected reading so there was a paper trail.",
-    r: "Six months later that link is still healthy. A marginal connector at install time often fails under temperature swings later. Re-doing it cost me 8 minutes and probably prevented a future escalation.",
+    s: "At my current prep role, I had finished verifying a tote of fiber jumpers headed for a high priority site. Eleven cables checked out cleanly, but the twelfth had a slightly off measurement, technically within tolerance but at the edge.",
+    t: "It would have shipped and probably worked, but I was not comfortable with that little margin for a high priority site.",
+    a: "I pulled it, re-measured carefully, confirmed it was actually about 8 cm shorter than spec, swapped it for a correctly sized one, re-labeled, re-verified, and noted the original measurement error so we could check whether it was a one off.",
+    r: "The shipment went out clean. A short cable in a rack often forces awkward routing or strain on the connector that fails later. Catching it cost me 10 minutes.",
     note: "Quality stories often beat heroic stories. They show steady judgment."
   },
   {
     cat: "Behavioral",
     lp: "Dive Deep",
+    sessions: [2],
     q: "Tell me about a time you investigated a problem deeply and found a root cause that surprised you.",
-    s: "We had a switch port that kept showing intermittent link flaps after a deployment. The first response was to assume bad fiber.",
-    t: "My job was to identify the actual cause before we replaced more parts.",
-    a: "I tested the fiber with an OTDR and it was clean. I swapped the SFP transceiver, no change. I checked the patch panel insertion, fine. Finally I traced the cable run physically and found it had been pulled too tightly around a corner during the original install. The bend radius was below spec, which was creating intermittent loss under thermal expansion.",
-    r: "I re-routed the cable through the proper management path with the correct bend radius. The flaps stopped. I documented the cause and added 'verify bend radius on every run' to our post install checklist.",
+    s: "At PTCL we had a recurring issue where one rack would lose monitoring data for five to ten minutes, a few times a day. The first assumption was a sensor problem.",
+    t: "My job was to actually find the cause rather than keep replacing sensors.",
+    a: "I checked the sensor logs and confirmed the sensors themselves were fine. Checked the power, stable. Checked the network switch port, clean. I traced the cable physically and noticed it ran past a fluorescent light fixture that had recently been replaced. I tested the cable considering EMI shielding and found interference was bleeding into a section that had not been shielded properly. I re-routed the cable through a different path with proper separation.",
+    r: "The intermittent dropouts stopped. I documented what I had found and the team started checking cable routing whenever new fixtures were installed. It saved a lot of false sensor replacements.",
     note: "The 'unexpected root cause' angle is exactly what Dive Deep is testing."
   },
   {
     cat: "Behavioral",
     lp: "Earn Trust",
+    sessions: [2],
     q: "Tell me about a time you made a mistake. How did you handle it?",
-    s: "Early in my time on this role, I racked a 1U switch but did not tighten one set of cage nuts properly because I was rushing to finish before end of shift.",
+    s: "Early in my time at PTCL, I was rushing to finish replacing a hot swappable hard drive before end of shift. I did not tighten one of the rail screws properly because I was already past my shift end time.",
     t: "I owed it to my team to catch this and fix it.",
-    a: "Before leaving, I did my final walkthrough, noticed the switch was sitting slightly uneven, and immediately stopped to re-do it. I told my lead what had happened, fixed the install properly, and stayed an extra 15 minutes to make sure my whole rack was right. I also added a 'final torque check' as the last step of my personal install routine going forward.",
-    r: "The switch is still in service with no issue. More importantly, my lead later told me he trusted me more for owning it on my own rather than hoping no one noticed.",
-    note: "Self-aware mistake stories build trust faster than perfect record stories."
+    a: "After my final walkthrough I noticed the drive was sitting slightly uneven. I immediately stopped, removed it, re-mounted it properly with all screws torqued, and stayed an extra 20 minutes to make sure the rest of my shift's work was solid. I told my supervisor what had happened and what I had done about it.",
+    r: "My supervisor told me later that admitting it openly built trust faster than hoping no one noticed. I added a 'final torque check' to my personal shift routine after that, and I have not had a similar issue since.",
+    note: "Self aware mistake stories build trust faster than perfect record stories."
   },
   {
     cat: "Behavioral",
     lp: "Deliver Results",
+    sessions: [1],
     q: "Tell me about a time you delivered a project under a tight deadline.",
-    s: "We had a rack delivery scheduled for a Friday cutover. On Wednesday the cable plan was updated, which meant 30 percent of the pre-staged cables were now wrong type or length.",
-    t: "I had two days to re-stage cables, verify the new plan, and stay on schedule for Friday.",
-    a: "I built a quick comparison spreadsheet between the old plan and the new plan to identify exactly which cables needed to be replaced. I pulled the right cables from stock, pre-labeled them at the bench, and ran the install in the order the network team needed for testing. I worked an extended Thursday so Friday could stay clean.",
-    r: "We hit the cutover window on Friday with no slip and zero failed light tests. The team lead used the comparison spreadsheet I built as a template for two later projects.",
+    s: "At my current prep team role, we had a high priority rack landing scheduled for a Friday and a cable plan was updated mid week. About 30 percent of the cables we had already prepped were now wrong type or length.",
+    t: "I had two days to re-prep the changed cables, re-verify everything, and stay on schedule.",
+    a: "I built a quick comparison list between the old and new plans to identify exactly which cables needed to be replaced. I pulled the right cables from stock, re-labeled and re-measured them, and organized them into the totes in the order needed for the install sequence. I worked an extended shift to keep us on track.",
+    r: "The shipment went out on schedule with zero discrepancies at site verification. The install crew landed the rack on time. The comparison list method I used got picked up as a quick template for future plan changes.",
     note: "End every Deliver Results answer with concrete numbers and a tangible artifact if possible."
   },
   {
     cat: "Travel",
     lp: "Customer Obsession",
+    sessions: [1],
     q: "How do you feel about traveling up to 90 percent of your time across AMER?",
     s: "I want to be honest about this because I know it is the hardest part of the role for many people.",
-    t: "I have thought about it carefully and it works for my life right now.",
-    a: "I am at a point where I can be flexible on location, my home setup supports it, and I actually enjoy seeing different sites and meeting different teams. I keep my go bag packed. I have a system for short notice flights, and I know how to settle into a new region quickly without it affecting my work quality.",
-    r: "I see the travel as the upside of the role, not the downside. The customers waiting on capacity in those regions are why this role exists.",
-    note: "Be genuine. If you have any travel anxiety, address it honestly and explain how you manage it."
+    t: "It actually fits where I am right now.",
+    a: "First, I have already made a major relocation from Pakistan to the US, so adjusting to new places is not theoretical for me. I have done it. Second, I have sustained 24/7 rotating shift schedules at both PTCL and through Securitas, so I am comfortable with non standard work hours and short notice schedule changes. Third, I have a reliable personal vehicle and a valid driver's license, which I know is required for this role.",
+    r: "The travel actually appeals to me. Getting to see different sites and meet different teams across AMER is an upside, not a downside.",
+    note: "The relocation point is genuinely powerful here. Most candidates have not lived through that kind of move."
   },
   {
     cat: "Physical",
     lp: "Ownership",
+    sessions: [3],
     q: "Are you comfortable with the physical demands of this role? Lifting up to 40 pounds, working at heights, long shifts on your feet?",
-    s: "Yes, this is the day to day reality of my current role.",
-    t: "I take physical safety as seriously as electrical or data safety.",
-    a: "I follow proper lift technique on anything up to 40 pounds, I always do group lifts on anything above. I am comfortable on platform ladders with three points of contact at all times. I work full shifts on my feet, I stay hydrated, I take micro breaks between heavy tasks, and I never push past a safety limit just to finish faster.",
-    r: "I have never had a reportable injury in this role. That is not luck, that is the result of treating each lift, each ladder climb, and each long shift as something to plan for, not improvise through.",
+    s: "Yes, this has been the day to day reality of every role I have had since 2021.",
+    t: "I take physical safety seriously.",
+    a: "At PTCL I spent two years on rotating shifts that included full days of standing, lifting, hardware swaps, and ladder work. My current role at Amazon has the same physical demands. I follow proper lift technique on anything up to 40 pounds, I always do group lifts on heavier items, I am comfortable on platform ladders with three points of contact, and I treat physical safety the same way I treat ESD protection or electrical safety, as non negotiable.",
+    r: "I have never had a reportable injury across any of my roles. That is not luck, it is the result of treating each shift as something to plan for, not improvise through.",
     note: "Tie physical ability to safety culture. That is what they are really listening for."
   },
   {
     cat: "Conflict",
     lp: "Have Backbone",
+    sessions: [2],
     q: "Tell me about a time you disagreed with your manager or team lead.",
-    s: "On one job, my lead wanted to skip the optical power meter test on a series of patch fibers because they were short jumpers and he believed visual inspection was enough.",
-    t: "I felt we should not skip the test, but he was the lead and the time pressure was real.",
-    a: "I respectfully said something like 'I understand the time issue, but I would feel a lot better if we tested even just a sample. If they all pass we can move on faster, and if one fails we know now instead of in production.' He thought about it for a moment and agreed to test 4 of the 12. One of those 4 came back with a failing reading.",
-    r: "We tested the rest, found one more bad jumper, replaced both. The lead later thanked me for pushing on it. I learned that having a calm, specific reason for pushing back makes the disagreement easier to resolve.",
+    s: "At PTCL one shift, my team lead wanted to skip the post replacement verification step on a few power supply units because we were running close to end of shift.",
+    t: "I understood the time pressure but was not comfortable skipping verification on power equipment.",
+    a: "I respectfully said something like 'I understand we are tight on time, but if a unit fails after we sign off it will be a longer issue than the verification would take. Can we at least sample check the most critical ones?' My lead thought about it and agreed to verify three of the six. One of those three came back with a marginal reading.",
+    r: "We verified the rest, found one more marginal unit, swapped both. My lead later said pushing back was the right call. I learned that having a calm specific reason for disagreement makes it much easier to resolve.",
     note: "Have Backbone is not about being argumentative. It is about being honest and constructive."
   },
   {
     cat: "Learning",
     lp: "Learn and Be Curious",
-    q: "Tell me about a time you learned a new technical skill on your own.",
-    s: "When I started getting more fiber heavy installs, I realized my optical fundamentals were weaker than my copper fundamentals.",
-    t: "I wanted to fix that gap before it caused a mistake on the job.",
-    a: "I studied the FOA Certified Fiber Optic Technician material in the evenings over about three weeks. I watched OTDR walkthrough videos, I practiced cleaning and inspecting connectors at home with practice cables, and I asked one of the senior techs at work to show me how to read OTDR traces during downtime.",
-    r: "Within a month I was confident running fiber light tests independently and reading OTDR traces. The next deployment I led had zero re-work on fiber, where my prior projects sometimes had one or two cables to re-do.",
+    sessions: [2],
+    q: "Tell me about a time you learned something new on your own.",
+    s: "My whole career path is the answer to this in a way.",
+    t: "Each step required learning something new outside of formal training.",
+    a: "At PTCL I started fresh out of my Computer Science degree and had to learn data center work from scratch in a 24/7 environment, mostly through senior techs and reading documentation in the evenings. When I moved to the US, I took the Securitas role at Amazon Manassas specifically because I wanted to be inside the Amazon ecosystem and learn how a hyperscale data center operates. I spent five months learning Amazon's standards, then transitioned internally to ID Install. Right now I am pursuing CompTIA Network+ on my own time to deepen my networking foundation.",
+    r: "I think people who treat their career as a series of learning steps end up qualified for roles others cannot reach.",
     note: "Self directed learning is one of the most underrated principles for a tech role. Show you do it."
+  },
+  {
+    cat: "Resume",
+    lp: "Multiple",
+    sessions: [3],
+    q: "Walk me through your time at PTCL.",
+    s: "PTCL is Pakistan Telecommunication Company Limited, the largest telecommunications provider in Pakistan. I worked at one of their main Islamabad data centers from June 2021 to May 2023, two years as a Data Center Technician 3.",
+    t: "My role covered the day to day operations of an enterprise scale data center.",
+    a: "My main responsibilities were monitoring infrastructure health including power systems, cooling, and environmental sensors, and responding to alerts. I performed first level hardware troubleshooting and escalated when needed. I replaced faulty components like drives, RAM, power supplies, and network modules. I managed structured cabling, including running, labeling, and organizing fiber and copper across racks. I logged everything through enterprise ticketing systems for audit traceability.",
+    r: "It was rotating shifts in a 24/7 environment, which gave me solid foundation in incident response, hardware handling, and cabling work. That is the experience I bring to STORM.",
+    note: "Two years at PTCL is your strongest defendable claim. Speak about it with confidence and detail."
+  },
+  {
+    cat: "Resume",
+    lp: "Learn and Be Curious",
+    sessions: [1],
+    q: "Why did you take the Securitas role at Amazon?",
+    s: "When I moved from Pakistan to the US, I wanted to get back into the data center industry, but specifically into the Amazon ecosystem.",
+    t: "Direct hires can take time, especially for someone newly relocated.",
+    a: "The Securitas role at Amazon Manassas was a deliberate entry point. It put me inside an active 24/7 Amazon data center, working with their access control, CCTV, ticketing, and compliance systems. I treated it as a learning role. I observed how Amazon DCs operate, met people in different teams, and proved my reliability.",
+    r: "After about five months, an opportunity opened in the ID Install organization at the same site, and I was able to move into it directly. The Securitas time did exactly what I needed it to do.",
+    note: "Frame Securitas as deliberate strategy, not as a step back. The transition itself is the proof."
+  },
+  {
+    cat: "Resume",
+    lp: "Multiple",
+    sessions: [1],
+    q: "Why did you only stay at Securitas for five months?",
+    s: "My time at Securitas was always intended as a stepping stone to get into Amazon's infrastructure side directly.",
+    t: "It was never meant to be a long term role.",
+    a: "When the opportunity opened in the ID Install organization at the same Amazon Manassas site, I applied and transitioned over. The move was not because anything went wrong at Securitas, it was because the role I was actually working toward, working directly on Amazon's infrastructure, opened up.",
+    r: "I am grateful for the Securitas time because it gave me my entry into the Amazon environment, and the transition was a clean internal move.",
+    note: "If they probe, do not get defensive. The five months ended with a promotion into the work you wanted."
+  },
+  {
+    cat: "Resume",
+    lp: "Multiple",
+    sessions: [1],
+    q: "There is a gap between May 2023 and August 2024. What were you doing during that time?",
+    s: "That is the period I relocated from Pakistan to the US.",
+    t: "International relocation took time.",
+    a: "I left PTCL in May 2023, moved to the US, settled into the new country, completed personal logistics, and then started looking for data center work in the US market. I joined Securitas at the Amazon Manassas site in August 2024, about 15 months after leaving PTCL.",
+    r: "Once I was settled, I went straight back to the data center industry. The gap was the relocation, nothing else.",
+    note: "Be calm and matter of fact. Relocation is a legitimate reason for a gap and most interviewers understand it."
+  },
+  {
+    cat: "Resume",
+    lp: "Multiple",
+    sessions: [3],
+    q: "Why are you ready for STORM coming from a prep role?",
+    s: "I think this is a fair question because the prep team and STORM do different work, even though we are in the same organization.",
+    t: "My readiness comes from two places, my PTCL experience and my proximity to install at Amazon now.",
+    a: "At PTCL I did install side work for two years. Structured cabling, hardware replacement, troubleshooting. That is the technical foundation. My current prep role gives me the Amazon specific environment, the standards, and exposure to the cable types and high value compute hardware like GB200 and GB300 I would be working with at STORM. So I have the install muscle memory from PTCL plus the Amazon process knowledge from now. STORM brings them together.",
+    r: "I would rather be honest about the path than oversell my current role. The path itself is the answer.",
+    note: "This is a key question. Lean heavily on PTCL. Do not pretend prep team is install work."
+  },
+  {
+    cat: "Resume",
+    lp: "Learn and Be Curious",
+    sessions: [3],
+    q: "Tell me about your CompTIA Network+ progress.",
+    s: "I am currently studying for CompTIA Network+, which is one of the certifications listed as preferred for this role.",
+    t: "I am doing it on my own time alongside my current job.",
+    a: "I am working through the Network+ material in evenings and weekends, focusing on networking fundamentals, cabling and connectors, troubleshooting methodology, and security basics. I have also covered some A+ material previously.",
+    r: "It is deliberate preparation for roles like STORM where networking knowledge directly applies.",
+    note: "Do not overstate progress. They might ask specific questions. Honest 'I am studying it now' is fine."
+  },
+  {
+    cat: "Resume",
+    lp: "Multiple",
+    sessions: [1],
+    q: "Why did you choose Computer Science as your degree?",
+    s: "I chose Computer Science because I was interested in how computing infrastructure actually works at the level beneath what most users see.",
+    t: "It was a deliberate choice for the field I am now working in.",
+    a: "The degree gave me foundation in operating systems, networking, hardware concepts, and troubleshooting methodology. Even though my work is hands on and physical, that academic foundation helps me understand why we do things the way we do, not just what to do. It is also why I picked PTCL as my first job, to get into infrastructure work directly.",
+    r: "Right now I am pursuing CompTIA Network+ to add a more applied networking certification on top of the degree.",
+    note: "Academic background plus hands on work is a strong combination. Own both."
+  },
+  {
+    cat: "Resume",
+    lp: "Customer Obsession",
+    sessions: [3],
+    q: "What is the difference between what you do now and what STORM does?",
+    s: "Honest answer, the prep team and STORM are adjacent but different.",
+    t: "Both sit inside the ID Install organization.",
+    a: "The prep team prepares cables and materials for upcoming rack landings. We label, measure, verify, and ship cables to sites so install crews have what they need. STORM is the install side. They actually land the racks, run the cables, install the hardware, and bring capacity online. The prep work I do is upstream of the install work STORM does. I support their success, but I do not do the install work itself in this role.",
+    r: "That is exactly why STORM is the right move for me. PTCL was install side work, my current role is adjacent to install, and STORM is the natural step that puts me back on the install side at Amazon scale.",
+    note: "Honest framing wins. Do not blur the line between prep and install. Acknowledge the difference and explain how PTCL bridges it."
   }
 ];
 
@@ -3153,27 +4215,123 @@ function saveState() {
 }
 
 /* ============================================================
-   COUNTDOWN
+   LIVE COUNTDOWN to next interview
    ============================================================ */
 
+const SESSIONS = [
+  {
+    id: 1,
+    label: "Session 1",
+    interviewer: "Md Alam, Hiring Manager",
+    date: new Date('2026-05-07T10:00:00-04:00'),
+    dateLabel: "Thursday, May 7, 2026 \u00b7 10:00 AM EDT"
+  },
+  {
+    id: 2,
+    label: "Session 2",
+    interviewer: "Giovanni Urrutia, ID Tech",
+    date: new Date('2026-05-07T16:00:00-04:00'),
+    dateLabel: "Thursday, May 7, 2026 \u00b7 4:00 PM EDT"
+  },
+  {
+    id: 3,
+    label: "Session 3 (Technical)",
+    interviewer: "Jovani Castelan, ID Tech",
+    date: new Date('2026-05-11T13:00:00-04:00'),
+    dateLabel: "Monday, May 11, 2026 \u00b7 1:00 PM EDT"
+  },
+];
+
+function _padCD(n) { return n < 10 ? '0' + n : '' + n; }
+
 function updateCountdown() {
-  const now = new Date('2026-05-04T12:00:00');
-  const i1 = new Date('2026-05-07T09:00:00');
-  const i2 = new Date('2026-05-12T09:00:00');
+  const now = new Date();
 
-  const dayMs = 1000 * 60 * 60 * 24;
-  const d1 = Math.max(0, Math.ceil((i1 - now) / dayMs));
-  const d2 = Math.max(0, Math.ceil((i2 - now) / dayMs));
+  // Find next upcoming session
+  let next = SESSIONS.find(s => s.date > now);
 
-  const d1NumEl = document.getElementById('d1Num');
-  const d1UnitEl = document.getElementById('d1Unit');
-  const d1MiniEl = document.getElementById('d1Mini');
-  const d2MiniEl = document.getElementById('d2Mini');
+  // Update home picker cards (next session glows)
+  for (let i = 0; i < SESSIONS.length; i++) {
+    const session = SESSIONS[i];
+    const pickCard = document.getElementById('pickS' + session.id);
+    const pickWhen = document.getElementById('pickWhen' + session.id);
+    if (pickCard) {
+      pickCard.classList.toggle('next', next && session.id === next.id);
+    }
+    if (pickWhen) {
+      if (session.date < now) {
+        pickWhen.textContent = "Done";
+      } else {
+        const diff = session.date - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        if (days > 0) pickWhen.textContent = days + 'd ' + hours + 'h';
+        else if (hours > 0) pickWhen.textContent = hours + 'h';
+        else {
+          const mins = Math.floor((diff / (1000 * 60)) % 60);
+          pickWhen.textContent = mins + 'm';
+        }
+      }
+    }
+  }
 
-  if (d1NumEl) d1NumEl.textContent = d1;
-  if (d1UnitEl) d1UnitEl.textContent = d1 === 1 ? 'day to go' : 'days to go';
-  if (d1MiniEl) d1MiniEl.textContent = d1 + 'd';
-  if (d2MiniEl) d2MiniEl.textContent = d2 + 'd';
+  // Update per-session countdown panels (page-s1, page-s2, page-s3)
+  for (const session of SESSIONS) {
+    const id = session.id;
+    const dEl = document.getElementById('s' + id + 'Days');
+    const hEl = document.getElementById('s' + id + 'Hours');
+    const mEl = document.getElementById('s' + id + 'Mins');
+    const sEl = document.getElementById('s' + id + 'Secs');
+    if (!dEl) continue;
+    if (session.date < now) {
+      dEl.textContent = '--'; hEl.textContent = '--'; mEl.textContent = '--'; sEl.textContent = '--';
+      continue;
+    }
+    const diff = session.date - now;
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const sc = Math.floor((diff / 1000) % 60);
+    dEl.textContent = _padCD(d);
+    hEl.textContent = _padCD(h);
+    mEl.textContent = _padCD(m);
+    sEl.textContent = _padCD(sc);
+  }
+
+  // Update main live countdown
+  const titleEl = document.getElementById('lcTitle');
+  const interviewerEl = document.getElementById('lcInterviewer');
+  const dateEl = document.getElementById('lcDate');
+  const daysEl = document.getElementById('lcDays');
+  const hoursEl = document.getElementById('lcHours');
+  const minsEl = document.getElementById('lcMins');
+  const secsEl = document.getElementById('lcSecs');
+
+  if (!next) {
+    if (titleEl) titleEl.innerHTML = 'All sessions <span class="accent">complete</span>';
+    if (interviewerEl) interviewerEl.textContent = 'You showed up for all three';
+    if (dateEl) dateEl.innerHTML = '<span class="urdu-accent">Mubarak ho.</span> Whatever the result, the prep is done.';
+    if (daysEl) daysEl.textContent = '--';
+    if (hoursEl) hoursEl.textContent = '--';
+    if (minsEl) minsEl.textContent = '--';
+    if (secsEl) secsEl.textContent = '--';
+    return;
+  }
+
+  if (titleEl) titleEl.innerHTML = 'Next: <span class="accent">' + next.label + '</span>';
+  if (interviewerEl) interviewerEl.textContent = next.interviewer;
+  if (dateEl) dateEl.textContent = next.dateLabel;
+
+  const diff = next.date - now;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const mins = Math.floor((diff / (1000 * 60)) % 60);
+  const secs = Math.floor((diff / 1000) % 60);
+
+  if (daysEl) daysEl.textContent = _padCD(days);
+  if (hoursEl) hoursEl.textContent = _padCD(hours);
+  if (minsEl) minsEl.textContent = _padCD(mins);
+  if (secsEl) secsEl.textContent = _padCD(secs);
 }
 
 /* ============================================================
@@ -3313,6 +4471,51 @@ function renderQuestions() {
 function toggleQ(idx) {
   state.qExpanded[idx] = !state.qExpanded[idx];
   renderQuestions();
+  renderSessionQuestions();
+}
+
+/* ============================================================
+   SESSION QUESTIONS
+   Build question cards inside each Interview Plan tab
+   ============================================================ */
+
+function renderSessionQuestions() {
+  for (let s = 1; s <= 3; s++) {
+    const wrap = document.getElementById('sessionQs' + s);
+    if (!wrap) continue;
+    const filtered = QUESTIONS.filter(q => q.sessions && q.sessions.includes(s));
+    wrap.innerHTML = filtered.map(q => {
+      const idx = QUESTIONS.indexOf(q);
+      const expanded = state.qExpanded[idx] ? 'expanded' : '';
+      return `
+        <div class="q-card ${expanded}" data-idx="${idx}" onclick="toggleQ(${idx})">
+          <div class="q-card-header">
+            <div class="q-tag">${q.lp}</div>
+            <div class="q-text">${q.q}</div>
+          </div>
+          <div class="q-body">
+            <div class="q-section s">
+              <div class="q-section-label">Situation</div>
+              <p>${q.s}</p>
+            </div>
+            <div class="q-section t">
+              <div class="q-section-label">Task</div>
+              <p>${q.t}</p>
+            </div>
+            <div class="q-section a">
+              <div class="q-section-label">Action</div>
+              <p>${q.a}</p>
+            </div>
+            <div class="q-section r">
+              <div class="q-section-label">Result</div>
+              <p>${q.r}</p>
+            </div>
+            <div class="q-which-lp">${q.note}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
 }
 
 /* ============================================================
@@ -3555,18 +4758,20 @@ function maybeShowSplash() {
    ============================================================ */
 
 const AFFIRMATIONS = [
-  "You have done harder things than this. The interview is just a conversation about work you already know.",
-  "Tum tayyar ho. Hosla rakho. The prep is solid, your experience is real.",
-  "Your accent is not on trial. Your thinking is. And your thinking is sharp.",
+  "Arooj, you have done harder things than this. The interview is just a conversation about work you already know.",
+  "Aap tayyar hain. Hosla rakhein. The prep is solid, your experience is real.",
+  "Arooj, your accent is not on trial. Your thinking is. And your thinking is sharp.",
   "Pause before you answer. Three seconds of silence is better than three minutes of rambling.",
   "Every story you tell is real. Real stories always sound better than rehearsed ones.",
-  "You belong in that room. They are looking for someone exactly like you.",
+  "Aap us room mein belong karti hain. They are looking for someone exactly like you.",
   "With the Name of Allah, take a breath. Walk in calm. Walk out proud.",
-  "It is okay to ask the interviewer to repeat a question. Clarity is professional.",
+  "Arooj, it is okay to ask the interviewer to repeat a question. Clarity is professional.",
   "Use 'I' not 'we' in your answers. They are hiring you, not your team.",
   "Quantify every result. 'I reduced rework by 30 percent' lands harder than 'it went well'.",
-  "InshaaAllah, you will look back at this week and smile. Just keep showing up.",
-  "Whatever happens, you tried. Tried is more than most people manage.",
+  "InshaaAllah, aap is hafte ko muskura ke yaad karengi. Just keep showing up.",
+  "Arooj, your two years at PTCL are real. Lean on them. They are your foundation.",
+  "When the question comes in English and your mind goes to Urdu, that is normal. Take the second. Then answer.",
+  "Aap akeli nahi hain. I am one message away through all three interviews.",
 ];
 
 let _affirmIdx = 0;
@@ -3706,6 +4911,15 @@ function triggerConfetti() {
 }
 
 /* ============================================================
+   INTERVIEW TABS
+   ============================================================ */
+
+function setIvTab(id) {
+  document.querySelectorAll('.iv-tab').forEach(t => t.classList.toggle('active', t.getAttribute('data-iv') === id));
+  document.querySelectorAll('.iv-panel').forEach(p => p.classList.toggle('active', p.getAttribute('data-panel') === id));
+}
+
+/* ============================================================
    PODCAST PLAYER
    ============================================================ */
 
@@ -3834,6 +5048,162 @@ function setupPodcasts() {
 }
 
 /* ============================================================
+   AUDIO LIBRARY
+   ============================================================ */
+
+const AUDIO_LIBRARY = [
+  // Session 1 - Md Alam, Hiring Manager (May 7, 10 AM)
+  { id: "s1_urdu",    title: "Mock with the Hiring Manager", session: 1, lang: "urdu",    length: "20-30 min", iconKey: "speech" },
+  { id: "s1_english", title: "Mock with the Hiring Manager", session: 1, lang: "english", length: "20-30 min", iconKey: "speech" },
+
+  // Session 2 - Giovanni Urrutia, Peer Tech (May 7, 4 PM)
+  { id: "s2_urdu",    title: "Mock with the Peer Tech", session: 2, lang: "urdu",    length: "20-30 min", iconKey: "speech" },
+  { id: "s2_english", title: "Mock with the Peer Tech", session: 2, lang: "english", length: "20-30 min", iconKey: "speech" },
+
+  // Session 3 - Jovani Castelan, Technical (May 11, 1 PM)
+  { id: "s3_urdu",    title: "Technical Mock", session: 3, lang: "urdu",    length: "20-30 min", iconKey: "gear" },
+  { id: "s3_english", title: "Technical Mock", session: 3, lang: "english", length: "20-30 min", iconKey: "gear" },
+];
+
+const SESSION_AUDIO_META = {
+  1: {
+    label: "Session 1 mocks",
+    sub: "With Md Alam, Hiring Manager &middot; May 7, 10 AM",
+    iconClass: "",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+  },
+  2: {
+    label: "Session 2 mocks",
+    sub: "With Giovanni Urrutia, Peer Tech &middot; May 7, 4 PM",
+    iconClass: "gold",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+  },
+  3: {
+    label: "Session 3 mocks",
+    sub: "Technical with Jovani Castelan &middot; May 11, 1 PM",
+    iconClass: "coral",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>'
+  }
+};
+
+const AUDIO_ITEM_ICONS = {
+  speech: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+  gear:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+  mic:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>',
+  doc:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'
+};
+
+let _audioFilter = "all";
+
+function setAudioFilter(filter) {
+  _audioFilter = filter;
+  document.querySelectorAll('.audio-filter-pill').forEach(p => {
+    p.classList.toggle('active', p.getAttribute('data-filter') === filter);
+  });
+  renderAudioLibrary();
+}
+
+function _matchesAudioFilter(item) {
+  if (_audioFilter === "all") return true;
+  if (_audioFilter === "s1") return item.session === 1;
+  if (_audioFilter === "s2") return item.session === 2;
+  if (_audioFilter === "s3") return item.session === 3;
+  if (_audioFilter === "urdu")    return item.lang === "urdu";
+  if (_audioFilter === "english") return item.lang === "english";
+  return true;
+}
+
+function _audioCardHTML(item) {
+  const langClass = item.lang === "urdu" ? "urdu" : "";
+  const iconClass = item.lang === "urdu" ? "gold" : "";
+  const playClass = item.lang === "urdu" ? "urdu" : "";
+  const langLabel = item.lang === "urdu" ? "Urdu" : "English";
+  const langTagClass = item.lang === "urdu" ? "lang-tag urdu" : "lang-tag";
+  const icon = AUDIO_ITEM_ICONS[item.iconKey] || AUDIO_ITEM_ICONS.speech;
+  return `
+    <div class="podcast-card ${langClass}" data-id="${item.id}">
+      <div class="podcast-row">
+        <div class="podcast-icon ${iconClass}">${icon}</div>
+        <div class="podcast-info">
+          <div class="podcast-title">${item.title}</div>
+          <div class="podcast-sub">
+            <span class="${langTagClass}">${langLabel}</span>
+            <span class="length-tag">${item.length}</span>
+          </div>
+        </div>
+        <button class="podcast-play ${playClass}" onclick="togglePodcast('${item.id}')" aria-label="Play">
+          <svg class="play-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+      <div class="podcast-progress-wrap">
+        <div class="podcast-bar"><div class="podcast-fill"></div></div>
+        <div class="podcast-times">
+          <span class="podcast-time-current">0:00</span>
+          <span class="podcast-time-remaining">--:--</span>
+        </div>
+      </div>
+      <audio id="audio-${item.id}" preload="metadata" src="${item.id}.mp3"></audio>
+    </div>
+  `;
+}
+
+function renderAudioLibrary() {
+  const wrap = document.getElementById('audioLibrary');
+  if (!wrap) return;
+
+  let html = "";
+  for (const sessionId of [1, 2, 3]) {
+    // Get items for this session, with Urdu first then English
+    const items = AUDIO_LIBRARY
+      .filter(a => a.session === sessionId && _matchesAudioFilter(a))
+      .sort((a, b) => {
+        if (a.lang === b.lang) return 0;
+        return a.lang === "urdu" ? -1 : 1;  // urdu always first
+      });
+
+    if (items.length === 0) continue;
+
+    const meta = SESSION_AUDIO_META[sessionId];
+    html += `
+      <div class="audio-group">
+        <div class="audio-group-header">
+          <div class="audio-group-icon ${meta.iconClass}">${meta.icon}</div>
+          <div>
+            <div class="audio-group-title">${meta.label}</div>
+            <div class="audio-group-count">${meta.sub}</div>
+          </div>
+        </div>
+        <div class="podcast-list">
+          ${items.map(_audioCardHTML).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  if (html === "") {
+    html = '<p style="color: var(--muted); text-align: center; padding: 30px;">No audio sessions match this filter yet.</p>';
+  }
+
+  wrap.innerHTML = html;
+  setupPodcasts();
+
+  document.querySelectorAll('.audio-filter-pill').forEach(p => {
+    p.onclick = () => setAudioFilter(p.getAttribute('data-filter'));
+  });
+}
+
+// Helper: render audios for ONE specific session (used inside session pages)
+function renderSessionAudio(sessionId) {
+  const wrap = document.getElementById('sessionAudio' + sessionId);
+  if (!wrap) return;
+  const items = AUDIO_LIBRARY
+    .filter(a => a.session === sessionId)
+    .sort((a, b) => a.lang === "urdu" ? -1 : 1);
+  wrap.innerHTML = `<div class="podcast-list">${items.map(_audioCardHTML).join('')}</div>`;
+  setupPodcasts();
+}
+
+/* ============================================================
    INIT
    ============================================================ */
 
@@ -3845,11 +5215,16 @@ function init() {
   renderLPs();
   renderQuestionFilters();
   renderQuestions();
+  renderSessionQuestions();
   renderFlash();
   renderQuiz();
   renderChecklist();
   setupTechTabs();
   setupPodcasts();
+  renderAudioLibrary();
+  renderSessionAudio(1);
+  renderSessionAudio(2);
+  renderSessionAudio(3);
   resetTimer();
   updateProgress();
 
@@ -3857,7 +5232,8 @@ function init() {
   setTimeout(() => { state._initialized = true; }, 500);
 
   // Update countdown each minute
-  setInterval(updateCountdown, 60000);
+  // Update live countdown every second
+  setInterval(updateCountdown, 1000);
 }
 
 init();
